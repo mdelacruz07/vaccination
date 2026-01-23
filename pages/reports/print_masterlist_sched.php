@@ -1,0 +1,418 @@
+<?php
+    include '../../controller/systemcore.php'; 
+    $systemcore = new systemcore();
+    session_start();
+    $id = $_GET["id"];
+    // $facility_id = $_POST["facility_id"];
+    // $employmentcategory = $_POST["employmentcategory"];
+
+    // $month_number = date("m",strtotime($date));
+    // $month_name = date("m",strtotime($date));
+    // $year = date("Y",strtotime($date));
+    // $day = date("d",strtotime($date));
+
+    // $monthNum  = $month_number;
+    // $dateObj   = DateTime::createFromFormat('!m', $monthNum);
+    // $monthName = $dateObj->format('F');
+
+    // $selected_month_no_zero = ltrim($month_number, '0');
+    $bago_barangay_array = array(
+      "_64502001_ABUANAN",
+      "_64502002_ALIANZA", 
+      "_64502003_ATIPULUAN", 
+      "_64502004_BACONG_MONTILLA", 
+      "_64502005_BAGROY", 
+      "_64502006_BALINGASAG", 
+      "_64502007_BINUBUHAN", 
+      "_64502008_BUSAY", 
+      "_64502009_CALUMANGAN", 
+      "_64502010_CARIDAD", 
+      "_64502011_DULAO", 
+      "_64502012_ILIJAN", 
+      "_64502013_LAG_ASAN", 
+      "_64502014_MA_AO_BARRIO", 
+      "_64502015_JORGE_L._ARANETA_(MA_AO_CENTRAL)", 
+      "_64502016_MAILUM", 
+      "_64502017_MALINGIN", 
+      "_64502018_NAPOLES", 
+      "_64502019_PACOL", 
+      "_64502020_POBLACION",
+      "_64502021_SAGASA", 
+      "_64502022_TABUNAN", 
+      "_64502023_TALOC", 
+      "_64502024_SAMPINIT"
+    );
+    
+      $category = array(
+        "01_A1: Health Care Workers",
+        "01_A1.8: Outbound OFWS",
+        "01_A1.9: Family Members of Healthcare Workers",
+        "02_A2: Senior Citizens",
+        "03_A3: Adult with Comorbidity",
+        "04_A4: Frontline Personnel in Essential Sector",
+        "05_A5: Poor Population",
+        "06_B1: Teachers and Social Workers",
+        "07_B2: Other Government Workers",
+        "08_B3: Other Essential Workers",
+        "09_B4: Socio-demographic Groups",
+        "10_B5: Overseas Filipino Workers",
+        "11_B6: Other Remaing Workforce",
+        "12_C: Rest of the Population"
+    );
+
+    $SelectSched_1 = $systemcore->SelectTable("system_schedule WHERE id = '$id'");
+    foreach($SelectSched_1 as $value1){
+        $schedule_name = $value1["schedule_name"]." ".$value1["year"];
+        $update_status = "UPDATE";
+    }
+    
+?>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>...</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap 4 -->
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+
+th, td, thead, tr {
+  border: 0.5px solid black !important;
+  border-collapse: collapse;
+  margin:0px !important;
+  padding: 5px !important;
+}
+.asdasdasd{
+  page-break-after: always;
+}
+
+@media screen {
+  div.divFooter {
+    display: none;
+  }
+}
+@media print {
+  div.divFooter {
+    position: fixed;
+    bottom: 0;
+  }
+}
+@media print {
+  #printPageButton {
+    display: none;
+  }
+}
+  </style>
+  <?php 
+    // include '../inc/header.php';//FIX this this is for temporary include!!
+
+  ?>
+</head>
+<body>
+<div class="wrapper">
+  <!-- Main content -->
+  <section class="invoice">
+  <div class="col-1 offset-11 pr-3"> <button class="btn btn-outline-info col-12" id="printPageButton" onclick="Printer()">Print</button></div>
+    
+      <?php 
+      // $SelectR = $systemcore->SelectCustomize("SELECT * FROM vaccine_registration ORDER BY lastname ASC");
+      $SelectR = $systemcore->SelectCustomize("SELECT vaccine_schedule.*, 
+      vaccine_registration.firstname as firstname,
+      vaccine_registration.middlename as middlename,
+      vaccine_registration.lastname as lastname,
+      vaccine_registration.brgy as brgy,
+      vaccine_registration.employmentcategory as employmentcategory,
+      vaccine_registration.dose_1 as dose_1,
+      vaccine_registration.dose_2 as dose_2,
+      vaccine_registration.time_stamp as time_stamp,
+      vaccine_registration.gender as gender,
+      vaccine_registration.date_added,
+      vaccine_registration.current_residence as current_residence 
+      FROM vaccine_schedule 
+      LEFT JOIN vaccine_registration ON vaccine_schedule.reg_id = vaccine_registration.id WHERE vaccine_schedule.schedule_id = '$id'");
+
+      $total_counter = 0;
+      foreach($bago_barangay_array as $brgy){ 
+        foreach($category as $cat){
+          $error = 0;
+            foreach($SelectR as $value){ $x++; 
+              $firstname = $value["firstname"];
+              $middlename = $value["middlename"];
+              $lastname = $value["lastname"];
+
+              if($value["brgy"] == $brgy && $value["employmentcategory"] == $cat){      
+
+                // $SelectD = $systemcore->SelectCustomize("SELECT * FROM vims_report WHERE firstname = '$firstname' AND middlename = '$middlename' AND lastname = '$lastname' ORDER BY lastname ASC");
+                // if($SelectD == "none"){
+                  $error++;
+                // }
+              // if($value["brgy"] == $brgy && $value["employmentcategory"] == $cat){  $error++;    }
+            }   
+          }
+            if($error > 1){                          ?>
+          <br>
+          <div class="col-12 asdasdasd">
+            <h2 class="page-header row">
+            
+              <div class="col-sm-12"><center><br>
+                <img src="../../dist/img/<?php echo $_SESSION["system_logo"];?>" style="width: 125px; hight:125px;"></center>
+              </div>
+              <div class="col-sm-12" >
+                  <center><p style="font-size:18px; margin:none; padding:none;"><b  style="font-size:22px;">Bago City Health Office</b><br>
+                  <u style="font-size:20px;">Vaccine Information Management System</u></p>
+                  <!-- <b style="font-size:22px;">Registered Contact List Information</b><br> -->
+                  <b style="font-size:22px;">Master List for <?php echo $schedule_name; ?></b><br>
+                  <b style="font-size:20px; color:rgb(3, 153, 56);"><u><?php echo $brgy; ?></u></b><br>
+                  <b style="font-size:18px; color:red;"><u><?php echo $cat; ?></u></b><br></center>
+              </div>
+            </h2>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>1st Dose</th>
+                  <th>2nd Dose</th>
+                  <th>Current Address</th>
+                  <th>Mobile</th>
+                  <th>Date of Vaccination</th>
+                  <th>Date of Registration</th>
+                </tr>
+              </thead>
+              <tbody> 
+              <?php
+                
+
+                // $SelectR = $systemcore->SelectCustomize("SELECT * FROM vaccine_registration ORDER BY lastname ASC");
+                foreach($SelectR as $value){ $x++; 
+                  $firstname = $value["firstname"];
+                  $middlename = $value["middlename"];
+                  $lastname = $value["lastname"];
+
+                  if($value["brgy"] == $brgy && $value["employmentcategory"] == $cat){ 
+                    // $SelectD = $systemcore->SelectCustomize("SELECT * FROM vims_report WHERE firstname = '$firstname' AND middlename = '$middlename' AND lastname = '$lastname' ORDER BY lastname ASC");
+                    // if($SelectD == "none"){
+                      $total_counter++; 
+                      // if($value["brgy"] == $brgy && $value["employmentcategory"] == $cat){ $total_counter++;   
+                      $bday = $value["bday"];
+                      $age = date_diff(date_create($bday), date_create('now'))->y; 
+                      $dose_1 = $value["dose_1"];                             if(strlen($dose_1) <= 1){ $dose_1="02_No"; };
+                      $dose_2 = $value["dose_2"];                             if(strlen($dose_2) <= 1){ $dose_2="02_No"; };
+                      $current_residence = $value["current_residence"];       if(strlen($current_residence) <= 1){ $current_residence="N/A"; };
+
+                      $contact = $value["contact"]; 
+                      $contact_length = strlen($contact);
+                      if($contact_length > 11 && $contact[0] == "0"){
+                        $contact = substr($contact, 1);
+                      }
+                      if(strlen($contact) <= 1){ $contact="N/A"; };
+
+                        $time_stamp = $value["time_stamp"];                           if(strlen($time_stamp) <= 1 || $time_stamp == "0000-00-00" ){ $time_stamp="N/A"; }; ?>
+                      <tr>
+                        <td><?php echo $value["lastname"];?> <?php echo $value["firstname"];?> <?php echo $value["middlename"]; ?></td>
+                        <td><?php echo $age;?></td>
+                        <td><?php echo $value["gender"];?></td>
+                        <td><?php echo $dose_1;?></td>
+                        <td><?php echo $dose_2;?></td>
+                        <td><?php echo $current_residence;?></td>
+                        <td><?php echo $contact;?></td>
+                        <td><?php echo $time_stamp;?></td>
+                        <td><?php echo $value["date_added"];?></td>
+                      </tr><?php
+                    // }
+                  }
+                } 
+              }
+                ?>
+              </tbody>
+              <tfoot style="border:none !important;">
+                <tr style="border:none !important;">
+                  <td style="border:none !important; color:white;"></td>
+                <tr style="border:none !important;">
+                <tr style="border:none !important;">
+                  <td style="border:none !important; color:white;"></td>
+                <tr style="border:none !important;">
+              </tfoot>
+            </table>
+          </div> <?php 
+        } 
+      } ?>
+      <!-- /.col -->
+    <Br>
+    <div class="divFooter col-12"  style="background-image: url('../../dist/img/checkerboard-pattern-green-seamless-background-vector-14423303.jpg'); background-size: 100px 100px;"> 
+    <!-- <div class="divFooter col-12">  -->
+        <center><p>Bago City College | B.S. in Information System <br> © 2020 James Bryan Flandez. All Rights Reserved.</p></center>
+    </div>
+    <!-- /.row -->
+
+
+    <div class="col-12 asdasdasd">
+            <h2 class="page-header row">
+              <div class="col-sm-12"><center><br>
+                <img src="../../dist/img/<?php echo $_SESSION["system_logo"];?>" style="width: 125px; hight:125px;"></center>
+              </div>
+              <div class="col-sm-12" >
+                  <center><p style="font-size:18px; margin:none; padding:none;"><b  style="font-size:22px;">Bago City Health Office</b><br>
+                  <u style="font-size:20px;">Vaccine Information Management System</u></p>
+                  <!-- <b style="font-size:22px;">Registered Contact List Information</b><br> -->
+                  <b style="font-size:22px;">Master List for <?php echo $schedule_name; ?></b><br>
+                  <b style="font-size:20px;"><u>Report Information and Details</u></b><br></center><br>
+
+                  <br><br>
+                  <div class="callout callout-info row col-12"  style="border: 1px solid black;"> 
+                      <h5><i class="fas fa-info col-3"></i><b>Note:</b></h5>
+                      <div class="col-9">
+                        <h6 class="col-12">This report is auto generated by the system and it is based on what the encoders are entering and providing in this system.</h6>
+                        <h6 class="col-12">There are some data imported into the systems database, these may cause error or none compatible with the system database.</h6>
+                        <h6 class="col-12"><b>Imported File Type:</b>Excel</h6>
+                      </div>
+                  </div>
+
+            <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                  <h4>
+                  <i class="fas fa-cog"></i> Details
+                    <!-- <small class="float-right">Date: 2/10/2014</small> -->
+                  </h4>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+              <div class="row invoice-info">
+                <div class="col-sm-3 invoice-col">
+                  <h5><b>List Of Barangay</b></h5>
+                  <address><h6><?php
+                    foreach($bago_barangay_array as $brgy){ 
+                        echo $brgy."<br>";
+                    } ?></h6>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-3 invoice-col">
+                <h5><b>List Of Category</b></h5>
+                  <address><h6>
+                  <?php
+                    foreach($category as $cat){ 
+                        echo $cat."<br>";
+                    } ?></h6>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6 invoice-col row">
+
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><b>Report Name:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><u>Master List for <?php echo $schedule_name; ?></u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><b>1st Dose:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><u>N</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><b>2nd Dose:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><u>N</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><b>Report Generated Date :</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><u><?php echo date("Y-M-d") ?></u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6><b>Date of System Creation :</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><u>2021-04-23</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6><b>Date of System Usage(Import Data from Excel):</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><u>May 26 2021</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6><b>Date of Using the Profiling:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><u>May 26 2021</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6><b>Date of Using the Online Registration </b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><u>June 01 2021</u></h6>
+                    </div>
+
+                    <div class="col-6">
+                      <h6><b>Date of Using the Vaccination and Postmonitoring:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6><u>June 14 2021</u></h6>
+                    </div>
+
+                      
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><b>Total:</b></h6>
+                    </div>
+                    <div class="col-6">
+                      <h6 class="p-1" style="background-color: rgb(241, 255, 102)"><u><?php echo $total_counter; ?></u></h6>
+                    </div>
+                 
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+              </div>
+            </h2>
+          </div>
+    <!-- title row -->
+
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- ./wrapper -->
+<?php
+   include '../inc/footer.php';//fix this, this is for temporary include!!
+?>
+<script type="text/javascript"> 
+
+
+
+function Printer(){
+  window.print();
+}
+
+
+</script>
+</body>
+</html>
+
