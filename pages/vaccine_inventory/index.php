@@ -230,7 +230,7 @@
                                                 <i class="fas fa-pills"></i>
                                             </span>
                                         </div>
-                                        <input type="number" min="0" class="form-control" name="quantity_available" alt="required">
+                                        <input id="quantity_available" type="number" min="0" class="form-control" name="quantity_available" alt="required">
                                     </div>
                                 </div>
 
@@ -377,7 +377,34 @@
             placeholder: 'SELECT A VACCINE',
             width: '100%',
             dropdownParent: $('#create_vaccine_inv') // if inside modal
-        });
+        }).on('change', function () {
+            let vaccine_id = $(this).val();
+
+            if (vaccine_id) {
+                fetchVaccineQuantity(vaccine_id);
+            } else {
+                $('#quantity_available').val('');
+            }
+        });;
+
+        function fetchVaccineQuantity(vaccine_id) {
+            $.ajax({
+                url: 'get_vaccine_avail_quantity.php',
+                type: 'POST',
+                data: { vaccine_id: vaccine_id },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#quantity_available').val(response.quantity_available);
+                    } else {
+                        $('#quantity_available').val(0);
+                    }
+                },
+                error: function () {
+                    alert('Failed to fetch vaccine quantity');
+                }
+            });
+        }
 
         // Optional: re-trigger Select2 to display selected text properly (useful if you dynamically load form)
         $('#vaccine_id').trigger('change.select2');
@@ -390,6 +417,10 @@
 
         $('.form-control[type="number"]').on('input', function () {
             this.value = this.value.replace(/\D/g, '');
+        });
+
+        $('#create_vaccine_inv').on('hidden.bs.modal', function () {
+            $(this).find('.select2').val(null).trigger('change');
         });
     </script>
 </body>

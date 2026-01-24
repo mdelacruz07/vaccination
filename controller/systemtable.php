@@ -1540,8 +1540,6 @@ class systemtable {
                 <tr>
                     <th>ID</th>
                     <th>Vaccine</th>
-                    <th>Batch No.</th>
-                    <th>QTY. Rec.</th>
                     <th>QTY. Avail.</th>
                     <th>Supplier</th>
                     <th>Expiry Date</th>
@@ -1550,7 +1548,20 @@ class systemtable {
                 </tr>
                 </thead>
                 <tbody> <?php
-                $SelectTable = $this->SelectCustomize("SELECT vi.*, v.name AS vaccine_name, vs.name AS supplier_name FROM vaccine_inventory vi LEFT JOIN vaccines v ON vi.vaccine_id = v.id LEFT JOIN vaccine_supplier vs ON vi.supplier_id = vs.id WHERE vi.is_archive = 0");
+                $SelectTable = $this->SelectCustomize(" SELECT
+                        vi.id as vaccine_inv_id,
+                        v.id AS vaccine_id,
+                        v.name AS vaccine_name,
+                        SUM(vi.quantity_received) AS quantity_available,
+                        GROUP_CONCAT(DISTINCT vs.name SEPARATOR ', ') AS supplier_name,
+                        MIN(vi.expiry_date) AS expiry_date,
+                        MAX(vi.date_received) AS date_received
+                        FROM vaccine_inventory vi 
+                        LEFT JOIN vaccines v ON vi.vaccine_id = v.id 
+                        LEFT JOIN vaccine_supplier vs ON vi.supplier_id = vs.id 
+                        WHERE vi.is_archive = 0
+                        GROUP BY v.id, vi.id, v.name
+                        ");
                 if($SelectTable != "none"){
                     $x = 0;
                     foreach($SelectTable as $value){
@@ -1558,8 +1569,6 @@ class systemtable {
                         echo "<tr>";
                             echo "<td>".$x."</td>";
                             echo "<td>".$value['vaccine_name']."</td>";
-                            echo "<td>".$value['batch_no']."</td>";
-                            echo "<td>".$value['quantity_received']."</td>";
                             echo "<td>".$value['quantity_available']."</td>";
                             echo "<td>".$value['supplier_name']."</td>";
                             echo "<td>".$value['expiry_date']."</td>";
@@ -1568,13 +1577,13 @@ class systemtable {
                             <td class="row m-0" style="justify-content: space-evenly;">
                                 <!-- <a href="index.php?page_name=Vaccine%20Inventory&primary_id=<?php //echo $value['id'];?>" class="col-sm-10 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</a> -->
 
-                                <button onclick="sys_edit('view.php', 'veiw_result_view', '<?php echo $value['id'];?>', 'required_div', '#tbl_vaccines_inv')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
+                                <button onclick="sys_edit('view.php', 'veiw_result_view', '<?php echo $value['vaccine_inv_id'];?>', 'required_div', '#tbl_vaccines_inv')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
                             
-                                <button onclick="sys_edit('edit.php', 'veiw_result_update', '<?php echo $value['id'];?>', 'required_div', '#tbl_vaccines_inv')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
+                                <button onclick="sys_edit('edit.php', 'veiw_result_update', '<?php echo $value['vaccine_inv_id'];?>', 'required_div', '#tbl_vaccines_inv')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
 
                                
                                 <div class="icheck-danger col-1 d-inline">
-                                    <input type="checkbox" class="delete-checkbox-vaccines-inv" value="<?php echo $value['id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
+                                    <input type="checkbox" class="delete-checkbox-vaccines-inv" value="<?php echo $value['vaccine_inv_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
                                     <label for="checkboxPrimary<?php echo $x;?>"></label>
                                 </div>
                             </td> <?php
@@ -1587,8 +1596,6 @@ class systemtable {
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th></th>
-                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
