@@ -3,17 +3,19 @@
     $systemcore = new systemcore();
     $systemcore->System_Sessioning("session");
 
-    $inventory_id = trim($_GET["inventory_id"]);
-    $type = trim($_GET["transaction_type"]);
+    $vaccine_id = trim($_GET["vaccine_id"]);
+    $supplier_id = trim($_GET["supplier_id"]);
+    $facility_id = trim($_GET["facility_id"]);
+    // $type = trim($_GET["transaction_type"]);
     $qty = trim($_GET["quantity"]);
-    $trans_date = trim($_GET["transaction_date"]);
-    $performed_by = trim($_GET["performed_by"]);
+    // $trans_date = trim($_GET["transaction_date"]);
+    // $performed_by = trim($_GET["performed_by"]);
     $remarks = trim($_GET["remarks"]);
     $created_by = $_SESSION["user_id"];
-
-    $table = "vaccine_transactions";
-    $table_col = "`inventory_id`, `transaction_type`, `quantity`, `transaction_date`, `performed_by`, `remarks`, `created_by`";
-    $table_val = "'$inventory_id', '$type', '$qty', '$trans_date', '$performed_by', '$remarks', '$created_by'"; 
+    
+    $table = "vaccine_receive";
+    $table_col = "`vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `remarks`, `created_by`";
+    $table_val = "'$vaccine_id', '$supplier_id', '$facility_id', '$qty', '$remarks', '$created_by'"; 
     $InsertTable = $systemcore->InsertTable($table, $table_col, $table_val);
 
 ?>

@@ -1606,7 +1606,77 @@ class systemtable {
                     </tr>
                 </tfoot>
             </table> <?php
-           
+
+        } else if ($table_name == "vaccine_receive") { ?>
+
+            <table id="tbl_vaccines_receive" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Vaccine</th>
+                        <th>Supplier</th>
+                        <th>Facility</th>
+                        <th>Quantity</th>
+                        <th>Remarks</th>
+                        <th>Edit / Delete</th>
+                    </tr>
+                </thead>
+                <tbody> <?php
+                $SelectTable = $this->SelectCustomize(" SELECT
+                        r.id AS vaccine_receive_id,
+                        v.name AS vaccine_name,
+                        s.name AS supplier_name,
+                        f.facility_name,
+                        r.quantity,
+                        r.remarks
+                        FROM vaccine_receive r
+                        LEFT JOIN vaccines v ON v.id = r.vaccine_id
+                        LEFT JOIN vaccine_supplier s ON s.id = r.supplier_id
+                        LEFT JOIN system_facilities f ON f.id = r.facility_id
+                        WHERE r.is_archive = 0");
+                if($SelectTable != "none"){
+                    $x = 0;
+                    foreach($SelectTable as $value){
+                        $x++;
+                        echo "<tr>";
+                            echo "<td>".$x."</td>";
+                            echo "<td>".$value['vaccine_name']."</td>";
+                            echo "<td>".$value['supplier_name']."</td>";
+                            echo "<td>".$value['facility_name']."</td>";
+                            echo "<td>".$value['quantity']."</td>";
+                            echo "<td>".$value['remarks']."</td>";
+                            ?>
+                            <td class="row m-0" style="justify-content: space-evenly;">
+                                <button onclick="sys_edit('view.php', 'veiw_result_view', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
+                            
+                                <button onclick="sys_edit('edit.php', 'veiw_result_update', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
+
+                                <div class="icheck-danger col-1 d-inline">
+                                    <input type="checkbox" class="delete-checkbox-vaccines-inv" value="<?php echo $value['vaccine_receive_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
+                                    <label for="checkboxPrimary<?php echo $x;?>"></label>
+                                </div>
+                            </td> <?php
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='7' style='text-align: center;'>No Data Available</td></tr>";
+                }
+                ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_inv.php', 'vaccine_inv_table', 'vaccine_inventory', '#tbl_vaccines_inv', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-inv" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        <?php
         }
     }
 }
