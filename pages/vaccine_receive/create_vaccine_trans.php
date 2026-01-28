@@ -6,10 +6,7 @@
     $vaccine_id = trim($_GET["vaccine_id"]);
     $supplier_id = trim($_GET["supplier_id"]);
     $facility_id = trim($_GET["facility_id"]);
-    // $type = trim($_GET["transaction_type"]);
     $qty = trim($_GET["quantity"]);
-    // $trans_date = trim($_GET["transaction_date"]);
-    // $performed_by = trim($_GET["performed_by"]);
     $remarks = trim($_GET["remarks"]);
     $created_by = $_SESSION["user_id"];
     

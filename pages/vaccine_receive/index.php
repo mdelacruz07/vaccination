@@ -93,7 +93,7 @@
 
     <div class="modal fade" id="update">
         <div class="modal-dialog modal-md">
-            <div class="modal-content" id="veiw_result_update">
+            <div class="modal-content" id="view_result_update">
                 
             </div>
             <!-- /.modal-content -->
@@ -103,7 +103,7 @@
 
     <div class="modal fade" id="view_vaccine_inv">
         <div class="modal-dialog modal-md">
-            <div class="modal-content" id="veiw_result_view"></div>
+            <div class="modal-content" id="view_result_view"></div>
         </div>
     </div>
     <!-- /.modal -->
@@ -293,12 +293,12 @@
         // setting up the tables
         show_table("vaccine_receive_table", "vaccine_receive", "#tbl_vaccines_receive");
 
-        $(document).on('change', '.delete-checkbox-vaccines-inv', function() {
+        $(document).on('change', '.delete-checkbox-vaccine-receive', function() {
             // Check if at least one checkbox is ticked
-            const anyChecked = $('.delete-checkbox-vaccines-inv:checked').length > 0;
+            const anyChecked = $('.delete-checkbox-vaccine-receive:checked').length > 0;
             
             // Enable or disable the button
-            $('#btn-delete-selected-vaccines-inv').prop('disabled', !anyChecked);
+            $('#btn-delete-selected-vaccines-receive').prop('disabled', !anyChecked);
         });
         
         $('#vaccine_id').select2({

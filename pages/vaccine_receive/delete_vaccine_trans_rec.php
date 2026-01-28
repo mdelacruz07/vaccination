@@ -8,7 +8,7 @@
     
     $length = count($selected_id);
     for ($i = 1; $i < $length; $i++) {
-        $table = "vaccine_inventory";
+        $table = "vaccine_receive";
         $col_to_update = "is_archive = '1'";
         $indicator = "id = '$selected_id[$i]'";
         // $DeleteTable = $systemcore->DeleteTable($table, $indicator);
