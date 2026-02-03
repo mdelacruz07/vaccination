@@ -1,0 +1,9 @@
+id
+vaccine_id
+Issued_to (facility_id) set default to 0 
+Issued_type [Used, Expired, Damaged, Transfer] (When selected "Used" display the ID of vaccine_registration [Get Fullname])
+vaccinee (vaccine_registation id) set default to 0
+qty
+remarks
+created_date
+is_archive
