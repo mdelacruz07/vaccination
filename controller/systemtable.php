@@ -1674,10 +1674,82 @@ class systemtable {
                         <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_trans_rec.php', 'vaccine_receive_table', 'vaccine_receive', '#tbl_vaccines_receive', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-receive" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
                     </tr>
                 </tfoot>
-            </table>
+            </table> <?php
 
-        <?php
-        }
+        } else if ($table_name == "vaccine_issuance") { ?>
+
+            <table id="tbl_vaccines_issuance" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Vaccine</th>
+                        <th>Supplier</th>
+                        <th>Facility</th>
+                        <th>Quantity</th>
+                        <th>Remarks</th>
+                        <th>Edit / Delete</th>
+                    </tr>
+                </thead>
+
+                <tbody> 
+                    <?php
+                        $SelectTable = $this->SelectCustomize(" SELECT
+                                i.id AS vaccine_issuance_id,
+                                v.name AS vaccine_name,
+                                CONCAT(vaccine_registration.firstname, ' ', vaccine_registration.middlename, ' ', vaccine_registration.lastname) AS fullname,
+                                f.facility_name,
+                                i.quantity,
+                                i.remarks
+                                FROM vaccine_issuance i
+                                LEFT JOIN vaccines v ON v.id = i.vaccine_id
+                                LEFT JOIN vaccine_supplier s ON s.id = i.supplier_id
+                                LEFT JOIN system_facilities f ON f.id = i.facility_id
+                                WHERE i.is_archive = 0");
+                        if($SelectTable != "none"){
+                            $x = 0;
+                            foreach($SelectTable as $value){
+                                $x++;
+                                echo "<tr>";
+                                    echo "<td>".$x."</td>";
+                                    echo "<td>".$value['vaccine_name']."</td>";
+                                    echo "<td>".$value['supplier_name']."</td>";
+                                    echo "<td>".$value['facility_name']."</td>";
+                                    echo "<td>".$value['quantity']."</td>";
+                                    echo "<td>".$value['remarks']."</td>";
+                                    ?>
+                                    <td class="row m-0" style="justify-content: space-evenly;">
+                                        <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
+                                    
+                                        <button onclick="sys_edit('edit.php', 'view_result_update', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
+
+                                        <div class="icheck-danger col-1 d-inline">
+                                            <input type="checkbox" class="delete-checkbox-vaccine-receive" value="<?php echo $value['vaccine_receive_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
+                                            <label for="checkboxPrimary<?php echo $x;?>"></label>
+                                        </div>
+                                    </td> <?php
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='text-align: center;'>No Data Available</td></tr>";
+                        }
+                    ?>
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_trans_rec.php', 'vaccine_receive_table', 'vaccine_receive', '#tbl_vaccines_receive', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-receive" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <?php
+        } 
+        
     }
 }
 ?>

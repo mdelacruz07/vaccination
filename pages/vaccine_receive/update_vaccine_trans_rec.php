@@ -37,7 +37,5 @@
 <?php
     include '../../controller/systemtable.php'; 
     $systemtable = new systemtable();
-    // $table_name = $_GET["table_name"];
-
     $SelectTable = $systemtable->SelectingTable($table, 'none');
 ?>
