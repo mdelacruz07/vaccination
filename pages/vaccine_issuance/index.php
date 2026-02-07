@@ -277,13 +277,17 @@
             // Hide both by default
             $('#issued_to_group').hide();
             $('#vaccinee_group').hide();
+            $('#issued_to').val('0').trigger('change.select2');
+            $('#vaccinee_id').val('0').trigger('change.select2');
 
             $('#issued_type').on('change', function () {
                 const type = $(this).val();
 
                 // Hide both first
-                $('#issued_to_group').hide();
-                $('#vaccinee_group').hide();
+                $('#issued_to_group').slideUp();
+                $('#vaccinee_group').slideUp();
+                $('#issued_to').val('0').trigger('change.select2');
+                $('#vaccinee_id').val('0').trigger('change.select2');
 
                 if (type === 'Transfer') {
                     $('#issued_to_group').slideDown();

@@ -1696,14 +1696,14 @@ class systemtable {
                         $SelectTable = $this->SelectCustomize(" SELECT
                                 i.id AS vaccine_issuance_id,
                                 v.name AS vaccine_name,
-                                CONCAT(vaccine_registration.firstname, ' ', vaccine_registration.middlename, ' ', vaccine_registration.lastname) AS fullname,
+                                CONCAT(vr.firstname, ' ', vr.middlename, ' ', vr.lastname) AS fullname,
                                 f.facility_name,
                                 i.quantity,
                                 i.remarks
                                 FROM vaccine_issuance i
                                 LEFT JOIN vaccines v ON v.id = i.vaccine_id
-                                LEFT JOIN vaccine_supplier s ON s.id = i.supplier_id
-                                LEFT JOIN system_facilities f ON f.id = i.facility_id
+                                LEFT JOIN vaccine_registration vr ON vr.id = i.vaccinee_id
+                                LEFT JOIN system_facilities f ON f.id = i.issued_to
                                 WHERE i.is_archive = 0");
                         if($SelectTable != "none"){
                             $x = 0;
@@ -1712,7 +1712,7 @@ class systemtable {
                                 echo "<tr>";
                                     echo "<td>".$x."</td>";
                                     echo "<td>".$value['vaccine_name']."</td>";
-                                    echo "<td>".$value['supplier_name']."</td>";
+                                    echo "<td>".$value['fullname']."</td>";
                                     echo "<td>".$value['facility_name']."</td>";
                                     echo "<td>".$value['quantity']."</td>";
                                     echo "<td>".$value['remarks']."</td>";
