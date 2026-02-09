@@ -4,18 +4,19 @@
     $id = isset($_GET['primary_id']) ? (int) $_GET['primary_id'] : 0;
 
     $result = $systemcore->SelectCustomize("SELECT
-        r.id AS vaccine_receive_id,
+        i.id AS vaccine_issuance_id,
+        i.issued_to,
+        i.vaccinee_id,
+        i.issued_date,
         v.name AS vaccine_name,
-        s.name AS supplier_name,
+        CONCAT(vr.firstname, ' ', vr.middlename, ' ', vr.lastname) AS fullname,
         f.facility_name,
-        r.quantity,
-        r.remarks,
-        CONCAT(u.first_name, ' ', u.last_name) as receive_by
-        FROM vaccine_receive r
-        LEFT JOIN vaccines v ON v.id = r.vaccine_id
-        LEFT JOIN vaccine_supplier s ON s.id = r.supplier_id
-        LEFT JOIN system_facilities f ON f.id = r.facility_id
-        LEFT JOIN system_user u ON u.id = r.created_by
+        i.quantity,
+        i.remarks
+        FROM vaccine_issuance i
+        LEFT JOIN vaccines v ON v.id = i.vaccine_id
+        LEFT JOIN vaccine_registration vr ON vr.id = i.vaccinee_id
+        LEFT JOIN system_facilities f ON f.id = i.issued_to
         WHERE r.is_archive = 0
         AND r.id = {$id}
     ");

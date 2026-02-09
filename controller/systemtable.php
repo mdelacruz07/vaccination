@@ -1683,10 +1683,10 @@ class systemtable {
                     <tr>
                         <th>ID</th>
                         <th>Vaccine</th>
-                        <th>Supplier</th>
-                        <th>Facility</th>
+                        <th>Issued To</th>
                         <th>Quantity</th>
                         <th>Remarks</th>
+                        <th>Date Issued</th>
                         <th>Edit / Delete</th>
                     </tr>
                 </thead>
@@ -1695,6 +1695,9 @@ class systemtable {
                     <?php
                         $SelectTable = $this->SelectCustomize(" SELECT
                                 i.id AS vaccine_issuance_id,
+                                i.issued_to,
+                                i.vaccinee_id,
+                                i.issued_date,
                                 v.name AS vaccine_name,
                                 CONCAT(vr.firstname, ' ', vr.middlename, ' ', vr.lastname) AS fullname,
                                 f.facility_name,
@@ -1709,21 +1712,31 @@ class systemtable {
                             $x = 0;
                             foreach($SelectTable as $value){
                                 $x++;
+                                $issued_to_name = "";
+
+                                if ($value["issued_to"] != 0) {
+                                    $issued_to_name = $value["facility_name"];
+                                }
+
+                                if ($value["vaccinee_id"] != 0) {
+                                    $issued_to_name = $value["fullname"];
+                                }
+
                                 echo "<tr>";
                                     echo "<td>".$x."</td>";
                                     echo "<td>".$value['vaccine_name']."</td>";
-                                    echo "<td>".$value['fullname']."</td>";
-                                    echo "<td>".$value['facility_name']."</td>";
+                                    echo "<td>".$issued_to_name."</td>";
                                     echo "<td>".$value['quantity']."</td>";
                                     echo "<td>".$value['remarks']."</td>";
+                                    echo "<td>".$value['issued_date']."</td>";
                                     ?>
                                     <td class="row m-0" style="justify-content: space-evenly;">
-                                        <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
+                                        <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $value['vaccine_issuance_id'];?>', 'required_div', '#tbl_vaccines_issuance')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
                                     
-                                        <button onclick="sys_edit('edit.php', 'view_result_update', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
+                                        <button onclick="sys_edit('edit.php', 'view_result_update', '<?php echo $value['vaccine_issuance_id'];?>', 'required_div', '#tbl_vaccines_issuance')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
 
                                         <div class="icheck-danger col-1 d-inline">
-                                            <input type="checkbox" class="delete-checkbox-vaccine-receive" value="<?php echo $value['vaccine_receive_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
+                                            <input type="checkbox" class="delete-checkbox-vaccine-receive" value="<?php echo $value['vaccine_issuance_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
                                             <label for="checkboxPrimary<?php echo $x;?>"></label>
                                         </div>
                                     </td> <?php
