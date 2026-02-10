@@ -9,26 +9,40 @@
         i.vaccinee_id,
         i.issued_date,
         v.name AS vaccine_name,
-        CONCAT(vr.firstname, ' ', vr.middlename, ' ', vr.lastname) AS fullname,
+        CONCAT(vr.firstname, ' ', vr.lastname) AS fullname,
         f.facility_name,
         i.quantity,
-        i.remarks
+        i.remarks, 
+        i.issued_type,
+        CONCAT(su.first_name, ' ', su.last_name) AS issue_by
         FROM vaccine_issuance i
         LEFT JOIN vaccines v ON v.id = i.vaccine_id
         LEFT JOIN vaccine_registration vr ON vr.id = i.vaccinee_id
         LEFT JOIN system_facilities f ON f.id = i.issued_to
-        WHERE r.is_archive = 0
-        AND r.id = {$id}
+        LEFT JOIN system_user su ON su.id = i.created_by
+        WHERE i.is_archive = 0
+        AND i.id = {$id}
     ");
     
     $data = ($result && $result->num_rows > 0) ? $result->fetch_assoc() : [];
 
+    $issued_to_name = "N/A";
+
+    if ($data["issued_to"] != 0) {
+        $issued_to_name = $data["facility_name"];
+    }
+
+    if ($data["vaccinee_id"] != 0) {
+        $issued_to_name = $data["fullname"];
+    }
+
     $vaccine_name = $data['vaccine_name'] ?? '—';
-    $supplier_name = $data['supplier_name'] ?? '—';
-    $facility_name = $data['facility_name'] ?? '—';
+    $issued_to = $issued_to_name;
     $quantity = $data['quantity'] ?? '—';
     $remarks = $data['remarks'] ?? '—';
-    $receive_by = $data['receive_by'] ?? '—';
+    $issue_by = $data['issue_by'] ?? '—';
+    $issued_type = $data['issued_type'] ?? '—';
+    $issued_date = $data['issued_date'] ?? '—';
 ?>
 <div class="modal-header">
     <h5 class="modal-title">View Vaccine Inventory</h5>
@@ -55,28 +69,34 @@
             <div class="fs-6 text-dark"><?= $vaccine_name ?></div>
         </div>
 
-        <!-- Supplier -->
+        <!-- Issued to -->
         <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Supplier:</label>
-            <div class="fs-6 text-dark"><?= $supplier_name ?></div>
+            <label class="fw-bold text-muted mb-0">Issued To:</label>
+            <div class="fs-6 text-dark"><?= $issued_to ?></div>
         </div>
 
-        <!-- Facility -->
+        <!-- Issued type -->
         <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Facility:</label>
-            <div class="fs-6 text-dark"><?= $facility_name ?></div>
+            <label class="fw-bold text-muted mb-0">Issued Type:</label>
+            <div class="fs-6 text-dark"><?= $issued_type ?></div>
         </div>
 
         <!-- Quantity -->
         <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Quantity Received:</label>
+            <label class="fw-bold text-muted mb-0">Quantity Issued:</label>
             <div class="fs-6 text-dark"><?= $quantity ?></div>
         </div>
 
         <!-- Created By -->
         <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Received / Created By:</label>
-            <div class="fs-6 text-dark"><?= $receive_by ?></div>
+            <label class="fw-bold text-muted mb-0">Issued By:</label>
+            <div class="fs-6 text-dark"><?= $issue_by ?></div>
+        </div>
+
+        <!-- Issued Date -->
+        <div class="col-lg-6 mb-4">
+            <label class="fw-bold text-muted mb-0">Issued Date:</label>
+            <div class="fs-6 text-dark"><?= $issued_date ?></div>
         </div>
 
         <!-- Remarks -->

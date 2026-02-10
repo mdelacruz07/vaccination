@@ -193,9 +193,9 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
 include '../inc/confirmation_alerts.php';
 include '../inc/footer.php';
 ?>
-<script>
+<!-- <script>
   show_table('tab', 'show_schedule_dashboard', '#example1', '1,<?php echo date('m');?>,<?php echo date('Y');?>, ');
-</script>
+</script> -->
 
 <!-- Fullcalendar Start -->
 <script type="text/javascript" src="../../dist/js/fullcalendar/index.global.js"></script>

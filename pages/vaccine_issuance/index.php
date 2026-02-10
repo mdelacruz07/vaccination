@@ -87,7 +87,7 @@
   <!-- </div> -->
   <!-- /.content-wrapper -->
 
-    <div class="modal fade" id="update">
+    <div class="modal fade issuance" id="update">
         <div class="modal-dialog modal-md">
             <div class="modal-content" id="view_result_update">
                 
@@ -302,6 +302,7 @@
         // setting up the tables
         show_table("vaccine_issuance_table", "vaccine_issuance", "#tbl_vaccines_issuance");
 
+        // Delete button trigger start
         $(document).on('change', '.delete-checkbox-vaccine-issuance', function() {
             // Check if at least one checkbox is ticked
             const anyChecked = $('.delete-checkbox-vaccine-issuance:checked').length > 0;
@@ -309,6 +310,7 @@
             // Enable or disable the button
             $('#btn-delete-selected-vaccines-issuance').prop('disabled', !anyChecked);
         });
+        // Delete button trigger end
         
         $('#vaccine_id').select2({
             placeholder: 'SELECT A VACCINE',
@@ -323,6 +325,41 @@
             this.value = this.value.replace(/\D/g, '');
         });
 
+
+        // Edit form
+        $('#update').on('shown.bs.modal', function() {
+            // var update
+            $('#issued_to_group_edit').hide();
+            $('#vaccinee_group_edit').hide();
+
+            const issuedType = $('#issued_type_hidden').val();
+
+            if (issuedType === "Transfer") {
+                $('#issued_to_group_edit').show();
+            }
+
+            if (issuedType === "Used") {
+                $('#vaccinee_group_edit').show();
+            }
+
+            $('#issued_type_edit').on('change', function () {
+                const type = $(this).val();
+
+                // Hide both first
+                $('#issued_to_group_edit').slideUp();
+                $('#vaccinee_group_edit').slideUp();
+                $('#issued_to_edit').val('0').trigger('change.select2');
+                $('#vaccinee_id_edit').val('0').trigger('change.select2');
+
+                if (type === 'Transfer') {
+                    $('#issued_to_group_edit').slideDown();
+                }
+
+                if (type === 'Used') {
+                    $('#vaccinee_group_edit').slideDown();
+                }
+            });
+        });
     </script>
 </body>
 </html>

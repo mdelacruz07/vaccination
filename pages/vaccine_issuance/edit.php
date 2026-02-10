@@ -3,23 +3,26 @@
     $systemcore = new systemcore();
     $id = $_GET['primary_id'];
 
-    $SelectTable = $systemcore->SelectCustomize("SELECT * FROM vaccine_receive WHERE id = '$id' AND is_archive = 0");
+    $SelectTable = $systemcore->SelectCustomize("SELECT * FROM vaccine_issuance WHERE id = '$id' AND is_archive = 0");
     foreach($SelectTable as $value){
         $vaccine_id = $value["vaccine_id"];
-        $supplier_id = $value["supplier_id"];
-        $facility_id = $value["facility_id"];
+        $vaccinee_id = $value["vaccinee_id"];
+        $issued_type = $value["issued_type"] ?? '';
+        $issued_date = $value["issued_date"];
         $quantity = $value["quantity"];
         $remarks = $value["remarks"];
         
         // Select2 data
         $select2vaccine = $systemcore->SelectCustomize("SELECT id, name FROM vaccines WHERE is_archive = 0 ORDER BY name ASC");
-        $select2supplier = $systemcore->SelectCustomize("SELECT id, name FROM vaccine_supplier WHERE is_archive = 0 ORDER BY name ASC");
-        $select2facility = $systemcore->SelectCustomize("SELECT id, facility_name as name FROM system_facilities WHERE status = 'ACTIVE' ORDER BY facility_name ASC");
+        $select2vaccinee = $systemcore->SelectCustomize("SELECT id, CONCAT(firstname, ' ', lastname) AS fullname FROM vaccine_registration");
+        $select2facility = $systemcore->SelectCustomize("SELECT id, facility_name FROM system_facilities WHERE status = 'ACTIVE' ORDER BY facility_name ASC");
     }
+
+    $types = ["Used", "Expire", "Damage", "Transfer", "Return"]; 
 ?>
 <div class="modal-header">
     <h5 class="modal-title">
-        Edit Vaccine
+        Edit Issuance
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -39,7 +42,8 @@
 </div>
 
 <form id="update_form" enctype="multipart/form-data">
-    <input type="text" class="form-control float-right" value="<?php echo $id;?>" id="primary_key" name="primary_key" hidden >
+    <input type="text" class="form-control float-right" value="<?php echo $id;?>" id="primary_key" name="primary_key" hidden>
+    <input type="text" class="form-control float-right" value="<?php echo $issued_type;?>" id="issued_type_hidden" name="issued_type_hidden" hidden>
     <div class="modal-body">
         <div class="row">
             
@@ -71,25 +75,42 @@
                     </div>
                 </div>
 
-                <!-- Supplier -->
+                <!-- Issued Type -->
                 <div class="form-group col-lg-12">
-                    <label>Supplier:</label>
+                    <label>Issued Type:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-exchange-alt"></i></span>
+                        </div>
+
+                        <select id="issued_type_edit" class="form-control" name="issued_type" alt="required">
+                            <option value="">Select Type</option>
+                            <?php foreach ($types as $type) : ?>
+                                <option value="<?= $type ?>" <?= ($type === $issued_type) ? "selected" : "" ?>><?= $type ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Facility -->
+                <div class="form-group col-lg-12" id="issued_to_group_edit" style="display: none;">
+                    <label>Issued to:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-hospital"></i>
                             </span>
                         </div>
                         <div class="form-control p-0 border-0">
-                            <select class="form-control select2" name="supplier_id" id="supplier_id" style="width: 100%;" alt="required">
+                            <select class="form-control select2" name="issued_to" id="issued_to_edit" style="width: 100%;" alt="required" require>
+                                <!-- <option value="">SELECT AN OPTION</option> -->
                                 <!-- Populate dynamically -->
 
-                                <option value="0">SELECT SUPPLIER</option>
+                                <option value="0">SELECT FACILITY</option>
                                 <?php
-                                    if ($select2supplier != "none") {
-                                        foreach ($select2supplier as $supplier) {
-                                            $selected = ($supplier['id'] == $supplier_id) ? "selected" : "";
-                                            echo "<option value='{$supplier['id']}' {$selected}>{$supplier['name']}</option>";
+                                    if ($select2facility != "none") {
+                                        foreach ($select2facility as $facility) {
+                                            echo "<option value='{$facility['id']}'>{$facility['facility_name']}</option>";
                                         }
                                     }
                                 ?>
@@ -98,26 +119,25 @@
                     </div>
                 </div>
 
-
-                <!-- Facility -->
-                <div class="form-group col-lg-12">
-                    <label>Facility:</label>
+                <!-- Vaccinee -->
+                <div class="form-group col-lg-12" id="vaccinee_group_edit" style="display: none;">
+                    <label>Vaccinee:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
-                                <i class="fas fa-truck"></i>
+                                <i class="fas fa-user"></i>
                             </span>
                         </div>
                         <div class="form-control p-0 border-0">
-                            <select class="form-control select2" name="facility_id" id="facility_id" style="width: 100%;" alt="required" require>
+                            <select class="form-control select2" name="vaccinee_id" id="vaccinee_id_edit" style="width: 100%;" alt="required" require>
+                                <!-- <option value="">SELECT AN OPTION</option> -->
                                 <!-- Populate dynamically -->
-
-                                <option value="0">SELECT FACILITY</option>
+                                <option value="0">SELECT VACCINEE</option>
                                 <?php
-                                    if ($select2facility != "none") {
-                                        foreach ($select2facility as $facility) {
-                                            $selected = ($facility['id'] == $facility_id) ? "selected" : "";
-                                            echo "<option value='{$facility['id']}' {$selected}>{$facility['name']}</option>";
+                                    if ($select2vaccinee != "none") {
+                                        foreach ($select2vaccinee as $vaccinee) {
+                                            $selected = ($vaccinee['id'] == $vaccinee_id) ? "selected" : "";
+                                            echo "<option value='{$vaccinee['id']}' {$selected}>{$vaccinee['fullname']}</option>";
                                         }
                                     }
                                 ?>
@@ -137,16 +157,26 @@
                     </div>
                 </div>
 
+                <!-- Issued Date -->
+                <div class="form-group col-lg-12">
+                    <label>Issued Date:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                        </div>
+                        <input type="date" class="form-control" value="<?php echo $issued_date;?>" name="issued_date" alt="required" require>
+                    </div>
+                </div>
+
+
                 <!-- Remarks -->
                 <div class="form-group col-lg-12">
                     <label>Remarks:</label>
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <i class="fas fa-comment-alt"></i>
-                            </span>
+                            <span class="input-group-text"><i class="far fa-comment-dots"></i></span>
                         </div>
-                        <textarea class="form-control" name="remarks" rows="3" placeholder="Additional notes..."><?php echo $remarks;?></textarea>
+                        <textarea class="form-control" name="remarks" rows="3" placeholder="Enter remarks (optional)"><?php echo $remarks; ?></textarea>
                     </div>
                 </div>
             </div>
@@ -156,6 +186,5 @@
 </form> 
 <div class="modal-footer justify-content-between">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="submit" onclick="set_system_cardinal_operation('You want to Update this Inventory??', 'update', 'update_form', 'update_vaccine_trans_rec.php', 'vaccine_receive_table', 'vaccine_receive', '#tbl_vaccines_receive', 'required_div', 'confirmation_update_success', 'none')" class="btn btn-primary">Update</button>
+    <button type="submit" onclick="set_system_cardinal_operation('You want to Update this Inventory??', 'update', 'update_form', 'update_vaccine_trans_iss.php', 'vaccine_issuance_table', 'vaccine_issuance', '#tbl_vaccines_issuance', 'required_div', 'confirmation_update_success', 'none')" class="btn btn-primary">Update</button>
 </div>
-

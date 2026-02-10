@@ -1684,8 +1684,8 @@ class systemtable {
                         <th>ID</th>
                         <th>Vaccine</th>
                         <th>Issued To</th>
+                        <th>Issued Type</th>
                         <th>Quantity</th>
-                        <th>Remarks</th>
                         <th>Date Issued</th>
                         <th>Edit / Delete</th>
                     </tr>
@@ -1699,10 +1699,11 @@ class systemtable {
                                 i.vaccinee_id,
                                 i.issued_date,
                                 v.name AS vaccine_name,
-                                CONCAT(vr.firstname, ' ', vr.middlename, ' ', vr.lastname) AS fullname,
+                                CONCAT(vr.firstname, ' ', vr.lastname) AS fullname,
                                 f.facility_name,
                                 i.quantity,
-                                i.remarks
+                                i.remarks,
+                                i.issued_type
                                 FROM vaccine_issuance i
                                 LEFT JOIN vaccines v ON v.id = i.vaccine_id
                                 LEFT JOIN vaccine_registration vr ON vr.id = i.vaccinee_id
@@ -1712,7 +1713,7 @@ class systemtable {
                             $x = 0;
                             foreach($SelectTable as $value){
                                 $x++;
-                                $issued_to_name = "";
+                                $issued_to_name = "N/A";
 
                                 if ($value["issued_to"] != 0) {
                                     $issued_to_name = $value["facility_name"];
@@ -1726,8 +1727,8 @@ class systemtable {
                                     echo "<td>".$x."</td>";
                                     echo "<td>".$value['vaccine_name']."</td>";
                                     echo "<td>".$issued_to_name."</td>";
+                                    echo "<td>".$value['issued_type']."</td>";
                                     echo "<td>".$value['quantity']."</td>";
-                                    echo "<td>".$value['remarks']."</td>";
                                     echo "<td>".$value['issued_date']."</td>";
                                     ?>
                                     <td class="row m-0" style="justify-content: space-evenly;">
@@ -1736,7 +1737,7 @@ class systemtable {
                                         <button onclick="sys_edit('edit.php', 'view_result_update', '<?php echo $value['vaccine_issuance_id'];?>', 'required_div', '#tbl_vaccines_issuance')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
 
                                         <div class="icheck-danger col-1 d-inline">
-                                            <input type="checkbox" class="delete-checkbox-vaccine-receive" value="<?php echo $value['vaccine_issuance_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
+                                            <input type="checkbox" class="delete-checkbox-vaccine-issuance" value="<?php echo $value['vaccine_issuance_id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $x;?>">
                                             <label for="checkboxPrimary<?php echo $x;?>"></label>
                                         </div>
                                     </td> <?php
@@ -1756,7 +1757,7 @@ class systemtable {
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_trans_rec.php', 'vaccine_receive_table', 'vaccine_receive', '#tbl_vaccines_receive', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-receive" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
+                        <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_trans_iss.php', 'vaccine_issuance_table', 'vaccine_issuance', '#tbl_vaccines_issuance', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-issuance" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
                     </tr>
                 </tfoot>
             </table>
