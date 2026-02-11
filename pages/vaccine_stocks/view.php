@@ -10,7 +10,6 @@
         f.facility_name,
         r.quantity,
         r.remarks,
-        r.expiry_date,
         CONCAT(u.first_name, ' ', u.last_name) as receive_by
         FROM vaccine_receive r
         LEFT JOIN vaccines v ON v.id = r.vaccine_id
@@ -29,7 +28,6 @@
     $quantity = $data['quantity'] ?? '—';
     $remarks = $data['remarks'] ?? '—';
     $receive_by = $data['receive_by'] ?? '—';
-    $exp = ($data['expiry_date'] != "") ? $data['expiry_date'] : "----:--:--";
 ?>
 <div class="modal-header">
     <h5 class="modal-title">View Vaccine Inventory</h5>
@@ -78,12 +76,6 @@
         <div class="col-lg-6 mb-4">
             <label class="fw-bold text-muted mb-0">Received / Created By:</label>
             <div class="fs-6 text-dark"><?= $receive_by ?></div>
-        </div>
-
-        <!-- Expiry Date -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Expiry Date:</label>
-            <div class="fs-6 text-dark"><?= $exp ?></div>
         </div>
 
         <!-- Remarks -->

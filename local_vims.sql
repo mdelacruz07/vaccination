@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 05, 2026 at 08:44 AM
+-- Generation Time: Feb 11, 2026 at 08:39 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -277,7 +277,8 @@ INSERT INTO `system_pages` (`pages_id`, `page_name`, `page_link`, `page_type`, `
 (59, 'Supplier', '../supplier/', 'nav', ' ', '9', '2025-10-14 02:46:57'),
 (60, 'Vaccine Inventory', '../vaccine_inventory', 'nav', ' ', '15', '2026-02-05 06:32:52'),
 (61, 'Receiving', '../vaccine_receive', 'nav', ' ', '15', '2026-02-05 06:41:35'),
-(62, 'Issuance', '../vaccine_issuance', 'nav', ' ', '15', '2026-02-05 06:41:35');
+(62, 'Issuance', '../vaccine_issuance', 'nav', ' ', '15', '2026-02-05 06:41:35'),
+(63, 'Stocks', '../vaccine_stocks', 'nav', ' ', '15', '2026-02-11 07:00:24');
 
 -- --------------------------------------------------------
 
@@ -298,7 +299,7 @@ CREATE TABLE `system_page_access` (
 --
 
 INSERT INTO `system_page_access` (`page_access`, `page_id`, `nav_group_id`, `name`, `time_stamp`) VALUES
-(1, '1,3,31,35,38,32,2,55,33,59,60,61,62', ', 1, 2, 9, 15', 'Super Admin', '2026-02-05 06:41:59'),
+(1, '1,3,31,35,38,32,2,55,33,59,60,61,62,63', ', 1, 2, 9, 15', 'Super Admin', '2026-02-11 07:00:51'),
 (14, ',1,35,36,44,39,55', ', 1, 9, 11, 14', 'Admin', '2021-11-11 00:37:36'),
 (15, ',35,1', ', 1, 9', 'Encoder', '2021-05-23 14:48:54'),
 (16, ',38,1', ', 9, 1', 'Pre Vaccination Screening', '2021-06-11 11:50:23'),
@@ -445,8 +446,8 @@ CREATE TABLE `vaccine_issuance` (
 --
 
 INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, `issued_date`, `vaccinee_id`, `quantity`, `remarks`, `created_date`, `created_by`, `update_by`, `update_date`, `is_archive`, `is_archive_date`, `is_archive_by`) VALUES
-(1, 7, 0, 'Used', '2026-02-04', 1, 1, 'test', '2026-02-05 07:59:11', 49, NULL, NULL, 0, NULL, NULL),
-(2, 7, 5, 'Transfer', '2026-02-05', 0, 32, 'test', '2026-02-05 08:01:15', 49, NULL, NULL, 0, NULL, NULL);
+(1, 7, 0, 'Used', '2026-02-04', 3, 1, 'test', '2026-02-05 07:59:11', 49, 49, '2026-02-10 01:21:11', 0, NULL, NULL),
+(2, 9, 4, 'Transfer', '2026-02-06', 0, 22, 'test222', '2026-02-05 08:01:15', 49, 49, '2026-02-10 01:21:02', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -460,6 +461,7 @@ CREATE TABLE `vaccine_receive` (
   `supplier_id` int NOT NULL COMMENT 'vaccine_supplier',
   `facility_id` int NOT NULL COMMENT 'system_facilities',
   `quantity` int NOT NULL COMMENT 'Quantity moved.',
+  `expiry_date` date DEFAULT NULL,
   `remarks` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Notes (e.g., reason for adjustment).',
   `created_by` int NOT NULL COMMENT 'References users.id (who logged it).',
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp.',
@@ -473,10 +475,11 @@ CREATE TABLE `vaccine_receive` (
 -- Dumping data for table `vaccine_receive`
 --
 
-INSERT INTO `vaccine_receive` (`id`, `vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `remarks`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `updated_by`, `updated_at`) VALUES
-(1, 9, 1, 4, 12, 's', 49, '2026-01-27 08:09:31', 1, NULL, 49, '2026-01-28 00:31:13'),
-(2, 7, 1, 4, 502, 'zzzz', 49, '2026-01-28 08:45:05', 1, NULL, 49, '2026-01-28 00:53:24'),
-(3, 7, 6, 5, 50, 'TESTS', 49, '2026-02-05 06:39:33', 0, NULL, 49, '2026-02-04 22:39:43');
+INSERT INTO `vaccine_receive` (`id`, `vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `expiry_date`, `remarks`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `updated_by`, `updated_at`) VALUES
+(1, 9, 1, 4, 12, NULL, 's', 49, '2026-01-27 08:09:31', 1, NULL, 49, '2026-01-28 00:31:13'),
+(2, 7, 1, 4, 502, NULL, 'zzzz', 49, '2026-01-28 08:45:05', 1, NULL, 49, '2026-01-28 00:53:24'),
+(3, 7, 6, 5, 50, '2026-02-28', 'TESTS', 49, '2026-02-05 06:39:33', 0, NULL, 49, '2026-02-10 23:34:57'),
+(4, 2, 6, 4, 50, '2026-02-28', 'test', 49, '2026-02-11 07:17:19', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -780,7 +783,7 @@ ALTER TABLE `system_nav_group`
 -- AUTO_INCREMENT for table `system_pages`
 --
 ALTER TABLE `system_pages`
-  MODIFY `pages_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `pages_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `system_page_access`
@@ -816,7 +819,7 @@ ALTER TABLE `vaccine_issuance`
 -- AUTO_INCREMENT for table `vaccine_receive`
 --
 ALTER TABLE `vaccine_receive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Transaction ID.', AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Transaction ID.', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vaccine_registration`

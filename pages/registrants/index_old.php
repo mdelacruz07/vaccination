@@ -167,6 +167,18 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Sub-Category</label>
+                                    <select name="sub_category" id="sub_category1" class="form-control regis_form" >
+                                    <option value="N/A" >N/A</option>
+                                    <?php foreach($Global_sub_category_array as $data){  ?>
+                                        <option value="<?php echo $data; ?>"><?php echo $data; ?></option>
+                                    <?php } ?>
+                                    </select>
+                                </div>
+
+
+
                                 <div class="form-group col-sm-4">
                                     <label for="exampleInputEmail1">Last Name</label>
                                     <input type="text" class="form-control regis_form" name="lastname" id="lastname">
@@ -195,6 +207,11 @@
                                     <option value="VI">VI</option>
                                     <option value="VII">VII</option>
                                     </select>
+                                </div>
+
+                                <div class="form-group col-sm-12" hidden>
+                                    <label  for="exampleInputEmail1">Current Residence:</label>
+                                    <input type="text" class="form-control regis_form" name="current_residence"  value="N/A"> 
                                 </div>
 
                                 <div class="form-group col-sm-3">
@@ -275,6 +292,11 @@
                                     </select>
                                 </div>
 
+                                <div class="form-group col-sm-3" hidden>
+                                    <label for="exampleInputEmail1">Occupation</label>
+                                    <input type="text" class="form-control regis_form" name="occupation" value="N/A">
+                                </div>
+
                                 <div class="form-group col-sm-4">
                                     <label  for="exampleInputEmail1">Mobile Number</label>
                                     <input type="text" class="form-control regis_form" name="contact"  value="N/A">
@@ -294,6 +316,46 @@
                                     <input type="date" class="form-control regis_form  bg-info" name="bday" alt="required">
                                 </div>
 
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Allergy to vaccines or Components of vaccines?</label>
+                                    <select name="allergy_to_vaccine" class="form-control regis_form">
+                                        <option value="N/A">N/A</option>
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_No">No</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">With Comorbidity?</label>
+                                    <select name="profile_comorbidity" class="form-control regis_form">
+                                        <option value="N/A">N/A</option>
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_None">None</option>
+                                    </select>
+                                </div>
+
+                                
+                                <h6 class="col-12" hidden><center><b>Consent</b></center></h6>
+
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Consent</label>
+                                    <select name="consent" class="form-control regis_form" >
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_No">No</option>
+                                    </select>
+                                    
+                                </div>
+
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Reason for Refusal</label>
+                                    <select name="reason_refusal" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <?php foreach($Global_refusal as $data){ ?>
+                                            <option value="<?php echo $data; ?>"><?php echo $data; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
                                 <div class="form-group col-sm-6">
                                     <label for="exampleInputEmail1">Indigenous Member</label>
                                     <input type="text" class="form-control regis_form" name="indigenous" value="02_No">
@@ -310,7 +372,6 @@
 
                             </div>
                         </div>
-
                         <div class="card" style="background-color:rgb(193, 219, 189)">
                             <div class="col-12 row  pr-3 pl-3">
                                 <center class="col-12"><h5><u>12 - 17 Year Old Additional Information</u></h5></center>
@@ -327,10 +388,209 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="card" style="background-color:rgb(239, 240, 206)">
                             <div class="col-12 row  pr-3 pl-3">
                                 <center class="col-12"><h5><u>Vaccination Details</u></h5></center>
+                                <div class="col-12 row"> <!-- Personal Information: -->
+                                    <h6 class="col-12" hidden><center><b>Personal Information</b></center></h6>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">ID Category</label>
+                                        <select name="idcategory" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <option value="01_PRC_number">PRC Number</option>
+                                        <option value="02_OSCA_number">OSCA Number</option>
+                                        <option value="03_Facility_ID_number">Facility ID Number</option>
+                                        <option value="04_Other_ID">Other ID</option>
+                                        <option value="00_UNKNOWN">UNKNOWN</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">ID Number</label>
+                                        <input type="text" class="form-control regis_form" name="idnumber" value="N/A">
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">PhilHealth ID</label>
+                                        <input type="text" class="form-control regis_form" name="phid" value="N/A">
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">PWD ID</label>
+                                        <input type="text" class="form-control regis_form" name="pwdid" value="N/A">
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">Civil Status</label>
+                                        <select name="civil_status" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <option value="01_Single">Single</option>
+                                        <option value="02_Married">Married</option>
+                                        <option value="03_Widow/Widower">Widow/Widower</option>
+                                        <option value="04_Separated/Annulled">Separated/Annulled</option>
+                                        <option value="05_Living_with_Partner">Living with Partner</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">Employment Status</label>
+                                        <select name="employment_status" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <option value="01_Government_Employed">Government Employed</option>
+                                        <option value="02_Private_Employed">Private Employed</option>
+                                        <option value="03_Self_employed">Self Employed</option>
+                                        <option value="04_Private_practitioner">Private Practitioner</option>
+                                        <option value="05_Others">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-sm-6" hidden>
+                                        <label for="exampleInputEmail1">Agency</label>
+                                        <input type="text" class="form-control regis_form" name="agency" value="N/A">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 row"  hidden><!-- Allergy: -->
+                                    <h6 class="col-12"><center><b>Allergy and Bleeding</b></center></h6>
+                                    <div class="form-group col-sm-3">
+                                        <label for="exampleInputEmail1">Has no allergies to PEG or polysorbate?</label>
+                                        <select name="allergies_to_PEG" class="form-control regis_form" >
+                                            <option value="N/A">N/A</option>
+                                            <option value="01_Yes">Yes</option>
+                                            <option value="02_No">No</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col-sm-3">
+                                        <label for="exampleInputEmail1">Allergy</label>
+                                        <input type="text" class="form-control regis_form" name="allergy" list="no_selection" value="N/A">
+                                    </div>
+
+                                    <div class="form-group col-sm-6">
+                                        <label for="exampleInputEmail1">Has no history of bleeding disorders or currently taking anti-coagulants?</label>
+                                        <select name="bleeding_disorders" class="form-control regis_form" >
+                                            <option value="N/A" >N/A</option>
+                                            <option value="01_Yes">Yes</option>
+                                            <option value="02_No">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 row" hidden><!-- Covid Exposure ann Recent Vaccine Information: -->
+                                    <div class="col-6 row">
+                                        <h6 class="col-12"><center><b>Covid Exposure</b></center></h6>
+                                        <div class="form-group col-sm-6">
+                                            <select name="covid_exposure" class="form-control regis_form" >
+                                                <option value="N/A">N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">Has no history of exposure to a confirmed or suspected COVID-19 case in the past 2 weeks?</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <select name="covid_status" class="form-control regis_form" >
+                                                <option value="N/A">N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">Has not been previously treated for COVID-19 in the past 90 days?</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 row">
+                                        <h6 class="col-12"><center><b>Recent Vaccine Information</b></center></h6>
+                                        <div class="form-group col-sm-6">
+                                            <select name="if_receive_vaccine" class="form-control regis_form" >
+                                                <option value="N/A">N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">Has not received any vaccine in the past 2 weeks?</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <select name="convalescent" class="form-control regis_form" >
+                                                <option value="N/A">N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">Has not received convalescent plasma or monoclonal antibodies for COVID-19 in the past 90 days?</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row col-12">
+                                    <div class="col-6 row" hidden><!-- Pregnant: -->
+                                        <h6 class="col-12"><center><b>Pregnant</b></center></h6>
+                                        <div class="form-group col-sm-6">
+                                            <select name="pregnant" class="form-control regis_form" >
+                                                <option value="N/A">N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">Not Pregnant?</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <select name="if_pregnant" class="form-control regis_form" >
+                                                <option value="N/A" >N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">If pregnant, 2nd or 3rd Trimester?<br><Br><Br><br><br></label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 row" hidden><!-- Comorbidity: -->
+                                        <h6 class="col-12"><center><b>Comorbidity</b></center></h6>
+                                        <div class="form-group col-sm-6">
+                                            <input type="text" class="form-control regis_form" name="comorbidity" list="no_selection" value="N/A">
+                                            <label for="exampleInputEmail1">Does not have any of the following: HIV, Cancer/ Malignancy, Underwent Transplant, Under Steroid Medication/ Treatment, Bed Ridden, terminal illness, less than 6 months prognosis?</label>
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <select name="medical_clearance" class="form-control regis_form" >
+                                                <option value="N/A" >N/A</option>
+                                                <option value="01_Yes">Yes</option>
+                                                <option value="02_No">No</option>
+                                            </select>
+                                            <label for="exampleInputEmail1">If with mentioned condition, has presented medical clearance prior to vaccination day?</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Adverse Event</label>
+                                    <select name="adverse_event" class="form-control regis_form" >
+                                    <option value="02_No" hidden>02_No</option>
+                                    <option value="01_Yes">01_Yes</option>
+                                    <option value="02_No">02_No</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-sm-6" hidden>
+                                    <label for="exampleInputEmail1">Adverse Event Condition</label>
+                                    <select name="adverse_event_cons" class="form-control regis_form" >
+                                    <option value="02_No">02_No</option>
+                                    <?php foreach($Global_adverse_event_condition as $data){ ?>
+                                        <option value="<?php echo $data; ?>"><?php echo $data; ?></option>
+                                    <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 row" hidden><!-- Deferral: -->
+                                    <h6 class="col-12"><center><b>Deferral</b></center></h6>
+                                    <div class="form-group col-sm-12">
+                                        <select name="defferal" class="form-control regis_form" >
+                                        <option value="02_No">02_No</option>
+                                            <?php foreach($Global_reasons_for_not_FIT as $data){ ?>
+                                                <option value="<?php echo $data; ?>"><?php echo $data; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-12 row"><!-- Vaccination: -->
                                     <h6 class="col-12" hidden><center><b>Vaccination Details</b></center></h6>
@@ -342,7 +602,7 @@
                                     </div>
 
                                     <div class="form-group col-sm-3">
-                                        <select id="select_vaccine" name="vaccine_name" class="form-control bg-info">  
+                                        <select id="select_vaccine" name="vaccine_name" class="form-control bg-info"  >  
                                         <option value="N/A" >N/A</option>
                                             <?php foreach($Global_vaccine_name as $data){?>
                                                 <option value="<?php echo $data; ?>"><?php echo $data; ?></option>
@@ -431,6 +691,43 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card" style="background-color:rgb(193, 219, 189)" hidden>
+                            <div class="col-12 row  pr-3 pl-3">
+                                <center class="col-12"><h4><u>Post Monitoring</u></h4></center>
+                                <div class="form-group col-sm-4">
+                                    <select name="if_severe_allergic" class="form-control regis_form" >
+                                    <option value="N/A" >N/A</option>
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_No">No</option>
+                                    </select>
+                                    <label for="exampleInputEmail1">Has no severe allergic reaction after the 1st dose of the vaccine?</label>
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <select name="if_allergy" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_No">No</option>
+                                    </select>
+                                    <label for="exampleInputEmail1">If with allergy or asthma, will the vaccinator able to monitor the patient for 30 minutes?</label>
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <select name="if_bleeding" class="form-control regis_form" >
+                                        <option value="N/A" >N/A</option>
+                                        <option value="01_Yes">Yes</option>
+                                        <option value="02_No">No</option>
+                                    </select>
+                                    <label for="exampleInputEmail1">If with bleeding history, is a gauge 23 - 25 syringe available for injection?</label>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <input type="text" class="form-control regis_form" name="symtoms" list="no_selection" value="N/A">
+                                    <label for="exampleInputEmail1">Does not manifest any of the following symptoms: Fever/chills, Headache, Cough, Colds, Sore throat,  Myalgia, Fatigue, Weakness, Loss of smell/taste, Diarrhea, Shortness of breath/ difficulty in breathing</label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </form> 
                 <div class="modal-footer p-1 justify-content-between">

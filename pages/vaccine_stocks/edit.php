@@ -9,7 +9,6 @@
         $supplier_id = $value["supplier_id"];
         $facility_id = $value["facility_id"];
         $quantity = $value["quantity"];
-        $exp = $value["expiry_date"];
         $remarks = $value["remarks"];
         
         // Select2 data
@@ -20,10 +19,10 @@
 ?>
 <div class="modal-header">
     <h5 class="modal-title">
-        Edit Receiving
+        Edit Vaccine
     </h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
+    <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
@@ -40,7 +39,7 @@
 </div>
 
 <form id="update_form" enctype="multipart/form-data">
-    <input type="text" class="form-control float-right" value="<?php echo $id;?>" id="primary_key" name="primary_key" hidden>
+    <input type="text" class="form-control float-right" value="<?php echo $id;?>" id="primary_key" name="primary_key" hidden >
     <div class="modal-body">
         <div class="row">
             
@@ -135,17 +134,6 @@
                             <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                         </div>
                         <input type="number" min="1" class="form-control" value="<?php echo $quantity;?>" name="quantity" placeholder="Enter Quantity" alt="required" require>
-                    </div>
-                </div>
-
-                <!-- Expiry Date -->
-                <div class="form-group col-lg-12">
-                    <label>Expiry Date:</label>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                        </div>
-                        <input type="date" class="form-control" value="<?php echo $exp;?>" name="expiry_date" alt="required">
                     </div>
                 </div>
 

@@ -1617,7 +1617,7 @@ class systemtable {
                         <th>Supplier</th>
                         <th>Facility</th>
                         <th>Quantity</th>
-                        <th>Remarks</th>
+                        <th>Expiry</th>
                         <th>Edit / Delete</th>
                     </tr>
                 </thead>
@@ -1628,7 +1628,8 @@ class systemtable {
                         s.name AS supplier_name,
                         f.facility_name,
                         r.quantity,
-                        r.remarks
+                        r.remarks,
+                        r.expiry_date
                         FROM vaccine_receive r
                         LEFT JOIN vaccines v ON v.id = r.vaccine_id
                         LEFT JOIN vaccine_supplier s ON s.id = r.supplier_id
@@ -1637,6 +1638,8 @@ class systemtable {
                 if($SelectTable != "none"){
                     $x = 0;
                     foreach($SelectTable as $value){
+                        $exp = ($value['expiry_date'] != "") ? $value['expiry_date'] : "----:--:--";
+
                         $x++;
                         echo "<tr>";
                             echo "<td>".$x."</td>";
@@ -1644,7 +1647,7 @@ class systemtable {
                             echo "<td>".$value['supplier_name']."</td>";
                             echo "<td>".$value['facility_name']."</td>";
                             echo "<td>".$value['quantity']."</td>";
-                            echo "<td>".$value['remarks']."</td>";
+                            echo "<td>".$exp."</td>";
                             ?>
                             <td class="row m-0" style="justify-content: space-evenly;">
                                 <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $value['vaccine_receive_id'];?>', 'required_div', '#tbl_vaccines_receive')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
@@ -1761,9 +1764,71 @@ class systemtable {
                     </tr>
                 </tfoot>
             </table>
+
             <?php
-        } 
-        
+        } else if ($table_name == "vaccine_stocks") { ?>
+
+            <table id="tbl_vaccines_stocks" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Vaccine</th>
+                        <th>In</th>
+                        <th>Out</th>
+                        <th>Balance</th>
+                        <th>Expiry</th>
+                    </tr>
+                </thead>
+
+                <tbody> 
+                    <?php
+                        $stocks = $this->SelectCustomize("SELECT
+                                v.id AS vaccine_id,
+                                v.name AS vaccine_name,
+                                IFNULL(SUM(DISTINCT vr.total_in), 0) AS total_in,
+                                IFNULL(SUM(DISTINCT vi.total_out), 0) AS total_out,
+                                (IFNULL(SUM(DISTINCT vr.total_in), 0) - IFNULL(SUM(DISTINCT vi.total_out), 0)) AS balance,
+                                MIN(vr.expiry_date) AS expiry_date
+                            FROM vaccines v
+                            LEFT JOIN (
+                                SELECT vaccine_id, SUM(quantity) AS total_in, expiry_date
+                                FROM vaccine_receive
+                                WHERE is_archive = 0
+                                GROUP BY vaccine_id, expiry_date
+                            ) vr ON vr.vaccine_id = v.id
+                            LEFT JOIN (
+                                SELECT vaccine_id, SUM(quantity) AS total_out
+                                FROM vaccine_issuance
+                                WHERE is_archive = 0
+                                GROUP BY vaccine_id
+                            ) vi ON vi.vaccine_id = v.id
+                            WHERE v.is_archive = 0
+                            GROUP BY v.id
+                            ORDER BY v.name ASC
+                        ");
+
+                        if($stocks != "none"){
+                             $i = 1;
+                            foreach ($stocks as $row) {
+                                echo "<tr>";
+                                    echo "<td>{$i}</td>";
+                                    echo "<td>{$row['vaccine_name']}</td>";
+                                    echo "<td>{$row['total_in']}</td>";
+                                    echo "<td>{$row['total_out']}</td>";
+                                    echo "<td>{$row['balance']}</td>";
+                                    echo "<td>".($row['expiry_date'] ?? 'N/A')."</td>";
+                                echo "</tr>";
+                                $i++;
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='text-align: center;'>No Data Available</td></tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+
+        <?php
+        }        
     }
 }
 ?>

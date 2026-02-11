@@ -7,13 +7,12 @@
     $supplier_id = trim($_GET["supplier_id"]);
     $facility_id = trim($_GET["facility_id"]);
     $qty = trim($_GET["quantity"]);
-    $exp = trim($_GET["expiry_date"]);
     $remarks = trim($_GET["remarks"]);
     $created_by = $_SESSION["user_id"];
     
     $table = "vaccine_receive";
-    $table_col = "`vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `expiry_date`, `remarks`, `created_by`";
-    $table_val = "'$vaccine_id', '$supplier_id', '$facility_id', '$qty', '$exp', '$remarks', '$created_by'"; 
+    $table_col = "`vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `remarks`, `created_by`";
+    $table_val = "'$vaccine_id', '$supplier_id', '$facility_id', '$qty', '$remarks', '$created_by'"; 
     $InsertTable = $systemcore->InsertTable($table, $table_col, $table_val);
 
 ?>

@@ -64,13 +64,13 @@
 
           <div class="card">
             <div class="card-header">
-              <h2 class="card-title col-lg-10" style="padding-top:10px; "><b>Vaccine Received</b></h2>
+              <h2 class="card-title col-lg-10" style="padding-top:10px; "><b>Vaccine Stocks</b></h2>
 
-              <button type="button" class="btn btn-block btn-outline-secondary col-lg-2" data-toggle="modal" data-target="#create_vaccine_receive">Receive New Vaccine</button>
+              <!-- <button type="button" class="btn btn-block btn-outline-secondary col-lg-2" data-toggle="modal" data-target="#create_vaccine_receive">Receive New Vaccine</button> -->
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <div id="vaccine_receive_table">
+                <div id="vaccine_stocks_table">
                     <!-- table will be showed here after the script executed!! -->
                 </div>
                 <form id="select_to_delete" hidden>
@@ -128,7 +128,27 @@
                <form id="create_transaction_form" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row col-sm-12">
+
+                            <!-- Transaction Type -->
+                            <!-- <div class="form-group col-lg-12">
+                                <label>Transaction Type:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-exchange-alt"></i></span>
+                                    </div>
+                                    <select class="form-control" name="transaction_type" alt="required">
+                                        <option value="">Select Type</option>
+                                        <option value="Received">Received</option>
+                                        <option value="Issued">Issued</option>
+                                        <option value="Returned">Returned</option>
+                                        <option value="Spoiled">Spoiled</option>
+                                        <option value="Expired">Expired</option>
+                                    </select>
+                                </div>
+                            </div> -->
+
                             <!-- Vaccine -->
+
                             <div class="form-group col-lg-12">
                                 <label>Vaccine:</label>
                                 <div class="input-group">
@@ -165,6 +185,9 @@
                                     </div>
                                     <div class="form-control p-0 border-0">
                                         <select class="form-control select2" name="supplier_id" id="supplier_id" style="width: 100%;" alt="required" require>
+                                            <!-- <option value="">SELECT AN OPTION</option> -->
+                                            <!-- Populate dynamically -->
+
                                             <option value="0">SELECT SUPPLIER</option>
                                             <?php
                                                 if ($select2supplier != "none") {
@@ -189,6 +212,9 @@
                                     </div>
                                     <div class="form-control p-0 border-0">
                                         <select class="form-control select2" name="facility_id" id="facility_id" style="width: 100%;" alt="required" require>
+                                            <!-- <option value="">SELECT AN OPTION</option> -->
+                                            <!-- Populate dynamically -->
+
                                             <option value="0">SELECT FACILITY</option>
                                             <?php
                                                 if ($select2facility != "none") {
@@ -213,16 +239,27 @@
                                 </div>
                             </div>
 
-                            <!-- Expiry Date -->
-                            <div class="form-group col-lg-12">
-                                <label>Expiry Date:</label>
+                            <!-- Transaction Date -->
+                            <!-- <div class="form-group col-lg-6">
+                                <label>Transaction Date:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                     </div>
-                                    <input type="date" class="form-control" name="expiry_date" alt="required">
+                                    <input type="date" class="form-control" name="transaction_date" alt="required">
                                 </div>
-                            </div>
+                            </div> -->
+
+                            <!-- Performed By -->
+                            <!-- <div class="form-group col-lg-12">
+                                <label>Performed By:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-user"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control" name="performed_by" placeholder="Who performed the transaction?" alt="required">
+                                </div>
+                            </div> -->
 
                             <!-- Remarks -->
                             <div class="form-group col-lg-12">
@@ -241,7 +278,7 @@
 
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" onclick="set_system_cardinal_operation('You want to Add this Transaction?', 'create', 'create_transaction_form', 'create_vaccine_trans.php', 'vaccine_receive_table', 'vaccine_receive', '#tbl_vaccines_trans', 'required_div', 'confirmation_create_success', 'create_vaccine_receive')" class="btn btn-primary">Submit</button>                           
+                    <button type="submit" onclick="set_system_cardinal_operation('You want to Add this Transaction?', 'create', 'create_transaction_form', 'create_vaccine_trans.php', 'vaccine_stocks_table', 'vaccine_receive', '#tbl_vaccines_trans', 'required_div', 'confirmation_create_success', 'create_vaccine_receive')" class="btn btn-primary">Submit</button>                           
                     <!-- (des, operation, form_id, form_file_name, table_div_id, table_file_name, table_id, required_notice, modal_open, modal_close) -->
                 </div>
             </div>
@@ -254,20 +291,20 @@
     ?>
     <script>
         // setting up the tables
-        show_table("vaccine_receive_table", "vaccine_receive", "#tbl_vaccines_receive");
+        show_table("vaccine_stocks_table", "vaccine_stocks", "#tbl_vaccines_stocks");
 
-        $(document).on('change', '.delete-checkbox-vaccine-receive', function() {
+        $(document).on('change', '.delete-checkbox-vaccine-stocks', function() {
             // Check if at least one checkbox is ticked
-            const anyChecked = $('.delete-checkbox-vaccine-receive:checked').length > 0;
+            const anyChecked = $('.delete-checkbox-vaccine-stocks:checked').length > 0;
             
             // Enable or disable the button
-            $('#btn-delete-selected-vaccines-receive').prop('disabled', !anyChecked);
+            $('#btn-delete-selected-vaccines-stocks').prop('disabled', !anyChecked);
         });
         
         $('#vaccine_id').select2({
             placeholder: 'SELECT A VACCINE',
             width: '100%',
-            dropdownParent: $('#create_vaccine_receive') // if inside modal
+            dropdownParent: $('#create_vaccine_stocks') // if inside modal
         });
 
         // Optional: re-trigger Select2 to display selected text properly (useful if you dynamically load form)
