@@ -109,7 +109,7 @@
     <!-- /.modal -->
 
     <div class="modal fade" id="create_vaccine_receive">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Receive New Vaccines</h5>
@@ -137,8 +137,23 @@
                                 <label>Category:</label>
                                 <div class="input-group">
                                     <div class="form-control p-0 border-0">
-                                        <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
+                                        <select class="form-control select2" name="catergory" id="catergory" alt="required" style="width: 100%;" require>
                                             <option value="N/A">Select Category</option>
+                                            <option value="Health Care Workers">Health Care Workers</option>
+                                            <option value="Outbound OFWs">Outbound OFWs</option>
+                                            <option value="Family Members of Healthcare Workers">Family Members of Healthcare Workers</option>
+                                            <option value="Senior Citizens">Senior Citizens</option>
+                                            <option value="Adult with Comorbidity">Adult with Comorbidity</option>
+                                            <option value="Pregnant women">Pregnant women</option>
+                                            <option value="Frontline Personnel in Essential Sector">Frontline Personnel in Essential Sector</option>
+                                            <option value="Poor Population">Poor Population</option>
+                                            <option value="Teachers and Social Workers">Teachers and Social Workers</option>
+                                            <option value="Other Government Workers">Other Government Workers</option>
+                                            <option value="Other Essential Workers">Other Essential Workers</option>
+                                            <option value="Socio-demographic Groups">Socio-demographic Groups</option>
+                                            <option value="Overseas Filipino Workers">Overseas Filipino Workers</option>
+                                            <option value="Other Remaing Workforce">Other Remaing Workforce</option>
+                                            <option value="Rest of the Population">Rest of the Population</option>
                                         </select>
                                     </div>
                                 </div>
@@ -208,9 +223,9 @@
                             <div class="form-group col-lg-12">
                                 <label>Indigenous Member:</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="indigenous" name="indigenous" style="width: 100%;" alt="required" require disabled>
+                                    <select class="form-control" id="indigenous" name="indigenous" style="width: 100%;" alt="required" require>
                                         <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                     </select>
                                 </div>
                             </div>
@@ -219,9 +234,9 @@
                             <div class="form-group col-lg-12">
                                 <label>PWD:</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require>
                                         <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                     </select>
                                 </div>
                             </div>
@@ -255,7 +270,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Date of Vaccination 1st Dose:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="first_dose_date" alt="required" require>
                                 </div>
                             </div>
 
@@ -269,7 +284,7 @@
                                         </span>
                                     </div>
                                     <div class="form-control p-0 border-0">
-                                        <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
+                                        <select class="form-control select2 vaccine_id" name="first_vaccine_id" alt="required" style="width: 100%;" require>
                                             <!-- Dynamically populate via PHP or AJAX -->
                                             <option value="">Select Vaccine</option>
                                             <?php
@@ -288,7 +303,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Batch Number</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="first_batch_no" alt="required" require>
                                 </div>
                             </div>
 
@@ -296,7 +311,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Lot Number</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="first_lot_no" alt="required" require>
                                 </div>
                             </div>
 
@@ -304,7 +319,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Date of Vaccination 2nd Dose:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="second_dose_date" alt="required" require>
                                 </div>
                             </div>
 
@@ -318,7 +333,7 @@
                                         </span>
                                     </div>
                                     <div class="form-control p-0 border-0">
-                                        <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
+                                        <select class="form-control select2 vaccine_id" name="second_vaccine_id" alt="required" style="width: 100%;" require>
                                             <!-- Dynamically populate via PHP or AJAX -->
                                             <option value="">Select Vaccine</option>
                                             <?php
@@ -337,7 +352,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Batch Number</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="second_batch_no" alt="required" require>
                                 </div>
                             </div>
 
@@ -345,7 +360,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Lot Number</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="second_lot_no" alt="required" require>
                                 </div>
                             </div>
 
@@ -353,7 +368,7 @@
                             <div class="form-group col-lg-12">
                                 <label>Vaccinator Name</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                    <input type="text" class="form-control" name="vaccinator_name" alt="required" require>
                                 </div>
                             </div>
 
@@ -361,9 +376,9 @@
                             <div class="form-group col-lg-12">
                                 <label>1st Dose?</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                    <select class="form-control" name="first_dose" style="width: 100%;" alt="required" require>
                                         <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                     </select>
                                 </div>
                             </div>
@@ -372,9 +387,9 @@
                             <div class="form-group col-lg-12">
                                 <label>2nd Dose?</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                    <select class="form-control" name="second_dose" style="width: 100%;" alt="required" require>
                                         <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                     </select>
                                 </div>
                             </div>
@@ -383,9 +398,9 @@
                             <div class="form-group col-lg-12">
                                 <label>Booster Dose?</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                    <select class="form-control" name="booster" style="width: 100%;" alt="required" require>
                                         <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                        <option value="No" selected>No</option>
                                     </select>
                                 </div>
                             </div>
