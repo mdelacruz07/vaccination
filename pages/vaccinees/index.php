@@ -128,9 +128,140 @@
                <form id="create_transaction_form" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="row col-sm-12">
-                            <!-- Vaccine -->
+                            <h3>Profiling</h3>
+
+                            <h4>Personal Information</h4>
+
+                            <!-- Catergory -->
                             <div class="form-group col-lg-12">
-                                <label>Vaccine:</label>
+                                <label>Category:</label>
+                                <div class="input-group">
+                                    <div class="form-control p-0 border-0">
+                                        <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
+                                            <option value="N/A">Select Category</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Firstname -->
+                            <div class="form-group col-lg-12">
+                                <label>Firstname:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="firstname" placeholder="John" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Middlename -->
+                            <div class="form-group col-lg-12">
+                                <label>Middlename:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="middlename" placeholder="Doe" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Lastname -->
+                            <div class="form-group col-lg-12">
+                                <label>Lastname:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="lastname" placeholder="Dalton" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Province -->
+                            <div class="form-group col-lg-12">
+                                <label>Province:</label>
+                                <div class="input-group">
+                                    <div class="form-control p-0 border-0">
+                                        <select class="form-control" id="province" name="province" style="width: 100%;" alt="required" require>
+                                            <option value="">Select Province</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- City/Municipality -->
+                            <div class="form-group col-lg-12">
+                                <label>City/Municipality:</label>
+                                <div class="input-group">
+                                    <div class="form-control p-0 border-0">
+                                        <select class="form-control" id="city" name="city" style="width: 100%;" alt="required" require disabled>
+                                            <option value="">Select City/Municipality</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Barangay -->
+                            <div class="form-group col-lg-12">
+                                <label>Barangay:</label>
+                                <div class="input-group">
+                                    <div class="form-control p-0 border-0">
+                                        <select class="form-control" id="barangay" name="barangay" style="width: 100%;" alt="required" require disabled>
+                                            <option value="">Select Barangay</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Indigenous Member -->
+                            <div class="form-group col-lg-12">
+                                <label>Indigenous Member:</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="indigenous" name="indigenous" style="width: 100%;" alt="required" require disabled>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Person With Disability-->
+                            <div class="form-group col-lg-12">
+                                <label>PWD:</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h4>12 - 17 Year Old Additional Information</h4>
+
+                            <!-- Guardian Name -->
+                            <div class="form-group col-lg-12">
+                                <label>Guardian Name:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="guardian_name" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Pedia Comorbidity -->
+                            <div class="form-group col-lg-12">
+                                <label>Pedia Comorbidity:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                </div>
+                            </div>
+
+                            
+                            <hr>
+
+                            <h4>Vaccination Details</h4>
+
+                            <!-- 1st dose -->
+                            <div class="form-group col-lg-12">
+                                <label>Date of Vaccination 1st Dose:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Vaccine name -->
+                            <div class="form-group col-lg-12">
+                                <label>Vaccine name</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
@@ -140,7 +271,7 @@
                                     <div class="form-control p-0 border-0">
                                         <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
                                             <!-- Dynamically populate via PHP or AJAX -->
-                                            <option value="">SELECT VACCINE</option>
+                                            <option value="">Select Vaccine</option>
                                             <?php
                                                 if ($select2vaccine != "none") {
                                                     foreach ($select2vaccine as $vaccine) {
@@ -150,26 +281,50 @@
                                             ?>
                                         </select>
                                     </div>
-                                    
                                 </div>
                             </div>
 
-                            <!-- Supplier -->
+                            <!-- Batch Number -->
                             <div class="form-group col-lg-12">
-                                <label>Supplier:</label>
+                                <label>Batch Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Lot Number -->
+                            <div class="form-group col-lg-12">
+                                <label>Lot Number</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- 2nd dose -->
+                            <div class="form-group col-lg-12">
+                                <label>Date of Vaccination 2nd Dose:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
+                                </div>
+                            </div>
+
+                            <!-- Vaccine name -->
+                            <div class="form-group col-lg-12">
+                                <label>Vaccine name</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">
-                                            <i class="fas fa-truck"></i>
+                                            <i class="fas fa-syringe"></i>
                                         </span>
                                     </div>
                                     <div class="form-control p-0 border-0">
-                                        <select class="form-control select2" name="supplier_id" id="supplier_id" style="width: 100%;" alt="required" require>
-                                            <option value="0">SELECT SUPPLIER</option>
+                                        <select class="form-control select2" name="vaccine_id" id="vaccine_id" alt="required" style="width: 100%;" require>
+                                            <!-- Dynamically populate via PHP or AJAX -->
+                                            <option value="">Select Vaccine</option>
                                             <?php
-                                                if ($select2supplier != "none") {
-                                                    foreach ($select2supplier as $supplier) {
-                                                        echo "<option value='{$supplier['id']}'>{$supplier['name']}</option>";
+                                                if ($select2vaccine != "none") {
+                                                    foreach ($select2vaccine as $vaccine) {
+                                                        echo "<option value='{$vaccine['id']}'>{$vaccine['name']}</option>";
                                                     }
                                                 }
                                             ?>
@@ -178,111 +333,62 @@
                                 </div>
                             </div>
 
-                             <!-- Facility -->
+                            <!-- Batch Number -->
                             <div class="form-group col-lg-12">
-                                <label>Facility:</label>
+                                <label>Batch Number</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-truck"></i>
-                                        </span>
-                                    </div>
-                                    <div class="form-control p-0 border-0">
-                                        <select class="form-control select2" name="facility_id" id="facility_id" style="width: 100%;" alt="required" require>
-                                            <option value="0">SELECT FACILITY</option>
-                                            <?php
-                                                if ($select2facility != "none") {
-                                                    foreach ($select2facility as $facility) {
-                                                        echo "<option value='{$facility['id']}'>{$facility['facility_name']}</option>";
-                                                    }
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
                                 </div>
                             </div>
 
+                            <!-- Lot Number -->
                             <div class="form-group col-lg-12">
-                                <label>Province:</label>
+                                <label>Lot Number</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-truck"></i>
-                                        </span>
-                                    </div>
-                                    <div class="form-control p-0 border-0">
-                                        <select class="form-control" id="province" name="province" style="width: 100%;" alt="required" require>
-                                            <option value="">Select Province</option>
-                                        </select>
-                                    </div>
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
                                 </div>
                             </div>
 
+                            <!-- Vaccinator Namer -->
                             <div class="form-group col-lg-12">
-                                <label>City/Municipality:</label>
+                                <label>Vaccinator Name</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-truck"></i>
-                                        </span>
-                                    </div>
-                                    <div class="form-control p-0 border-0">
-                                        <select class="form-control" id="city" name="city" style="width: 100%;" alt="required" require disabled>
-                                            <option value="">Select City/Municipality</option>
-                                        </select>
-                                    </div>
+                                    <input type="text" class="form-control" name="pedia_comorbidity" alt="required" require>
                                 </div>
                             </div>
 
+                            <!-- First Dose -->
                             <div class="form-group col-lg-12">
-                                <label>Barangay:</label>
+                                <label>1st Dose?</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-truck"></i>
-                                        </span>
-                                    </div>
-                                    <div class="form-control p-0 border-0">
-                                        <select class="form-control" id="barangay" name="barangay" style="width: 100%;" alt="required" require disabled>
-                                            <option value="">Select Barangay</option>
-                                        </select>
-                                    </div>
+                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <!-- Quantity -->
+                            <!-- Second Dose -->
                             <div class="form-group col-lg-12">
-                                <label>Quantity:</label>
+                                <label>2nd Dose?</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-cubes"></i></span>
-                                    </div>
-                                    <input type="number" min="1" class="form-control" name="quantity" placeholder="Enter Quantity" alt="required" require>
+                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
                                 </div>
                             </div>
 
-                            <!-- Expiry Date -->
+                            <!-- Booster Dose -->
                             <div class="form-group col-lg-12">
-                                <label>Expiry Date:</label>
+                                <label>Booster Dose?</label>
                                 <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-                                    </div>
-                                    <input type="date" class="form-control" name="expiry_date" alt="required">
+                                    <select class="form-control" id="pwd" name="pwd" style="width: 100%;" alt="required" require disabled>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                    </select>
                                 </div>
                             </div>
-
-                            <!-- Remarks -->
-                            <div class="form-group col-lg-12">
-                                <label>Remarks:</label>
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-comment-dots"></i></span>
-                                    </div>
-                                    <textarea class="form-control" name="remarks" rows="3" placeholder="Enter remarks (optional)"></textarea>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                 </form>
