@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 11, 2026 at 08:39 AM
+-- Generation Time: Feb 16, 2026 at 08:41 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -119,6 +119,53 @@ INSERT INTO `local_data_fetcher` (`id`, `database_main_id`, `qr_id`, `employment
 (10, 'NEW', 'Ei92oo73O54V25C30B47Q55Z70h48A35t93', 'Adults', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'DOE', 'JOHN', 'SMITH', 'N/A', '0935965626656565', '02_Male', '2025-07-11', '', '06_Western_Visayas', '_0645_NEGROS_OCCIDENTAL', '_64517_LA_CASTELLANA', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', NULL, 'N/A', 'N/A', 'Not-Vaccinated', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '01_Yes', '02_No', '2025-07-02', 'N/A', 'N/A', 'Pfizer', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'YES', 'N/A', '02_No', '02_No', '02_No', '02_No', ' approved', ' ', 'Admin Super Super', 'N/A', 'N/A', 'Sinovac', 'N/A', 'N/A', '2025-06-27', '2025-07-02 13:03:26'),
 (11, 'NEW', 'aY51uP63r65Z23E68x20h17f91H11g73P52', 'Adults', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'TEST2', 'TEST2', 'N/A', 'N/A', 'N/A', 'N/A', '2015-06-09', '_64517006_LALAGSAN', '06_Western_Visayas', '_0645_NEGROS_OCCIDENTAL', '_64517_LA_CASTELLANA', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', NULL, 'N/A', 'N/A', 'Not-Vaccinated', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '01_Yes', '02_No', '2025-07-02', 'N/A', 'N/A', 'IPV', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'YES', 'N/A', '02_No', '02_No', '02_No', '02_No', ' approved', ' ', 'Admin Super Super', 'N/A', 'N/A', 'Penta Hib', 'N/A', 'N/A', '2025-07-14', '2025-07-02 13:09:31'),
 (14, 'NEW', 'HW78uC85r36O99r43c49G39w66U86W49x53', 'Adults', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'SERGIO ', 'MECHLING', 'N/A', 'N/A', 'N/A', 'N/A', '1994-05-15', '_64517004_CABAGNAAN', '06_Western_Visayas', '_0645_NEGROS_OCCIDENTAL', '_64517_LA_CASTELLANA', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', NULL, 'N/A', 'N/A', 'Not-Vaccinated', 'N/A', 'N/A', 'N/A', 'N/A', '01_Yes', 'yes', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '01_Yes', '02_No', '2025-08-01', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'YES', 'N/A', '02_No', '02_No', '02_No', '02_No', ' approved', ' ', 'Admin Super Super', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', '2025-08-20', '2025-07-02 15:06:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patient`
+--
+
+CREATE TABLE `patient` (
+  `id` int NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `middlename` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `category` text COLLATE utf8mb4_general_ci NOT NULL,
+  `province` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `barangay` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `indigenous` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `pwd` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `guardian_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `pedia_comorbidity` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `first_dose_date` date DEFAULT NULL,
+  `first_vaccine_id` int NOT NULL,
+  `first_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `first_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `second_dose_date` date DEFAULT NULL,
+  `second_vaccine_id` int NOT NULL DEFAULT '0',
+  `second_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `second_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `vaccinator_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `second_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `booster` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `created_by` int NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 not delete\r\n1 is deleted',
+  `is_archive_at` datetime DEFAULT NULL,
+  `is_archive_by` int NOT NULL DEFAULT '0',
+  `update_by` int NOT NULL DEFAULT '0',
+  `update_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `patient`
+--
+
+INSERT INTO `patient` (`id`, `firstname`, `middlename`, `lastname`, `category`, `province`, `city`, `barangay`, `indigenous`, `pwd`, `guardian_name`, `pedia_comorbidity`, `first_dose_date`, `first_vaccine_id`, `first_batch_no`, `first_lot_no`, `second_dose_date`, `second_vaccine_id`, `second_batch_no`, `second_lot_no`, `vaccinator_name`, `first_dose`, `second_dose`, `booster`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `is_archive_by`, `update_by`, `update_at`) VALUES
+(1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', NULL, 0, '', '', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,7 +325,8 @@ INSERT INTO `system_pages` (`pages_id`, `page_name`, `page_link`, `page_type`, `
 (60, 'Vaccine Inventory', '../vaccine_inventory', 'nav', ' ', '15', '2026-02-05 06:32:52'),
 (61, 'Receiving', '../vaccine_receive', 'nav', ' ', '15', '2026-02-05 06:41:35'),
 (62, 'Issuance', '../vaccine_issuance', 'nav', ' ', '15', '2026-02-05 06:41:35'),
-(63, 'Stocks', '../vaccine_stocks', 'nav', ' ', '15', '2026-02-11 07:00:24');
+(63, 'Stocks', '../vaccine_stocks', 'nav', ' ', '15', '2026-02-11 07:00:24'),
+(64, 'Patients', '../vaccinees', 'nav', ' ', '9', '2026-02-13 07:38:55');
 
 -- --------------------------------------------------------
 
@@ -299,7 +347,7 @@ CREATE TABLE `system_page_access` (
 --
 
 INSERT INTO `system_page_access` (`page_access`, `page_id`, `nav_group_id`, `name`, `time_stamp`) VALUES
-(1, '1,3,31,35,38,32,2,55,33,59,60,61,62,63', ', 1, 2, 9, 15', 'Super Admin', '2026-02-11 07:00:51'),
+(1, '1,3,31,35,38,32,2,55,33,59,60,61,62,63,64', ', 1, 2, 9, 15', 'Super Admin', '2026-02-13 07:38:19'),
 (14, ',1,35,36,44,39,55', ', 1, 9, 11, 14', 'Admin', '2021-11-11 00:37:36'),
 (15, ',35,1', ', 1, 9', 'Encoder', '2021-05-23 14:48:54'),
 (16, ',38,1', ', 9, 1', 'Pre Vaccination Screening', '2021-06-11 11:50:23'),
@@ -431,7 +479,7 @@ CREATE TABLE `vaccine_issuance` (
   `issued_date` date NOT NULL,
   `vaccinee_id` int NOT NULL DEFAULT '0' COMMENT 'vaccine_registration id',
   `quantity` int NOT NULL,
-  `remarks` text COLLATE utf8mb4_general_ci NOT NULL,
+  `remarks` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_by` int NOT NULL COMMENT 'the one who was logged in',
   `update_by` int DEFAULT NULL COMMENT 'the one who was logged in',
@@ -446,8 +494,7 @@ CREATE TABLE `vaccine_issuance` (
 --
 
 INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, `issued_date`, `vaccinee_id`, `quantity`, `remarks`, `created_date`, `created_by`, `update_by`, `update_date`, `is_archive`, `is_archive_date`, `is_archive_by`) VALUES
-(1, 7, 0, 'Used', '2026-02-04', 3, 1, 'test', '2026-02-05 07:59:11', 49, 49, '2026-02-10 01:21:11', 0, NULL, NULL),
-(2, 9, 4, 'Transfer', '2026-02-06', 0, 22, 'test222', '2026-02-05 08:01:15', 49, 49, '2026-02-10 01:21:02', 1, NULL, NULL);
+(1, 2, 0, 'Used', '2026-02-16', 1, 1, 'Used for test test test as first dose', '2026-02-16 08:37:43', 49, 0, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -674,6 +721,12 @@ ALTER TABLE `local_data_fetcher`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `patient`
+--
+ALTER TABLE `patient`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `system_config`
 --
 ALTER TABLE `system_config`
@@ -762,6 +815,12 @@ ALTER TABLE `local_data_fetcher`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `patient`
+--
+ALTER TABLE `patient`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `system_config`
 --
 ALTER TABLE `system_config`
@@ -783,7 +842,7 @@ ALTER TABLE `system_nav_group`
 -- AUTO_INCREMENT for table `system_pages`
 --
 ALTER TABLE `system_pages`
-  MODIFY `pages_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `pages_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `system_page_access`
@@ -813,7 +872,7 @@ ALTER TABLE `vaccine_inventory`
 -- AUTO_INCREMENT for table `vaccine_issuance`
 --
 ALTER TABLE `vaccine_issuance`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `vaccine_receive`
