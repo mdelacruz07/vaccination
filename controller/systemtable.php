@@ -1828,7 +1828,70 @@ class systemtable {
             </table>
 
         <?php
-        }        
+        } else if ($table_name == "vaccine_patient") { ?>
+
+            <table id="tbl_vaccines_patient" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>1st Dose</th>
+                        <th>1st Dose Date</th>
+                        <th>2nd Dose</th>
+                        <th>2nd Dose Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody> 
+                    <?php
+                        $patients = $this->SelectCustomize("SELECT p.*, v1.name AS first_vaccine_name,
+                                                            IF(p.second_vaccine_id = 0 OR v2.name IS NULL, 'None', v2.name) AS second_vaccine_name
+                                                            FROM patient p
+                                                            LEFT JOIN vaccines v1 ON p.first_vaccine_id = v1.id
+                                                            LEFT JOIN vaccines v2 ON p.second_vaccine_id = v2.id
+                                                            WHERE p.is_archive = 0
+                                                            ORDER BY p.id DESC
+                        ");
+
+
+                        if($patients != "none"){
+                             $i = 1;
+                            foreach ($patients as $row) {
+                                echo "<tr>";
+                                    echo "<td>{$i}</td>";
+                                    echo "<td>{$row['firstname']} {$row['lastname']}</td>";
+                                    echo "<td>{$row['first_vaccine_name']}</td>";      // 1st Dose Vaccine
+                                    echo "<td>{$row['first_dose_date']}</td>";        // 1st Dose Date
+                                    echo "<td>{$row['second_vaccine_name']}</td>";    // 2nd Dose Vaccine
+                                    echo "<td>{$row['second_dose_date']}</td>";       // 2nd Dose Date
+                    ?>
+
+
+                                    <td class="row m-0" style="justify-content: space-evenly;">
+                                        <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $row['id'];?>', 'required_div', '#tbl_vaccines_patient')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
+                                    
+                                        <button onclick="sys_edit('edit.php', 'view_result_update', '<?php echo $row['id'];?>', 'required_div', '#tbl_vaccines_patient')" type="button" class="col-5 btn btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
+
+                                        <div class="icheck-danger col-1 d-inline">
+                                            <input type="checkbox" class="delete-checkbox-vaccine-patient" value="<?php echo $row['id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $i;?>">
+                                            <label for="checkboxPrimary<?php echo $x;?>"></label>
+                                        </div>
+                                    </td>
+                    <?php
+                                echo "</tr>";
+
+                                $i++;
+                            }
+                        } else {
+                            echo "<tr><td colspan='7' style='text-align: center;'>No Data Available</td></tr>";
+                        }
+                    ?>
+                </tbody>
+            </table>
+
+        <?php
+        }
     }
 }
 ?>

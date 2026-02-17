@@ -10,9 +10,6 @@
     // include '../inc/navbar.php';
 
     // Vaccine Dropdown
-    // $query_vaccine = "SELECT id, name FROM vaccines WHERE is_archive = 0 ORDER BY name ASC";
-    // $select2vaccine = $systemcore->SelectCustomize($query_vaccine);
-
     $query_vaccine = "SELECT v.id, v.name,
         (IFNULL(SUM(DISTINCT vr.total_in), 0) - IFNULL(SUM(DISTINCT vi.total_out), 0)) AS balance
         FROM vaccines v
@@ -103,7 +100,7 @@
   <!-- /.content-wrapper -->
 
     <div class="modal fade" id="update">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content" id="view_result_update">
                 
             </div>
@@ -202,11 +199,11 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-between w-100 mb-3 px-3">
+                                <div class="d-flex align-items-center justify-content-between w-100 mb-3 px-3 address-form">
                                     <div class="col-4">
                                         <!-- Province -->
                                         <label>Province <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="province" name="province" style="width: 100%;" alt="required" required>
+                                        <select class="form-control province" name="province" style="width: 100%;" alt="required" required>
                                             <option value="">Select Province</option>
                                         </select>
                                     </div>
@@ -214,7 +211,7 @@
                                     <div class="col-4">
                                         <!-- City/Municipality -->
                                         <label>City/Municipality <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="city" name="city" style="width: 100%;" alt="required" required disabled>
+                                        <select class="form-control city" name="city" style="width: 100%;" alt="required" required disabled>
                                             <option value="">Select City/Municipality</option>
                                         </select>
                                     </div>
@@ -222,7 +219,7 @@
                                     <div class="col-4">
                                         <!-- Barangay -->
                                         <label>Barangay <span style="color:red;">*</span></label>
-                                        <select class="form-control" id="barangay" name="barangay" style="width: 100%;" alt="required" required disabled>
+                                        <select class="form-control barangay" name="barangay" style="width: 100%;" alt="required" required disabled>
                                             <option value="">Select Barangay</option>
                                         </select>
                                     </div>
@@ -332,7 +329,7 @@
                                     <div class="form-group">
                                         <label>Date of Vaccination 2nd Dose</label>
                                         <div class="input-group">
-                                            <input type="date" class="form-control" name="second_dose_date" disabled>
+                                            <input type="date" class="form-control" name="second_dose_date">
                                         </div>
                                     </div>
 
@@ -442,72 +439,110 @@
 
         let data;
 
-        fetch("../../provinces.json").then(res => res.json()).then(json => {
+        fetch("../../provinces.json")
+        .then(res => res.json())
+        .then(json => {
             data = json;
-            loadProvinces();
+            initAddressForms();
         });
 
-        function loadProvinces() {
-            let provinceSelect = document.getElementById("province");
+        function initAddressForms() {
+            document.querySelectorAll(".address-form").forEach(form => {
 
-            let provinces = Object.keys(data).sort((a,b)=>a.localeCompare(b));
+                const provinceSelect = form.querySelector(".province");
+                const citySelect = form.querySelector(".city");
+                const brgySelect = form.querySelector(".barangay");
 
-            provinces.forEach(province => {
-                provinceSelect.innerHTML += `<option value="${province}">${province}</option>`;
+                const selectedProvince = provinceSelect.dataset.selected;
+                const selectedCity = citySelect.dataset.selected;
+                const selectedBrgy = brgySelect.dataset.selected;
+
+                loadProvinces(provinceSelect, selectedProvince);
+
+                if (selectedProvince) {
+                    loadCities(provinceSelect, citySelect, selectedProvince, selectedCity);
+                }
+
+                if (selectedProvince && selectedCity) {
+                    loadBarangays(provinceSelect, citySelect, brgySelect, selectedBrgy);
+                }
+
+                provinceSelect.addEventListener("change", function () {
+                    loadCities(provinceSelect, citySelect, this.value);
+                    brgySelect.innerHTML = `<option value="">Select Barangay</option>`;
+                    brgySelect.disabled = true;
+                });
+
+                citySelect.addEventListener("change", function () {
+                    loadBarangays(provinceSelect, citySelect, brgySelect);
+                });
             });
         }
 
-        document.getElementById("province").addEventListener("change", function () {
-            let province = this.value;
-            let citySelect = document.getElementById("city");
-            let brgySelect = document.getElementById("barangay");
+        function loadProvinces(selectEl, selected=null){
+            selectEl.innerHTML = `<option value="">Select Province</option>`;
 
-            // reset city + barangay
+            Object.keys(data)
+            .sort((a,b)=>a.localeCompare(b))
+            .forEach(province=>{
+                selectEl.innerHTML += `
+                    <option value="${province}" ${province===selected?'selected':''}>
+                        ${province}
+                    </option>`;
+            });
+        }
+
+        function loadCities(provinceSelect, citySelect, province, selected=null){
             citySelect.innerHTML = `<option value="">Select City/Municipality</option>`;
-            brgySelect.innerHTML = `<option value="">Select Barangay</option>`;
-            brgySelect.disabled = true;
 
-            if (!province) {
-                citySelect.disabled = true;
+            if(!province){
+                citySelect.disabled=true;
                 return;
             }
 
             let cities = data[province].municipalities;
 
             Object.keys(cities)
-             .sort((a,b)=>a.localeCompare(b))
-             .forEach(city => {
-                citySelect.innerHTML += `<option value="${city}">${city}</option>`;
+            .sort((a,b)=>a.localeCompare(b))
+            .forEach(city=>{
+                citySelect.innerHTML += `
+                    <option value="${city}" ${city===selected?'selected':''}>
+                        ${city}
+                    </option>`;
             });
 
-            citySelect.disabled = false;
-        });
+            citySelect.disabled=false;
+        }
 
-        document.getElementById("city").addEventListener("change", function () {
-            let province = document.getElementById("province").value;
-            let city = this.value;
-            let brgySelect = document.getElementById("barangay");
+        function loadBarangays(provinceSelect, citySelect, brgySelect, selected=null){
+            let province = provinceSelect.value;
+            let city = citySelect.value;
 
             brgySelect.innerHTML = `<option value="">Select Barangay</option>`;
 
-            if (!city) {
-                brgySelect.disabled = true;
+            if(!city){
+                brgySelect.disabled=true;
                 return;
             }
 
             let barangays = data[province].municipalities[city].barangays;
 
-            barangays.sort((a,b)=>a.localeCompare(b)).forEach(brgy => {
-                brgySelect.innerHTML += `<option value="${brgy}">${brgy}</option>`;
+            barangays
+            .sort((a,b)=>a.localeCompare(b))
+            .forEach(brgy=>{
+                brgySelect.innerHTML += `
+                    <option value="${brgy}" ${brgy===selected?'selected':''}>
+                        ${brgy}
+                    </option>`;
             });
 
-            brgySelect.disabled = false;
-        });
+            brgySelect.disabled=false;
+        }
 
         // =================================================================
 
         // setting up the tables
-        show_table("patient_table", "vaccine_receive", "#tbl_vaccines_receive");
+        show_table("patient_table", "vaccine_patient", "#tbl_vaccines_patient");
 
         $(document).on('change', '.delete-checkbox-vaccine-receive', function() {
             // Check if at least one checkbox is ticked

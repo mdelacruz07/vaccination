@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 16, 2026 at 08:41 AM
+-- Generation Time: Feb 17, 2026 at 11:17 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -165,7 +165,9 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `firstname`, `middlename`, `lastname`, `category`, `province`, `city`, `barangay`, `indigenous`, `pwd`, `guardian_name`, `pedia_comorbidity`, `first_dose_date`, `first_vaccine_id`, `first_batch_no`, `first_lot_no`, `second_dose_date`, `second_vaccine_id`, `second_batch_no`, `second_lot_no`, `vaccinator_name`, `first_dose`, `second_dose`, `booster`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `is_archive_by`, `update_by`, `update_at`) VALUES
-(1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', NULL, 0, '', '', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 0, NULL);
+(1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', NULL, 0, '', '', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 0, NULL),
+(2, 'test2', 'test2', 'test2', 'Senior Citizens', 'BULACAN', 'PANDI', 'REAL DE CACARONG', 'Yes', 'Yes', 'test2', 'test2', '2026-02-17', 7, '1', '1', NULL, 0, '', '', 'test2', 'Yes', 'No', 'No', 49, '2026-02-17 10:54:58', 0, NULL, 0, 0, NULL),
+(3, 'test333333', 'test333333', 'test333333', 'Other Remaing Workforce', '', '', '', 'No', 'Yes', 'test3test333333', 'test3test333333', '2026-02-17', 7, '', '', '2026-03-17', 0, 'test333333', 'test333333', 'test3', 'Yes', 'Yes', 'Yes', 49, '2026-02-17 11:00:05', 0, NULL, 0, 49, '2026-02-17 03:02:40');
 
 -- --------------------------------------------------------
 
@@ -494,7 +496,9 @@ CREATE TABLE `vaccine_issuance` (
 --
 
 INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, `issued_date`, `vaccinee_id`, `quantity`, `remarks`, `created_date`, `created_by`, `update_by`, `update_date`, `is_archive`, `is_archive_date`, `is_archive_by`) VALUES
-(1, 2, 0, 'Used', '2026-02-16', 1, 1, 'Used for test test test as first dose', '2026-02-16 08:37:43', 49, 0, NULL, 0, NULL, NULL);
+(1, 2, 0, 'Used', '2026-02-16', 1, 1, 'Used for test test test as first dose', '2026-02-16 08:37:43', 49, 0, NULL, 0, NULL, NULL),
+(2, 7, 0, 'Used', '2026-02-17', 2, 1, 'Used for test2 test2 test2 as first dose', '2026-02-17 10:54:58', 49, 0, NULL, 0, NULL, NULL),
+(3, 7, 0, 'Used', '2026-02-17', 3, 1, 'Used for test3 test3 test3 as first dose', '2026-02-17 11:00:05', 49, 0, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -818,7 +822,7 @@ ALTER TABLE `local_data_fetcher`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `system_config`
@@ -872,7 +876,7 @@ ALTER TABLE `vaccine_inventory`
 -- AUTO_INCREMENT for table `vaccine_issuance`
 --
 ALTER TABLE `vaccine_issuance`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `vaccine_receive`
