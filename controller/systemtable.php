@@ -1867,7 +1867,6 @@ class systemtable {
                                     echo "<td>{$row['second_dose_date']}</td>";       // 2nd Dose Date
                     ?>
 
-
                                     <td class="row m-0" style="justify-content: space-evenly;">
                                         <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $row['id'];?>', 'required_div', '#tbl_vaccines_patient')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
                                     
@@ -1875,7 +1874,7 @@ class systemtable {
 
                                         <div class="icheck-danger col-1 d-inline">
                                             <input type="checkbox" class="delete-checkbox-vaccine-patient" value="<?php echo $row['id'];?>" onclick="selection(this.value, 'select_to_delete_input', 'none')" id="checkboxPrimary<?php echo $i;?>">
-                                            <label for="checkboxPrimary<?php echo $x;?>"></label>
+                                            <label for="checkboxPrimary<?php echo $i;?>"></label>
                                         </div>
                                     </td>
                     <?php
@@ -1888,6 +1887,18 @@ class systemtable {
                         }
                     ?>
                 </tbody>
+
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th><button onclick="set_system_cardinal_operation('You want to Delete all the selected?', 'delete', 'select_to_delete', 'delete_vaccine_patient.php', 'patient_table', 'vaccine_patient', '#tbl_vaccines_patient', 'required_div', 'confirmation_delete_success', 'none')" type="button" id="btn-delete-selected-vaccines-patient" class="col-sm-12 btn btn-block btn-outline-danger" disabled>Delete Selected</button></th>
+                    </tr>
+                </tfoot>
             </table>
 
         <?php

@@ -72,5 +72,7 @@
 <?php
     include '../../controller/systemtable.php'; 
     $systemtable = new systemtable();
-    $SelectTable = $systemtable->SelectingTable($table, 'none');
+    $table_name = "vaccine_patient";
+
+    $SelectTable = $systemtable->SelectingTable($table_name, 'none');
 ?>

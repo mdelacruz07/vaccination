@@ -539,17 +539,21 @@
             brgySelect.disabled=false;
         }
 
+        $('#update').on('shown.bs.modal', function () {
+            initAddressForms();
+        });
+
         // =================================================================
 
         // setting up the tables
         show_table("patient_table", "vaccine_patient", "#tbl_vaccines_patient");
 
-        $(document).on('change', '.delete-checkbox-vaccine-receive', function() {
+        $(document).on('change', '.delete-checkbox-vaccine-patient', function() {
             // Check if at least one checkbox is ticked
-            const anyChecked = $('.delete-checkbox-vaccine-receive:checked').length > 0;
+            const anyChecked = $('.delete-checkbox-vaccine-patient:checked').length > 0;
             
             // Enable or disable the button
-            $('#btn-delete-selected-vaccines-receive').prop('disabled', !anyChecked);
+            $('#btn-delete-selected-vaccines-patient').prop('disabled', !anyChecked);
         });
         
         $('.vaccine_id').select2({

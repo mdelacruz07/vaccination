@@ -150,7 +150,7 @@
                 <div class="col-4">
                     <!-- Province -->
                     <label>Province <span style="color:red;">*</span></label>
-                    <select class="form-control province" name="province" style="width: 100%;" alt="required" required>
+                    <select class="form-control province" name="province" style="width: 100%;" alt="required" data-selected="<?= $province; ?>" required>
                         <option value="">Select Province</option>
                     </select>
                 </div>
@@ -158,7 +158,7 @@
                 <div class="col-4">
                     <!-- City/Municipality -->
                     <label>City/Municipality <span style="color:red;">*</span></label>
-                    <select class="form-control city" name="city" style="width: 100%;" alt="required" required disabled>
+                    <select class="form-control city" name="city" style="width: 100%;" alt="required" data-selected="<?= $city; ?>" required disabled>
                         <option value="">Select City/Municipality</option>
                     </select>
                 </div>
@@ -166,7 +166,7 @@
                 <div class="col-4">
                     <!-- Barangay -->
                     <label>Barangay <span style="color:red;">*</span></label>
-                    <select class="form-control barangay" name="barangay" style="width: 100%;" alt="required" required disabled>
+                    <select class="form-control barangay" name="barangay" style="width: 100%;" alt="required" data-selected="<?= $barangay; ?>" required disabled>
                         <option value="">Select Barangay</option>
                     </select>
                 </div>

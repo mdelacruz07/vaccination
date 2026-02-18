@@ -1,20 +1,33 @@
 <?php
 
     include '../../controller/systemcore.php'; 
+    include '../../database/connector.php';
     $systemcore = new systemcore();
+    $systemcore->System_Sessioning("session");
 
     $selected_id = $_GET["selected_id"];
     $selected_id = explode(",", $selected_id);
     
     $length = count($selected_id);
     for ($i = 1; $i < $length; $i++) {
-        $table = "vaccine_receive";
-        $col_to_update = "is_archive = '1'";
+        $table = "patient";
+        $arr = [
+          'is_archive' => '1',
+          'is_archive_at' => date('Y-m-d H:i:s'),
+          'is_archive_by' => $_SESSION['user_id']
+        ];
         $indicator = "id = '$selected_id[$i]'";
-        // $DeleteTable = $systemcore->DeleteTable($table, $indicator);
 
         // Just make an update to hide the data instead of deleting it.
-        $DeleteTable = $systemcore->UpdateTable($table, $col_to_update, $indicator);
+        $col_to_update = "";
+
+        foreach ($arr as $key => $value) {
+            $col_to_update .= "$key = '$value', ";
+        }
+
+        $col_to_update = rtrim($col_to_update, ", ");
+        $sql = "UPDATE $table SET $col_to_update WHERE $indicator";
+        $result = $conn->query($sql);
     }
     
 ?>
@@ -29,7 +42,7 @@
 <?php
     include '../../controller/systemtable.php'; 
     $systemtable = new systemtable();
-    $table_name = $_GET["table_name"];
+    $table_name = "vaccine_patient";
 
     $SelectTable = $systemtable->SelectingTable($table_name, 'none');
 ?>

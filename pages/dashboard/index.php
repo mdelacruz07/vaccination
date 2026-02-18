@@ -20,13 +20,16 @@ if(empty($_GET["page_name"])){
 }
 $current_date = date("Y-m-d 00:00:00");
 $counter = 0;
-$SelectTable = $systemcore->SelectTable("local_data_fetcher WHERE date_added >= '$current_date'");
+$SelectTable = $systemcore->SelectTable("patient WHERE created_date >= '$current_date'");
 foreach($SelectTable as $value){
   $counter++;
 }
 
 // Count vaccine list
-$global_vaccine_name_count = count($VIMS_settings->Global_vaccine_name());
+// $global_vaccine_name_count = count($VIMS_settings->Global_vaccine_name());
+$vax_query = "SELECT * FROM vaccines WHERE is_archive = '0'";
+$vax_result = $conn->query($vax_query);
+$vax_count = $vax_result ? $vax_result->num_rows : 0;
 
 // Count facilities
 $SelectTablefacilities = "SELECT * FROM system_facilities WHERE status = 'active'";
@@ -34,7 +37,7 @@ $result = $conn->query($SelectTablefacilities);
 $facility_count = $result ? $result->num_rows : 0;
 
 // Count fully vaccinated
-$SelectTableFullyVaccinated = "SELECT * FROM local_data_fetcher WHERE LOWER(dose_1) LIKE '%yes%' AND LOWER(dose_2) LIKE '%yes%'";
+$SelectTableFullyVaccinated = "SELECT * FROM patient WHERE LOWER(first_dose) LIKE '%yes%' AND LOWER(second_dose) LIKE '%yes%' AND is_archive = 0";
 $fully_vaccinated_res = $conn->query($SelectTableFullyVaccinated);
 $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_rows : 0;
 
@@ -117,7 +120,7 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
                         </span>
                       </div>
                       <div class="col-8">
-                          <span>Vaccine Listed <br> <?= $global_vaccine_name_count ?></span>
+                          <span>Vaccine Listed <br> <?= $vax_count ?></span>
                           
                       </div>
                   </div>
@@ -146,7 +149,7 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
               </div>
               
               <div class="row calendar_data_incidator my-4">
-                <div class="col-12 mb-2">
+                <!-- <div class="col-12 mb-2">
                   <div class="circle blue"></div> 
                   <span>1st Dose</span>
                 </div>
@@ -154,7 +157,7 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
                 <div class="col-12 mb-2">
                   <div class="circle orange"></div>
                   <span>2nd Dose</span>
-                </div>
+                </div> -->
 
                 <div class="col-12 mb-2">
                   <div class="circle green"></div>
@@ -202,28 +205,28 @@ include '../inc/footer.php';
 
 <?php 
   // Vaccince Calendar Data
-  $select_vac_dates = "SELECT CONCAT(firstname, ' ', lastname) AS full_name, time_stamp AS first_date_of_vaccination, sec_date_of_vaccination, dose_1, dose_2 FROM local_data_fetcher";
+  $select_vac_dates = "SELECT CONCAT(firstname, ' ', lastname) AS full_name, first_dose_date AS first_date_of_vaccination, second_dose_date AS second_date_of_vaccination, first_dose, second_dose FROM patient WHERE is_archive = 0";
   $result_vac_dates = $conn->query($select_vac_dates);
 
   $events = [];
 
   while ($row = $result_vac_dates->fetch_assoc()) {
-    $dose1 = strtolower(trim($row["dose_1"]));
-    $dose2 = strtolower(trim($row["dose_2"]));
-    
+    $dose1 = strtolower(trim($row["first_dose"]));
+    $dose2 = strtolower(trim($row["second_dose"]));
+  
     // Determine color for dose 1
-    if (stripos($dose1, 'yes') !== false) {
+    if ($dose1 == 'yes') {
       $colorFirstDose = 'green';
-    } elseif (stripos($dose1, 'no') !== false) {
+    } elseif ($dose1 == 'no') {
       $colorFirstDose = '#fa003f';
     } else {
       $colorFirstDose = '#3498db'; // blue
     }
 
     // Determine color for dose 2
-    if (stripos($dose2, 'yes') !== false) {
+    if ($dose2 == 'yes') {
       $colorSecondDose = 'green';
-    } elseif (stripos($dose2, 'no') !== false) {
+    } elseif ($dose2 == 'no') {
       $colorSecondDose = '#fa003f';
     } else {
       $colorSecondDose = '#f39c12'; // orange
@@ -237,10 +240,10 @@ include '../inc/footer.php';
     ];
 
     // Second dose event (if available)
-    if (!empty($row["sec_date_of_vaccination"])) {
+    if (!empty($row["second_date_of_vaccination"])) {
       $events[] = [
         'title' => $row["full_name"],
-        'start' => $row["sec_date_of_vaccination"],
+        'start' => $row["second_date_of_vaccination"],
         'color' => $colorSecondDose
       ];
     }
