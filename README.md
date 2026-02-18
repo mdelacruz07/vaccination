@@ -1,3 +1,13 @@
+Features to add
+☐ Reminders and notification
+☐ Inventory of vaccine
+☐ Tracking of vaccine availability
+☐ Add forecasting on the vaccine record yearly
+☐ Provide data analytics
+☐ Forecasting Prediction future vaccine needs
+☐ Priority of vaccination MP date of the system
+☐ Establish the profilling of all vaccinations
+
 # Introduction
 
 [![npm version](https://img.shields.io/npm/v/admin-lte/latest.svg)](https://www.npmjs.com/package/admin-lte)
