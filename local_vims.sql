@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 17, 2026 at 11:17 AM
+-- Generation Time: Feb 18, 2026 at 08:40 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -139,11 +139,11 @@ CREATE TABLE `patient` (
   `pwd` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   `guardian_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   `pedia_comorbidity` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `first_dose_date` date DEFAULT NULL,
+  `first_dose_date` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `first_vaccine_id` int NOT NULL,
   `first_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   `first_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `second_dose_date` date DEFAULT NULL,
+  `second_dose_date` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `second_vaccine_id` int NOT NULL DEFAULT '0',
   `second_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
   `second_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
@@ -165,9 +165,10 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`id`, `firstname`, `middlename`, `lastname`, `category`, `province`, `city`, `barangay`, `indigenous`, `pwd`, `guardian_name`, `pedia_comorbidity`, `first_dose_date`, `first_vaccine_id`, `first_batch_no`, `first_lot_no`, `second_dose_date`, `second_vaccine_id`, `second_batch_no`, `second_lot_no`, `vaccinator_name`, `first_dose`, `second_dose`, `booster`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `is_archive_by`, `update_by`, `update_at`) VALUES
-(1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', NULL, 0, '', '', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 0, NULL),
-(2, 'test2', 'test2', 'test2', 'Senior Citizens', 'BULACAN', 'PANDI', 'REAL DE CACARONG', 'Yes', 'Yes', 'test2', 'test2', '2026-02-17', 7, '1', '1', NULL, 0, '', '', 'test2', 'Yes', 'No', 'No', 49, '2026-02-17 10:54:58', 0, NULL, 0, 0, NULL),
-(3, 'test333333', 'test333333', 'test333333', 'Other Remaing Workforce', '', '', '', 'No', 'Yes', 'test3test333333', 'test3test333333', '2026-02-17', 7, '', '', '2026-03-17', 0, 'test333333', 'test333333', 'test3', 'Yes', 'Yes', 'Yes', 49, '2026-02-17 11:00:05', 0, NULL, 0, 49, '2026-02-17 03:02:40');
+(1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', '2026-03-18', 0, 'None', 'None', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 49, '2026-02-17 23:36:53'),
+(2, 'test2', 'test2', 'test2', 'Senior Citizens', 'BULACAN', 'PANDI', 'REAL DE CACARONG', 'Yes', 'Yes', 'test2', 'test2', '2026-02-17', 7, '1', '1', '2026-03-17', 0, 'None', 'None', 'test2', 'No', 'Yes', 'No', 49, '2026-02-17 10:54:58', 0, NULL, 0, 49, '2026-02-17 23:28:44'),
+(3, 'test333333', 'test333333', 'test333333', 'Other Remaing Workforce', 'AGUSAN DEL SUR', 'PROSPERIDAD', 'AZPETIA', 'No', 'Yes', 'test3test333333', 'test3test333333', '2026-02-17', 7, 'None', 'None', '2026-03-17', 0, 'test333333', 'test333333', 'test3', 'Yes', 'Yes', 'Yes', 49, '2026-02-17 11:00:05', 0, NULL, 0, 49, '2026-02-17 23:27:06'),
+(4, 'test4', 'test4', 'test4', 'Family Members of Healthcare Workers', 'AURORA', 'DINGALAN', 'IBONA', 'No', 'No', 'test4', 'test4', '2026-02-18', 0, '', '', '', 0, '', '', 'test4', 'No', 'No', 'No', 49, '2026-02-18 08:02:26', 1, '2026-02-18 16:35:52', 49, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -296,7 +297,7 @@ INSERT INTO `system_pages` (`pages_id`, `page_name`, `page_link`, `page_type`, `
 (3, 'System Configuration', '../config/', 'nav', '     ', '2', '2021-04-24 04:24:32'),
 (4, 'System Logs', '../logs/', 'nav', '      ', '2', '2021-04-24 04:24:31'),
 (30, 'Schedule', '../schedule/', 'nav', ' ', '9', '2021-04-24 07:06:07'),
-(31, 'Accounts', '../accounts/', 'nav', ' ', '9', '2021-04-24 07:36:36'),
+(31, 'Accounts', '../accounts/', 'nav', ' ', '2', '2026-02-18 08:20:02'),
 (32, 'Facilities', '../facilities/', 'nav', ' ', '9', '2021-04-25 08:21:19'),
 (33, 'Vaccines', '../vaccines/', 'nav', ' ', '9', '2021-04-26 03:30:02'),
 (34, 'Profiled and None Vaccine(List)', 'print_profiled_not_vaccine', 'modal', ' ', '10', '2021-07-23 03:32:42'),
@@ -349,7 +350,7 @@ CREATE TABLE `system_page_access` (
 --
 
 INSERT INTO `system_page_access` (`page_access`, `page_id`, `nav_group_id`, `name`, `time_stamp`) VALUES
-(1, '1,3,31,35,38,32,2,55,33,59,60,61,62,63,64', ', 1, 2, 9, 15', 'Super Admin', '2026-02-13 07:38:19'),
+(1, '1,3,31,32,2,33,59,61,62,63,64', ', 1, 2, 9, 15', 'Super Admin', '2026-02-18 08:36:32'),
 (14, ',1,35,36,44,39,55', ', 1, 9, 11, 14', 'Admin', '2021-11-11 00:37:36'),
 (15, ',35,1', ', 1, 9', 'Encoder', '2021-05-23 14:48:54'),
 (16, ',38,1', ', 9, 1', 'Pre Vaccination Screening', '2021-06-11 11:50:23'),
@@ -529,7 +530,7 @@ CREATE TABLE `vaccine_receive` (
 INSERT INTO `vaccine_receive` (`id`, `vaccine_id`, `supplier_id`, `facility_id`, `quantity`, `expiry_date`, `remarks`, `created_by`, `created_date`, `is_archive`, `is_archive_at`, `updated_by`, `updated_at`) VALUES
 (1, 9, 1, 4, 12, NULL, 's', 49, '2026-01-27 08:09:31', 1, NULL, 49, '2026-01-28 00:31:13'),
 (2, 7, 1, 4, 502, NULL, 'zzzz', 49, '2026-01-28 08:45:05', 1, NULL, 49, '2026-01-28 00:53:24'),
-(3, 7, 6, 5, 50, '2026-02-28', 'TESTS', 49, '2026-02-05 06:39:33', 0, NULL, 49, '2026-02-10 23:34:57'),
+(3, 7, 6, 5, 40, '2026-02-28', 'TESTS', 49, '2026-02-05 06:39:33', 0, NULL, 49, '2026-02-17 23:32:53'),
 (4, 2, 6, 4, 50, '2026-02-28', 'test', 49, '2026-02-11 07:17:19', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
@@ -657,7 +658,7 @@ CREATE TABLE `vaccine_supplier` (
 --
 
 INSERT INTO `vaccine_supplier` (`id`, `name`, `contact_person`, `phone`, `email`, `address`, `created_by`, `created_at`, `updated_at`, `is_archive`) VALUES
-(1, 'Johnsons', 'John sons', '0936482646', 'test@gmail.com', 'Bgry. Mambuloc Bacolod City', 49, '2025-10-14 03:11:41', NULL, 0),
+(1, 'Johnsons', 'John sonss', '0936482646', 'test@gmail.com', 'Bgry. Mambuloc Bacolod City', 49, '2025-10-14 03:11:41', '2026-02-17 23:31:44', 0),
 (2, 'Moderna', 'Moderna', '09123456789', 'john@gmail.com', 'Moderna Inc.', 49, '2025-10-14 04:15:25', '2025-10-29 00:09:50', 0),
 (3, 'zzzzzzzz', 'zzzzzzzz', '22222222222', 'zzzzzzzz@gmail.com', 'zzzzzzzz', 49, '2025-10-14 04:23:37', '2025-10-14 13:45:12', 1),
 (4, 'Sinovac', 'Sinovac', '09113236564', 'sinovac@gmail.com', 'SinovacINc', 49, '2025-10-28 16:10:41', NULL, 0),
@@ -822,7 +823,7 @@ ALTER TABLE `local_data_fetcher`
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `system_config`
