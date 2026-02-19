@@ -149,7 +149,7 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
               </div>
               
               <div class="row calendar_data_incidator my-4">
-                <!-- <div class="col-12 mb-2">
+                <div class="col-12 mb-2">
                   <div class="circle blue"></div> 
                   <span>1st Dose</span>
                 </div>
@@ -157,7 +157,7 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
                 <div class="col-12 mb-2">
                   <div class="circle orange"></div>
                   <span>2nd Dose</span>
-                </div> -->
+                </div>
 
                 <div class="col-12 mb-2">
                   <div class="circle green"></div>
@@ -181,6 +181,12 @@ $fully_vaccinated_count = $fully_vaccinated_res ? $fully_vaccinated_res->num_row
                 </div>
 
                 <!-- <img src="../../dist/img/resbakuna.jpg" alt="Girl in a jacket" width="100%" height="100%"> -->
+              </div>
+
+              <div id="charts_container" class="charts_container">
+                  <div style="height: 350px;">
+                      <canvas id="myDoughnutChart"></canvas>
+                  </div>
               </div>
             </div>
             <!-- /.card-body -->
@@ -217,8 +223,8 @@ include '../inc/footer.php';
     // Determine color for dose 1
     if ($dose1 == 'yes') {
       $colorFirstDose = 'green';
-    } elseif ($dose1 == 'no') {
-      $colorFirstDose = '#fa003f';
+    } elseif (!empty($row["first_date_of_vaccination"]) && strtotime($row["first_date_of_vaccination"]) < time()) {
+      $colorFirstDose = '#fa003f'; // red - vaccination date exceeded
     } else {
       $colorFirstDose = '#3498db'; // blue
     }
@@ -226,15 +232,15 @@ include '../inc/footer.php';
     // Determine color for dose 2
     if ($dose2 == 'yes') {
       $colorSecondDose = 'green';
-    } elseif ($dose2 == 'no') {
-      $colorSecondDose = '#fa003f';
+    } elseif (!empty($row["second_date_of_vaccination"]) && strtotime($row["second_date_of_vaccination"]) < time()) {
+      $colorSecondDose = '#fa003f'; // red - vaccination date exceeded
     } else {
       $colorSecondDose = '#f39c12'; // orange
     }
 
     // First dose event
     $events[] = [
-      'title' => $row["full_name"],
+      'title' => $row["full_name"] . ' - (1st Dose)',
       'start' => $row["first_date_of_vaccination"],
       'color' => $colorFirstDose
     ];
@@ -242,7 +248,7 @@ include '../inc/footer.php';
     // Second dose event (if available)
     if (!empty($row["second_date_of_vaccination"])) {
       $events[] = [
-        'title' => $row["full_name"],
+        'title' => $row["full_name"] . ' - (2nd Dose)',
         'start' => $row["second_date_of_vaccination"],
         'color' => $colorSecondDose
       ];
@@ -253,6 +259,7 @@ include '../inc/footer.php';
 ?>
 
 <script> 
+  // <!-- Fullcalendar Start -->
  var eventsFromPHP = <?php echo $events_json; ?>;
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -265,22 +272,73 @@ include '../inc/footer.php';
           left: 'prev,next today',
           center: 'title',
           // right: 'dayGridMonth,timeGridWeek,listWeek' //Weekly view
-        right: 'dayGridMonth,listWeek'
+        right: ''
       },
       height: 700,
       buttonText: {
           today: 'Today',
           month: 'Month',
           // week: 'Week', // Weekly view
-          list: 'List'
+          // list: 'List'
       },
       theme: true
     });
 
     calendar.render();
   });
+
+  // <!-- Fullcalendar End -->
+
+  // ====================================================================================
+
+  // Doughnut Chart Start
+  const ctx = document.getElementById('myDoughnutChart');
+
+    // Generate 5 random numbers
+    const randomData = Array.from({ length: 5 }, () => 
+        Math.floor(Math.random() * 100) + 10
+    );
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                'Category A',
+                'Category B',
+                'Category C',
+                'Category D',
+                'Category E'
+            ],
+            datasets: [{
+                label: 'Sample Data',
+                data: randomData,
+                backgroundColor: [
+                    '#4CAF50',
+                    '#2196F3',
+                    '#FFC107',
+                    '#E91E63',
+                    '#9C27B0'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    enabled: true
+                }
+            }
+        }
+    });
+  // Doughnut Chart End
 </script>
 
-<!-- Fullcalendar End -->
+
+ 
 </body>
 </html>

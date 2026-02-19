@@ -125,7 +125,7 @@
 <?php
     include '../../controller/systemtable.php'; 
     $systemtable = new systemtable();
-    $table_name = $_GET["table_name"];
+    $table_name = "vaccine_patient";
 
     $SelectTable = $systemtable->SelectingTable($table_name,'none');
 ?>

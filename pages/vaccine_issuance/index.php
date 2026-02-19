@@ -10,7 +10,16 @@
     // include '../inc/navbar.php';
 
     // Vaccine Dropdown
-    $query_vaccine = "SELECT id, name FROM vaccines WHERE is_archive = 0 ORDER BY name ASC";
+    $query_vaccine = "SELECT v.id, v.name,
+        (IFNULL(SUM(DISTINCT vr.total_in), 0) - IFNULL(SUM(DISTINCT vi.total_out), 0)) AS balance
+        FROM vaccines v
+        LEFT JOIN (SELECT vaccine_id, SUM(quantity) AS total_in FROM vaccine_receive WHERE is_archive = 0 GROUP BY vaccine_id) vr ON vr.vaccine_id = v.id
+        LEFT JOIN (SELECT vaccine_id, SUM(quantity) AS total_out FROM vaccine_issuance WHERE is_archive = 0 GROUP BY vaccine_id) vi ON vi.vaccine_id = v.id
+        WHERE v.is_archive = 0
+        GROUP BY v.id
+        HAVING balance > 0
+        ORDER BY v.name ASC
+    ";
     $select2vaccine = $systemcore->SelectCustomize($query_vaccine);
 
     // Supplier Dropdown
@@ -141,13 +150,28 @@
                                             <?php
                                                 if ($select2vaccine != "none") {
                                                     foreach ($select2vaccine as $vaccine) {
-                                                        echo "<option value='{$vaccine['id']}'>{$vaccine['name']}</option>";
+                                                        echo "<option value='{$vaccine['id']}' data-balance='{$vaccine['balance']}'>{$vaccine['name']}</option>";
                                                     }
                                                 }
                                             ?>
                                         </select>
                                     </div>
                                     
+                                </div>
+                            </div>
+
+                            <!-- Running Balance -->
+                            <div class="form-group col-lg-12">
+                                <label>Running Balance:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-syringe"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-control p-0 border-0">
+                                        <input type="text" id="running_balance" class="running_balance form-control" placeholder="0">
+                                    </div>
                                 </div>
                             </div>
 
@@ -229,7 +253,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-cubes"></i></span>
                                     </div>
-                                    <input type="number" min="1" class="form-control" name="quantity" placeholder="Enter Quantity" alt="required" require>
+                                    <input type="number" id="quantity" min="1" class="form-control" name="quantity" placeholder="Enter Quantity" alt="required" require>
                                 </div>
                             </div>
 
@@ -312,11 +336,34 @@
         });
         // Delete button trigger end
         
+        // ====================================================================================
+        // Vaccine functionality
         $('#vaccine_id').select2({
             placeholder: 'SELECT A VACCINE',
             width: '100%',
             dropdownParent: $('#create_vaccine_issuance') // if inside modal
+        }).on('change', function () {
+            let balance = parseInt($(this).find(':selected').data('balance')) || 0;
+
+            $('#running_balance').val(balance);
+            $('#quantity').val('');
+            $('#quantity').attr('max', balance); // important
         });
+        // ====================================================================================
+
+        // ====================================================================================
+        // Quantity input validation to not exceed balance
+        $('#quantity').on('input', function () {
+            let balance = parseInt($('#running_balance').val()) || 0;
+            let qty = parseInt($(this).val()) || 0;
+
+            if (qty > balance) {
+                alert("Quantity cannot exceed available balance (" + balance + ")");
+                $(this).val(balance);
+            }
+        });
+        // ====================================================================================
+
 
         // Optional: re-trigger Select2 to display selected text properly (useful if you dynamically load form)
         $('#vaccine_id').trigger('change.select2');
