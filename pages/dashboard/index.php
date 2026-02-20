@@ -153,6 +153,7 @@
 
         $vax_in = [];
         $vax_out = [];
+        $vax_balance = [];
         $vax_rows = []; // full rows with Vaccine_name, balance, In, Out
 
         if ($vax_list && $vax_list->num_rows > 0) {
@@ -167,6 +168,7 @@
 
                 $vax_in[] = $in;
                 $vax_out[] = $out;
+                $vax_balance[] = $balance;
 
                 $vax_rows[] = [
                     'Vaccine_name' => $name,
@@ -421,6 +423,7 @@ new Chart(ctx, {
 const labels = <?= json_encode($vax_ver_bar_labels); ?>;
 const totalIn = <?= json_encode($vax_in); ?>;
 const totalOut = <?= json_encode($vax_out); ?>;
+const totalBalance = <?= json_encode($vax_balance); ?>;
 
 const ctx_ver_bar = document.getElementById('myVerticalBarChart');
 
@@ -441,6 +444,13 @@ new Chart(ctx_ver_bar, {
                 data: <?= json_encode($vax_out); ?>,
                 backgroundColor: 'rgba(255, 99, 132, 0.6)', // red
                 borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            },
+            {
+                label: 'BALANCE',
+                data: <?= json_encode($vax_balance); ?>,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)', // green
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }
         ]
