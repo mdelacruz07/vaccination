@@ -246,7 +246,7 @@
                         </div>
 
                         <div class="card-body row" style="padding: 30px 80px;">
-                            <div id="vaccine_date_count" class="row m-0 w-100 justify-content-between">
+                            <div id="vaccine_date_count" class="row mx-0 mb-5 w-100 justify-content-between">
                                 <div class="jumbotron">
                                     <div class="col-4">
                                         <span class="text-center d-block">
@@ -282,7 +282,23 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
+                            <div id="charts_container" class="charts_container w-100">
+                                <div class="d-flex justify-content-between">
+                                    <div class="col-6">
+                                        <div class="doughnut" style="height: 500px;">
+                                            <canvas id="myDoughnutChart"></canvas>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-6">
+                                        <div class="vertical_bar" style="height: 500px;">
+                                            <canvas id="myVerticalBarChart" height="500" width="500"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row calendar_data_incidator my-4">
                                 <div class="col-12 mb-2">
                                     <div class="circle blue"></div> 
@@ -307,22 +323,6 @@
 
                             <div class="col-12 mb-5">
                                 <div id="vaccine_calendar"></div>
-                            </div>
-
-                            <div id="charts_container" class="charts_container w-100">
-                                <div class="d-flex justify-content-between">
-                                    <div class="col-6">
-                                        <div class="doughnut" style="height: 500px;">
-                                            <canvas id="myDoughnutChart"></canvas>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-6">
-                                        <div class="vertical_bar" style="height: 500px;">
-                                            <canvas id="myVerticalBarChart" height="500" width="500"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
