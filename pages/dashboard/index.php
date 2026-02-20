@@ -283,6 +283,13 @@
                                 </div>
                             </div>
 
+                            <div style="width:200px;">
+                                <!-- <input type="text" id="year_filter" class="form-control" placeholder="Select Year">
+                                <button id="filterBtn" class="btn btn-primary mt-2">Filter</button> -->
+
+                                <input type="text" id="year_filter" class="form-control" placeholder="Select Year">
+                            </div>
+
                             <div id="charts_container" class="charts_container w-100">
                                 <div class="d-flex justify-content-between">
                                     <div class="col-6">
@@ -339,6 +346,25 @@
 <script type="text/javascript" src="../../dist/js/fullcalendar/index.global.js"></script>
 
 <script> 
+$(document).ready(function() {
+    // Load initial chart data
+    loadChart();
+
+    // Year filter button click event
+    $('#filterBtn').on('click', function() {
+        let year = $("#year_filter").val();
+        loadChart(year);
+    });
+
+    $("#year_filter").on("change", function(){
+        loadChart($(this).val());
+    });
+});
+
+// ==========================================================================================
+
+// ==========================================================================================
+
 // ==========================================================================================
 // Fullcalendar Start
 var eventsFromPHP = <?php echo $events_json; ?>;
@@ -373,27 +399,60 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ==========================================================================================
 // Doughnut Chart Start
+// const ctx = document.getElementById('myDoughnutChart');
+
+// const vaccineLabels = <?= json_encode($vax_donut_labels); ?>;
+// const vaccineData   = <?= json_encode($vax_donut_data); ?>;
+
+// new Chart(ctx, {
+//     type: 'doughnut',
+//     data: {
+//         labels: vaccineLabels,
+//         datasets: [{
+//             label: 'Vaccine Balance',
+//             data: vaccineData,
+//             backgroundColor: [
+//                 '#4CAF50',
+//                 '#2196F3',
+//                 '#FFC107',
+//                 '#E91E63',
+//                 '#9C27B0',
+//                 '#00BCD4',
+//                 '#FF5722',
+//                 '#8BC34A'
+//             ],
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         plugins: {
+//             legend: {
+//                 position: 'bottom'
+//             },
+//             tooltip: {
+//                 callbacks: {
+//                     label: function(context) {
+//                         return context.label + ': ' + context.raw + ' doses';
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// });
 const ctx = document.getElementById('myDoughnutChart');
 
-const vaccineLabels = <?= json_encode($vax_donut_labels); ?>;
-const vaccineData   = <?= json_encode($vax_donut_data); ?>;
-
-new Chart(ctx, {
+let myDoughnutChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: vaccineLabels,
+        labels: [],
         datasets: [{
             label: 'Vaccine Balance',
-            data: vaccineData,
+            data: [],
             backgroundColor: [
-                '#4CAF50',
-                '#2196F3',
-                '#FFC107',
-                '#E91E63',
-                '#9C27B0',
-                '#00BCD4',
-                '#FF5722',
-                '#8BC34A'
+                '#4CAF50','#2196F3','#FFC107','#E91E63',
+                '#9C27B0','#00BCD4','#FF5722','#8BC34A'
             ],
             borderWidth: 1
         }]
@@ -402,9 +461,7 @@ new Chart(ctx, {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            legend: {
-                position: 'bottom'
-            },
+            legend: { position: 'bottom' },
             tooltip: {
                 callbacks: {
                     label: function(context) {
@@ -415,6 +472,38 @@ new Chart(ctx, {
         }
     }
 });
+
+// year filter for charts
+$("#year_filter").datepicker({
+    changeYear: true,
+    showButtonPanel: true,
+    dateFormat: 'yy',
+    onClose: function(dateText, inst) {
+        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        $(this).val(year);
+    },
+    beforeShow: function(input, inst) {
+        $(".ui-datepicker-calendar").hide();
+    }
+});
+
+function loadChart(year = '') {
+
+    $.ajax({
+        url: "get_vaccine_donut_chart.php",
+        type: "POST",
+        data: { year: year },
+        dataType: "json",
+        success: function(response) {
+
+            myDoughnutChart.data.labels = response.labels;
+            myDoughnutChart.data.datasets[0].data = response.data;
+
+            myDoughnutChart.update();
+        }
+    });
+
+}
 // Doughnut Chart End
 // ==========================================================================================
 

@@ -54,6 +54,7 @@ error_reporting(0);
 
   <!-- Bootstrap Color Picker -->
   <link rel="stylesheet" href="../../plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+  <link rel="stylesheet" href="../../plugins/jquery-ui/1.14/jquery-ui.min.css">
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
 		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-163334868-1"></script> -->
