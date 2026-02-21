@@ -656,7 +656,7 @@ const datasets_line = <?php
 const firstDataset = datasets_line[0];
 
 // Set its label to next year
-const nextYear_line = new Date().getFullYear(); // current year + 1
+const nextYear_line = new Date().getFullYear() + 1; // current year + 1
 firstDataset.label = nextYear_line;
 
 const horizontalLineChart = new Chart(ctx_line, {
