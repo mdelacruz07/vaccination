@@ -170,7 +170,7 @@
                                         </span>
                                     </div>
                                     <div class="form-control p-0 border-0">
-                                        <input type="text" id="running_balance" class="running_balance form-control" placeholder="0">
+                                        <input type="text" id="running_balance" class="running_balance form-control" placeholder="0" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -291,7 +291,7 @@
             </div>
         </div>
     </div>
-    <!-- /.modal -->
+        
     <?php 
         include '../inc/confirmation_alerts.php';
         include '../inc/footer.php';

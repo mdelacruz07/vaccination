@@ -309,7 +309,7 @@
                                 </div>
                             </div>
 
-                            <div class="row calendar_data_incidator my-4">
+                            <!-- <div class="row calendar_data_incidator my-4">
                                 <div class="col-12 mb-2">
                                     <div class="circle blue"></div> 
                                     <span>1st Dose</span>
@@ -333,7 +333,7 @@
 
                             <div class="col-12 mb-5">
                                 <div id="vaccine_calendar"></div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -548,6 +548,10 @@ function loadVerticalChart(year = '') {
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutQuart'
+                    },
                     plugins: {
                         legend: { position: 'top' },
                         title: {
