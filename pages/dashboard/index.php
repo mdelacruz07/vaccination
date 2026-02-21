@@ -306,6 +306,26 @@
                                             <canvas id="myLineChart"></canvas>
                                         </div>
                                     </div>
+
+                                    <div class="col-6 separated_charts">
+                                        <div style="width:150px;">
+                                            <div class="year_filter_container input-group">
+                                                <div class="form-control p-0">
+                                                    <select class="year_filter_stacked_bar year-filter-select2 form-control select2" style="width: 100%;">
+                                                        <option value="">Select Year</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart_desc">
+                                            <p class="my-3">This chart indicates how many vaccinee received each vaccine type.</p>
+                                        </div>
+
+                                        <div class="stacked_bar" style="width: 100%; max-width: 800px;">
+                                            <canvas id="facilityVaccineChart"></canvas>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -355,6 +375,7 @@ $(document).ready(function() {
     loadDonutChart();
     loadVerticalChart();
     loadHorizontalChart();
+    loadStackedChart();
 
     // Select2 dynamic year options
     let startYear = new Date().getFullYear(); // current year
@@ -390,6 +411,12 @@ $(document).ready(function() {
     $('.year_filter_horizontal_bar').on('change', function() {
         let year = $(this).val();
         loadHorizontalChart(year);
+    });
+
+    // Stacked Bar
+    $('.year_filter_stacked_bar').on('change', function() {
+        let year = $(this).val();
+        loadStackedChart(year);
     });
     // ==========================================================================================
 });
@@ -689,4 +716,67 @@ const horizontalLineChart = new Chart(ctx_line, {
         }
     }
 });
+
+// Line Chart End
+// ==========================================================================================
+let stackedChart;
+
+function loadStackedChart(year = '') {
+    $.ajax({
+        url: "get_vaccine_stack_chart.php",
+        type: "POST",
+        data: { year: year },
+        dataType: "json",
+        success: function(response) {
+
+            const ctx_stacked = document.getElementById('facilityVaccineChart').getContext('2d');
+
+            if (stackedChart) {
+                stackedChart.destroy();
+            }
+
+            // Generate colors based on number of vaccines (datasets)
+            const colors = generateColors(response.datasets.length);
+
+            // Assign colors dynamically
+            response.datasets.forEach((dataset, index) => {
+                dataset.backgroundColor = colors[index];
+                dataset.borderColor = colors[index];
+                dataset.borderWidth = 1;
+            });
+
+
+            stackedChart = new Chart(ctx_stacked, {
+                type: 'bar',
+                data: {
+                    labels: response.labels,
+                    datasets: response.datasets
+                },
+                options: {
+                    indexAxis: 'x',
+                    responsive: true,
+                    // plugins: {
+                    //     tooltip: {
+                    //         mode: 'index',
+                    //         intersect: false
+                    //     },
+                    //     legend: {
+                    //         position: 'top'
+                    //     }
+                    // },
+                    scales: {
+                        x: {
+                            stacked: true
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    }
+                }
+            });
+
+        }
+    });
+}
+
 </script>
