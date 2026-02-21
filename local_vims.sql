@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 21, 2026 at 09:32 AM
--- Server version: 8.4.3
--- PHP Version: 8.3.26
+-- Host: 127.0.0.1
+-- Generation Time: Feb 21, 2026 at 07:11 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,78 +28,78 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `local_data_fetcher` (
-  `id` int NOT NULL,
-  `database_main_id` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'NEW',
-  `qr_id` mediumtext COLLATE utf8mb4_general_ci,
-  `employmentcategory` mediumtext COLLATE utf8mb4_general_ci,
-  `sub_category` mediumtext COLLATE utf8mb4_general_ci,
-  `idcategory` mediumtext COLLATE utf8mb4_general_ci,
-  `idnumber` mediumtext COLLATE utf8mb4_general_ci,
-  `phid` mediumtext COLLATE utf8mb4_general_ci,
-  `pwdid` mediumtext COLLATE utf8mb4_general_ci,
-  `lastname` mediumtext COLLATE utf8mb4_general_ci,
-  `firstname` mediumtext COLLATE utf8mb4_general_ci,
-  `middlename` mediumtext COLLATE utf8mb4_general_ci,
-  `suffix` mediumtext COLLATE utf8mb4_general_ci,
-  `contact` mediumtext COLLATE utf8mb4_general_ci,
-  `gender` mediumtext COLLATE utf8mb4_general_ci,
+  `id` int(11) NOT NULL,
+  `database_main_id` varchar(255) NOT NULL DEFAULT 'NEW',
+  `qr_id` mediumtext DEFAULT NULL,
+  `employmentcategory` mediumtext DEFAULT NULL,
+  `sub_category` mediumtext DEFAULT NULL,
+  `idcategory` mediumtext DEFAULT NULL,
+  `idnumber` mediumtext DEFAULT NULL,
+  `phid` mediumtext DEFAULT NULL,
+  `pwdid` mediumtext DEFAULT NULL,
+  `lastname` mediumtext DEFAULT NULL,
+  `firstname` mediumtext DEFAULT NULL,
+  `middlename` mediumtext DEFAULT NULL,
+  `suffix` mediumtext DEFAULT NULL,
+  `contact` mediumtext DEFAULT NULL,
+  `gender` mediumtext DEFAULT NULL,
   `bday` date DEFAULT NULL,
-  `brgy` mediumtext COLLATE utf8mb4_general_ci,
-  `region` mediumtext COLLATE utf8mb4_general_ci,
-  `province` mediumtext COLLATE utf8mb4_general_ci,
-  `city` mediumtext COLLATE utf8mb4_general_ci,
-  `civil_status` mediumtext COLLATE utf8mb4_general_ci,
-  `employment_status` mediumtext COLLATE utf8mb4_general_ci,
-  `ocupation` mediumtext COLLATE utf8mb4_general_ci,
-  `agency` mediumtext COLLATE utf8mb4_general_ci,
-  `current_residence` mediumtext COLLATE utf8mb4_general_ci,
-  `pregnant` mediumtext COLLATE utf8mb4_general_ci,
-  `nurse_response` mediumtext COLLATE utf8mb4_general_ci,
-  `covid_status` mediumtext COLLATE utf8mb4_general_ci,
-  `covid_exposure` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccination_status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Not-Vaccinated',
-  `reason_refusal` mediumtext COLLATE utf8mb4_general_ci,
-  `if_severe_allergic` mediumtext COLLATE utf8mb4_general_ci,
-  `allergy` mediumtext COLLATE utf8mb4_general_ci,
-  `if_allergy` mediumtext COLLATE utf8mb4_general_ci,
-  `dose_1` mediumtext COLLATE utf8mb4_general_ci,
-  `dose_2` mediumtext COLLATE utf8mb4_general_ci,
-  `booster` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `allergies_to_PEG` mediumtext COLLATE utf8mb4_general_ci,
-  `bleeding_disorders` mediumtext COLLATE utf8mb4_general_ci,
-  `if_bleeding` mediumtext COLLATE utf8mb4_general_ci,
-  `symtoms` mediumtext COLLATE utf8mb4_general_ci,
-  `if_receive_vaccine` mediumtext COLLATE utf8mb4_general_ci,
-  `comorbidity` mediumtext COLLATE utf8mb4_general_ci,
-  `consent` mediumtext COLLATE utf8mb4_general_ci,
-  `defferal` mediumtext COLLATE utf8mb4_general_ci,
+  `brgy` mediumtext DEFAULT NULL,
+  `region` mediumtext DEFAULT NULL,
+  `province` mediumtext DEFAULT NULL,
+  `city` mediumtext DEFAULT NULL,
+  `civil_status` mediumtext DEFAULT NULL,
+  `employment_status` mediumtext DEFAULT NULL,
+  `ocupation` mediumtext DEFAULT NULL,
+  `agency` mediumtext DEFAULT NULL,
+  `current_residence` mediumtext DEFAULT NULL,
+  `pregnant` mediumtext DEFAULT NULL,
+  `nurse_response` mediumtext DEFAULT NULL,
+  `covid_status` mediumtext DEFAULT NULL,
+  `covid_exposure` mediumtext DEFAULT NULL,
+  `vaccination_status` varchar(255) NOT NULL DEFAULT 'Not-Vaccinated',
+  `reason_refusal` mediumtext DEFAULT NULL,
+  `if_severe_allergic` mediumtext DEFAULT NULL,
+  `allergy` mediumtext DEFAULT NULL,
+  `if_allergy` mediumtext DEFAULT NULL,
+  `dose_1` mediumtext DEFAULT NULL,
+  `dose_2` mediumtext DEFAULT NULL,
+  `booster` varchar(255) DEFAULT NULL,
+  `allergies_to_PEG` mediumtext DEFAULT NULL,
+  `bleeding_disorders` mediumtext DEFAULT NULL,
+  `if_bleeding` mediumtext DEFAULT NULL,
+  `symtoms` mediumtext DEFAULT NULL,
+  `if_receive_vaccine` mediumtext DEFAULT NULL,
+  `comorbidity` mediumtext DEFAULT NULL,
+  `consent` mediumtext DEFAULT NULL,
+  `defferal` mediumtext DEFAULT NULL,
   `time_stamp` date DEFAULT NULL,
-  `convalescent` mediumtext COLLATE utf8mb4_general_ci,
-  `if_pregnant` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccine_name` mediumtext COLLATE utf8mb4_general_ci,
-  `batch_number` mediumtext COLLATE utf8mb4_general_ci,
-  `lot_number` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccinator_name` mediumtext COLLATE utf8mb4_general_ci,
-  `prof_vaccinator` mediumtext COLLATE utf8mb4_general_ci,
-  `medical_clearance` mediumtext COLLATE utf8mb4_general_ci,
-  `allergy_to_vaccine` mediumtext COLLATE utf8mb4_general_ci,
-  `profile_comorbidity` mediumtext COLLATE utf8mb4_general_ci,
-  `encoded` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'NO',
-  `covid_classification` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'N/A',
-  `indigenous` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `adverse_event` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `adverse_event_cons` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'N/A',
-  `pwd` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `sched_status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT ' approved',
-  `facility_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `encoded_by` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'Unrecorded',
-  `guardian` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ped_comorbid` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sec_vaccine_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sec_batch_number` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sec_lot_number` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `convalescent` mediumtext DEFAULT NULL,
+  `if_pregnant` mediumtext DEFAULT NULL,
+  `vaccine_name` mediumtext DEFAULT NULL,
+  `batch_number` mediumtext DEFAULT NULL,
+  `lot_number` mediumtext DEFAULT NULL,
+  `vaccinator_name` mediumtext DEFAULT NULL,
+  `prof_vaccinator` mediumtext DEFAULT NULL,
+  `medical_clearance` mediumtext DEFAULT NULL,
+  `allergy_to_vaccine` mediumtext DEFAULT NULL,
+  `profile_comorbidity` mediumtext DEFAULT NULL,
+  `encoded` varchar(255) NOT NULL DEFAULT 'NO',
+  `covid_classification` varchar(255) NOT NULL DEFAULT 'N/A',
+  `indigenous` varchar(255) NOT NULL DEFAULT '02_No',
+  `adverse_event` varchar(255) NOT NULL DEFAULT '02_No',
+  `adverse_event_cons` varchar(255) NOT NULL DEFAULT 'N/A',
+  `pwd` varchar(255) NOT NULL DEFAULT '02_No',
+  `sched_status` varchar(255) NOT NULL DEFAULT ' approved',
+  `facility_id` varchar(255) DEFAULT NULL,
+  `encoded_by` varchar(255) DEFAULT 'Unrecorded',
+  `guardian` varchar(255) DEFAULT NULL,
+  `ped_comorbid` varchar(255) DEFAULT NULL,
+  `sec_vaccine_name` varchar(255) DEFAULT NULL,
+  `sec_batch_number` varchar(255) DEFAULT NULL,
+  `sec_lot_number` varchar(255) DEFAULT NULL,
   `sec_date_of_vaccination` date DEFAULT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_added` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -123,40 +123,62 @@ INSERT INTO `local_data_fetcher` (`id`, `database_main_id`, `qr_id`, `employment
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `minimum_stock`
+--
+
+CREATE TABLE `minimum_stock` (
+  `id` int(11) NOT NULL,
+  `min_qty` int(11) NOT NULL,
+  `create_by` int(11) NOT NULL,
+  `create_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `update_by` int(11) NOT NULL,
+  `update_date` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `minimum_stock`
+--
+
+INSERT INTO `minimum_stock` (`id`, `min_qty`, `create_by`, `create_date`, `update_by`, `update_date`) VALUES
+(1, 30, 0, '2026-02-21 05:01:17', 49, '2026-02-21 13:01:17');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `patient`
 --
 
 CREATE TABLE `patient` (
-  `id` int NOT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `middlename` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `category` text COLLATE utf8mb4_general_ci NOT NULL,
-  `province` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `city` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `barangay` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `indigenous` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `pwd` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `guardian_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `pedia_comorbidity` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `first_dose_date` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `first_vaccine_id` int NOT NULL,
-  `first_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `first_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `second_dose_date` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `second_vaccine_id` int NOT NULL DEFAULT '0',
-  `second_batch_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `second_lot_no` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `vaccinator_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `first_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `second_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `booster` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
-  `created_by` int NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 not delete\r\n1 is deleted',
+  `id` int(11) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `middlename` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `category` text NOT NULL,
+  `province` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `barangay` varchar(255) NOT NULL,
+  `indigenous` varchar(255) DEFAULT '',
+  `pwd` varchar(255) DEFAULT '',
+  `guardian_name` varchar(255) DEFAULT '',
+  `pedia_comorbidity` varchar(255) DEFAULT '',
+  `first_dose_date` varchar(255) DEFAULT NULL,
+  `first_vaccine_id` int(11) NOT NULL,
+  `first_batch_no` varchar(255) DEFAULT '',
+  `first_lot_no` varchar(255) DEFAULT '',
+  `second_dose_date` varchar(255) DEFAULT NULL,
+  `second_vaccine_id` int(11) NOT NULL DEFAULT 0,
+  `second_batch_no` varchar(255) DEFAULT '',
+  `second_lot_no` varchar(255) DEFAULT '',
+  `vaccinator_name` varchar(255) NOT NULL,
+  `first_dose` varchar(255) DEFAULT '',
+  `second_dose` varchar(255) DEFAULT '',
+  `booster` varchar(255) DEFAULT '',
+  `created_by` int(11) NOT NULL,
+  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_archive` int(11) NOT NULL DEFAULT 0 COMMENT '0 not delete\r\n1 is deleted',
   `is_archive_at` datetime DEFAULT NULL,
-  `is_archive_by` int NOT NULL DEFAULT '0',
-  `update_by` int NOT NULL DEFAULT '0',
+  `is_archive_by` int(11) NOT NULL DEFAULT 0,
+  `update_by` int(11) NOT NULL DEFAULT 0,
   `update_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -168,11 +190,11 @@ INSERT INTO `patient` (`id`, `firstname`, `middlename`, `lastname`, `category`, 
 (1, 'test', 'test', 'test', 'Health Care Workers', 'AGUSAN DEL SUR', 'LA PAZ', 'KASAPA II', 'No', 'No', '', '', '2026-02-16', 2, 'test', 'test', '2026-03-18', 0, 'None', 'None', 'test', 'Yes', 'No', 'No', 49, '2026-02-16 08:37:43', 0, NULL, 0, 49, '2026-02-17 23:36:53'),
 (2, 'test2', 'test2', 'test2', 'Senior Citizens', 'BULACAN', 'PANDI', 'REAL DE CACARONG', 'Yes', 'Yes', 'test2', 'test2', '2026-02-17', 7, '1', '1', '2026-03-17', 0, 'None', 'None', 'test2', 'No', 'Yes', 'No', 49, '2026-02-17 10:54:58', 0, '2026-02-19 17:17:19', 49, 49, '2026-02-17 23:28:44'),
 (3, 'test333333', 'test333333', 'test333333', 'Other Remaing Workforce', 'AGUSAN DEL SUR', 'PROSPERIDAD', 'AZPETIA', 'No', 'Yes', 'test3test333333', 'test3test333333', '2026-02-17', 7, 'None', 'None', '2026-03-17', 0, 'test333333', 'test333333', 'test3', 'Yes', 'Yes', 'Yes', 49, '2026-02-17 11:00:05', 0, '2026-02-19 17:17:19', 49, 49, '2026-02-17 23:27:06'),
-(4, 'test4', 'test4', 'test4', 'Family Members of Healthcare Workers', 'AURORA', 'DINGALAN', 'IBONA', 'No', 'No', 'test4', 'test4', '2026-02-18', 0, '', '', '', 0, '', '', 'test4', 'No', 'No', 'No', 49, '2026-02-18 08:02:26', 1, '2026-02-19 17:17:53', 49, 0, NULL),
+(4, 'test4', 'test4', 'test4', 'Family Members of Healthcare Workers', 'AURORA', 'DINGALAN', 'IBONA', 'No', 'No', 'test4', 'test4', '2026-02-21', 0, '', '', '', 0, '', '', 'test4', 'No', 'No', 'No', 49, '2026-02-18 08:02:26', 1, '2026-02-19 17:17:53', 49, 0, NULL),
 (5, 'Test5', 'Test5', 'Test5', 'Overseas Filipino Workers', 'ANTIQUE', 'LIBERTAD', 'MARAMIG', 'No', 'No', 'Test5', 'Test5', '2026-02-24', 7, 'Test5', 'Test5', '2026-03-24', 0, '', '', 'Test5', 'No', 'No', 'No', 49, '2026-02-19 09:20:01', 0, NULL, 0, 0, NULL),
 (6, 'Test6', 'Test6', 'Test6', 'Family Members of Healthcare Workers', 'BULACAN', 'PANDI', 'SANTO NIÑO', 'Yes', 'No', 'Test6', 'Test6', '2026-02-27', 7, 'Test6', 'Test6', '2026-03-27', 0, '', '', 'Test6', 'No', 'No', 'No', 49, '2026-02-19 09:21:15', 0, NULL, 0, 0, NULL),
-(7, 'Test7', 'Test7', 'Test7', 'Other Remaing Workforce', 'SOUTH COTABATO', 'POLOMOLOK', 'LUMAKIL', 'Yes', 'Yes', 'Test7', 'Test7', '2025-02-09', 2, 'Test7', 'Test7', '2025-03-09', 0, '', '', 'N/A', 'Yes', 'No', 'No', 49, '2026-02-19 09:22:27', 0, NULL, 0, 0, NULL),
-(8, 'Test8', 'Test8', 'Test8', 'Adult with Comorbidity', 'BENGUET', 'KABAYAN', 'LUSOD', 'Yes', 'No', 'Test8', 'Test8', '2024-02-05', 7, 'Test8', 'Test8', '2024-03-05', 0, '', '', 'Test8', 'Yes', 'No', 'No', 49, '2026-02-19 09:23:24', 0, NULL, 0, 0, NULL);
+(7, 'Test7', 'Test7', 'Test7', 'Other Remaing Workforce', 'SOUTH COTABATO', 'POLOMOLOK', 'LUMAKIL', 'Yes', 'Yes', 'Test7', 'Test7', '2025-02-09', 2, 'Test7', 'Test7', '2025-03-09', 2, 'None', 'None', 'N/A', 'Yes', 'Yes', 'No', 49, '2026-02-19 09:22:27', 0, NULL, 0, 49, '2026-02-21 11:57:10'),
+(8, 'Test8', 'Test8', 'Test8', 'Adult with Comorbidity', 'BENGUET', 'KABAYAN', 'LUSOD', 'Yes', 'No', 'Test8', 'Test8', '2024-02-05', 7, 'Test8', 'Test8', '2024-03-05', 7, 'None', 'None', 'Test8', 'Yes', 'Yes', 'No', 49, '2026-02-19 09:23:24', 0, NULL, 0, 49, '2026-02-21 11:46:58');
 
 -- --------------------------------------------------------
 
@@ -181,36 +203,36 @@ INSERT INTO `patient` (`id`, `firstname`, `middlename`, `lastname`, `category`, 
 --
 
 CREATE TABLE `system_config` (
-  `id` int NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `head_title` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nav_bar_title` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nav_bar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `nav_bar_text_color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `side_bar` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `side_bar_text` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `hover_side_bar_text` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `hover_side_bar_text_bg` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `header_color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `header_font_color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `modal_header_color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `modal_header_font_color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `system_main_redirect` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `system_logo` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `login_background_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `background_image` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `system_add_bg_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_add_btn_border` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_add_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_add_btn_size` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_delete_bg_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_delete_btn_border` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_delete_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_delete_btn_size` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_edit_bg_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_edit_btn_border` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_edit_btn_color` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `system_edit_btn_size` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `head_title` varchar(255) NOT NULL,
+  `nav_bar_title` varchar(255) DEFAULT NULL,
+  `nav_bar` varchar(255) NOT NULL,
+  `nav_bar_text_color` varchar(255) NOT NULL,
+  `side_bar` varchar(255) NOT NULL,
+  `side_bar_text` varchar(255) NOT NULL,
+  `hover_side_bar_text` varchar(255) NOT NULL,
+  `hover_side_bar_text_bg` varchar(255) NOT NULL,
+  `header_color` varchar(255) NOT NULL,
+  `header_font_color` varchar(255) NOT NULL,
+  `modal_header_color` varchar(255) NOT NULL,
+  `modal_header_font_color` varchar(255) NOT NULL,
+  `system_main_redirect` varchar(255) NOT NULL,
+  `system_logo` varchar(255) NOT NULL,
+  `login_background_image` varchar(255) NOT NULL,
+  `background_image` varchar(255) NOT NULL,
+  `system_add_bg_btn_color` varchar(255) DEFAULT NULL,
+  `system_add_btn_border` varchar(255) DEFAULT NULL,
+  `system_add_btn_color` varchar(255) DEFAULT NULL,
+  `system_add_btn_size` varchar(255) DEFAULT NULL,
+  `system_delete_bg_btn_color` varchar(255) DEFAULT NULL,
+  `system_delete_btn_border` varchar(255) DEFAULT NULL,
+  `system_delete_btn_color` varchar(255) DEFAULT NULL,
+  `system_delete_btn_size` varchar(255) DEFAULT NULL,
+  `system_edit_bg_btn_color` varchar(255) DEFAULT NULL,
+  `system_edit_btn_border` varchar(255) DEFAULT NULL,
+  `system_edit_btn_color` varchar(255) DEFAULT NULL,
+  `system_edit_btn_size` varchar(255) DEFAULT NULL,
   `system_libraries_date_creation` date NOT NULL,
   `system_date_creation` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -229,12 +251,12 @@ INSERT INTO `system_config` (`id`, `title`, `head_title`, `nav_bar_title`, `nav_
 --
 
 CREATE TABLE `system_facilities` (
-  `id` int NOT NULL,
-  `facility_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `location` mediumtext COLLATE utf8mb4_general_ci,
-  `iframe_location` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `id` int(11) NOT NULL,
+  `facility_name` varchar(255) DEFAULT NULL,
+  `location` mediumtext DEFAULT NULL,
+  `iframe_location` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -255,10 +277,10 @@ INSERT INTO `system_facilities` (`id`, `facility_name`, `location`, `iframe_loca
 --
 
 CREATE TABLE `system_nav_group` (
-  `id` int NOT NULL,
+  `id` int(11) NOT NULL,
   `nav_group_name` varchar(255) DEFAULT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `system_nav_group`
@@ -282,13 +304,13 @@ INSERT INTO `system_nav_group` (`id`, `nav_group_name`, `time_stamp`) VALUES
 --
 
 CREATE TABLE `system_pages` (
-  `pages_id` int NOT NULL,
-  `page_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `page_link` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `page_type` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'nav',
-  `page_icon` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nav_group_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `pages_id` int(11) NOT NULL,
+  `page_name` varchar(255) DEFAULT NULL,
+  `page_link` varchar(255) DEFAULT NULL,
+  `page_type` varchar(255) DEFAULT 'nav',
+  `page_icon` varchar(255) DEFAULT NULL,
+  `nav_group_id` varchar(255) DEFAULT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -333,7 +355,8 @@ INSERT INTO `system_pages` (`pages_id`, `page_name`, `page_link`, `page_type`, `
 (61, 'Receiving', '../vaccine_receive', 'nav', ' ', '15', '2026-02-05 06:41:35'),
 (62, 'Issuance', '../vaccine_issuance', 'nav', ' ', '15', '2026-02-05 06:41:35'),
 (63, 'Stocks', '../vaccine_stocks', 'nav', ' ', '15', '2026-02-11 07:00:24'),
-(64, 'Patients', '../vaccinees', 'nav', ' ', '9', '2026-02-13 07:38:55');
+(64, 'Patients', '../vaccinees', 'nav', ' ', '9', '2026-02-13 07:38:55'),
+(65, 'Calendar', '../calendar', 'nav', ' ', '9', '2026-02-21 02:25:32');
 
 -- --------------------------------------------------------
 
@@ -342,11 +365,11 @@ INSERT INTO `system_pages` (`pages_id`, `page_name`, `page_link`, `page_type`, `
 --
 
 CREATE TABLE `system_page_access` (
-  `page_access` int NOT NULL,
-  `page_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `nav_group_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `page_access` int(11) NOT NULL,
+  `page_id` varchar(255) DEFAULT NULL,
+  `nav_group_id` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `time_stamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -354,7 +377,7 @@ CREATE TABLE `system_page_access` (
 --
 
 INSERT INTO `system_page_access` (`page_access`, `page_id`, `nav_group_id`, `name`, `time_stamp`) VALUES
-(1, '1,3,31,32,2,33,59,61,62,63,64', ', 1, 2, 9, 15', 'Super Admin', '2026-02-18 08:36:32'),
+(1, '1,3,31,32,2,33,59,61,62,63,64,65', ', 1, 2, 9, 15', 'Super Admin', '2026-02-21 02:25:43'),
 (14, ',1,35,36,44,39,55', ', 1, 9, 11, 14', 'Admin', '2021-11-11 00:37:36'),
 (15, ',35,1', ', 1, 9', 'Encoder', '2021-05-23 14:48:54'),
 (16, ',38,1', ', 9, 1', 'Pre Vaccination Screening', '2021-06-11 11:50:23'),
@@ -370,23 +393,23 @@ INSERT INTO `system_page_access` (`page_access`, `page_id`, `nav_group_id`, `nam
 --
 
 CREATE TABLE `system_user` (
-  `id` int NOT NULL,
-  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `middle_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `suffix` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `age` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `id` int(11) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `middle_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `suffix` varchar(255) DEFAULT NULL,
+  `age` varchar(255) NOT NULL,
   `birthday` date NOT NULL,
-  `gender` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `address` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `contact` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `access` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `profile_picture` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `code` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `facility_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `gender` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `contact` varchar(255) DEFAULT NULL,
+  `access` varchar(255) NOT NULL,
+  `profile_picture` varchar(255) DEFAULT NULL,
+  `code` varchar(255) DEFAULT NULL,
+  `facility_id` varchar(255) DEFAULT NULL,
+  `date_added` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -408,16 +431,16 @@ INSERT INTO `system_user` (`id`, `first_name`, `middle_name`, `last_name`, `suff
 --
 
 CREATE TABLE `vaccines` (
-  `id` int NOT NULL COMMENT 'Vaccine ID',
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Vaccine name (e.g., “Pfizer-BioNTech COVID-19”).',
-  `type` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Vaccine type (e.g., “mRNA”, “Inactivated”).',
-  `manufacturer` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Default manufacturer.',
-  `dose_per_vial` int NOT NULL COMMENT 'Doses per vial.',
-  `description` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Vaccine details.',
-  `created_by` int NOT NULL COMMENT 'References users.id (creator of record).',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record creation timestamp.',
+  `id` int(11) NOT NULL COMMENT 'Vaccine ID',
+  `name` varchar(100) NOT NULL COMMENT 'Vaccine name (e.g., “Pfizer-BioNTech COVID-19”).',
+  `type` varchar(255) NOT NULL COMMENT 'Vaccine type (e.g., “mRNA”, “Inactivated”).',
+  `manufacturer` text NOT NULL COMMENT 'Default manufacturer.',
+  `dose_per_vial` int(11) NOT NULL COMMENT 'Doses per vial.',
+  `description` text NOT NULL COMMENT 'Vaccine details.',
+  `created_by` int(11) NOT NULL COMMENT 'References users.id (creator of record).',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Record creation timestamp.',
   `updated_at` datetime NOT NULL COMMENT 'Record update timestamp.',
-  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 = not delete\r\n1 = delete'
+  `is_archive` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not delete\r\n1 = delete'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -442,26 +465,26 @@ INSERT INTO `vaccines` (`id`, `name`, `type`, `manufacturer`, `dose_per_vial`, `
 --
 
 CREATE TABLE `vaccine_inventory` (
-  `id` int NOT NULL COMMENT 'Unique identifier for each inventory record.',
-  `vaccine_id` int NOT NULL COMMENT 'References the vaccines table.',
-  `batch_no` varchar(50) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Batch or lot number from manufacturer.',
-  `manufacturer` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Vaccine manufacturer name.',
-  `supplier_id` int DEFAULT NULL COMMENT 'References the suppliers table.',
-  `quantity_received` int NOT NULL COMMENT 'Number of doses received.',
-  `quantity_available` int DEFAULT NULL COMMENT 'Current remaining stock.',
-  `unit` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Unit of measurement (e.g., doses, vials).',
-  `storage_location` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Physical storage location (e.g., “Cold Room A”).',
-  `temperature_range` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Recommended storage temperature (e.g., “2°C–8°C”).',
+  `id` int(11) NOT NULL COMMENT 'Unique identifier for each inventory record.',
+  `vaccine_id` int(11) NOT NULL COMMENT 'References the vaccines table.',
+  `batch_no` varchar(50) NOT NULL COMMENT 'Batch or lot number from manufacturer.',
+  `manufacturer` varchar(255) NOT NULL COMMENT 'Vaccine manufacturer name.',
+  `supplier_id` int(11) DEFAULT NULL COMMENT 'References the suppliers table.',
+  `quantity_received` int(11) NOT NULL COMMENT 'Number of doses received.',
+  `quantity_available` int(11) DEFAULT NULL COMMENT 'Current remaining stock.',
+  `unit` varchar(255) NOT NULL COMMENT 'Unit of measurement (e.g., doses, vials).',
+  `storage_location` varchar(255) NOT NULL COMMENT 'Physical storage location (e.g., “Cold Room A”).',
+  `temperature_range` varchar(255) NOT NULL COMMENT 'Recommended storage temperature (e.g., “2°C–8°C”).',
   `expiry_date` date NOT NULL COMMENT 'Expiration date of the batch.',
   `date_received` date NOT NULL COMMENT 'Date received.',
-  `received_by` varchar(255) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'References users.id (person who received).',
-  `status` enum('Available','Used','Expired','Damaged','Quarantined') COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Batch status.',
-  `remarks` text COLLATE utf8mb4_general_ci COMMENT 'Additional notes.',
-  `created_by` int NOT NULL COMMENT 'References users.id (person who created the record).',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record creation timestamp.',
-  `updated_by` int DEFAULT NULL,
+  `received_by` varchar(255) NOT NULL COMMENT 'References users.id (person who received).',
+  `status` enum('Available','Used','Expired','Damaged','Quarantined') NOT NULL COMMENT 'Batch status.',
+  `remarks` text DEFAULT NULL COMMENT 'Additional notes.',
+  `created_by` int(11) NOT NULL COMMENT 'References users.id (person who created the record).',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Record creation timestamp.',
+  `updated_by` int(11) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL COMMENT 'Record update timestamp.',
-  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 = not deleted\r\n1 = delete'
+  `is_archive` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted\r\n1 = delete'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -479,21 +502,21 @@ INSERT INTO `vaccine_inventory` (`id`, `vaccine_id`, `batch_no`, `manufacturer`,
 --
 
 CREATE TABLE `vaccine_issuance` (
-  `id` int NOT NULL,
-  `vaccine_id` int NOT NULL COMMENT 'vaccine',
-  `issued_to` int NOT NULL DEFAULT '0' COMMENT 'facility_if from facility',
-  `issued_type` enum('Used','Expire','Damage','Transfer','Return') COLLATE utf8mb4_general_ci NOT NULL COMMENT 'types of out',
+  `id` int(11) NOT NULL,
+  `vaccine_id` int(11) NOT NULL COMMENT 'vaccine',
+  `issued_to` int(11) NOT NULL DEFAULT 0 COMMENT 'facility_if from facility',
+  `issued_type` enum('Used','Expire','Damage','Transfer','Return') NOT NULL COMMENT 'types of out',
   `issued_date` date NOT NULL,
-  `vaccinee_id` int NOT NULL DEFAULT '0' COMMENT 'vaccine_registration id',
-  `quantity` int NOT NULL,
-  `remarks` text COLLATE utf8mb4_general_ci,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_by` int NOT NULL COMMENT 'the one who was logged in',
-  `update_by` int DEFAULT NULL COMMENT 'the one who was logged in',
+  `vaccinee_id` int(11) NOT NULL DEFAULT 0 COMMENT 'vaccine_registration id',
+  `quantity` int(11) NOT NULL,
+  `remarks` text DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` int(11) NOT NULL COMMENT 'the one who was logged in',
+  `update_by` int(11) DEFAULT NULL COMMENT 'the one who was logged in',
   `update_date` datetime DEFAULT NULL,
-  `is_archive` int NOT NULL DEFAULT '0',
+  `is_archive` int(11) NOT NULL DEFAULT 0,
   `is_archive_date` datetime DEFAULT NULL,
-  `is_archive_by` int DEFAULT NULL COMMENT 'the one who was logged in'
+  `is_archive_by` int(11) DEFAULT NULL COMMENT 'the one who was logged in'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -508,7 +531,8 @@ INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, 
 (5, 7, 0, 'Used', '2026-02-19', 6, 1, 'Used for Test6 Test6 Test6 as first dose', '2026-02-19 09:21:15', 49, 0, NULL, 0, NULL, NULL),
 (6, 2, 0, 'Used', '2026-02-19', 7, 1, 'Used for Test7 Test7 Test7 as first dose', '2026-02-19 09:22:27', 49, 0, NULL, 0, NULL, NULL),
 (7, 7, 0, 'Used', '2026-02-19', 8, 1, 'Used for Test8 Test8 Test8 as first dose', '2026-02-19 09:23:24', 49, 0, NULL, 0, NULL, NULL),
-(8, 1, 4, 'Transfer', '2025-02-05', 0, 40, 'test', '2026-02-21 07:09:53', 49, NULL, NULL, 0, NULL, NULL);
+(8, 1, 4, 'Transfer', '2025-02-05', 0, 40, 'test', '2026-02-21 07:09:53', 49, NULL, NULL, 0, NULL, NULL),
+(9, 9, 5, 'Transfer', '2026-02-21', 0, 80, 'test', '2026-02-21 06:03:59', 49, NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -517,18 +541,18 @@ INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, 
 --
 
 CREATE TABLE `vaccine_receive` (
-  `id` int NOT NULL COMMENT 'Transaction ID.',
-  `vaccine_id` int NOT NULL COMMENT 'References vaccine_inventory.id.',
-  `supplier_id` int NOT NULL COMMENT 'vaccine_supplier',
-  `facility_id` int NOT NULL COMMENT 'system_facilities',
-  `quantity` int NOT NULL COMMENT 'Quantity moved.',
+  `id` int(11) NOT NULL COMMENT 'Transaction ID.',
+  `vaccine_id` int(11) NOT NULL COMMENT 'References vaccine_inventory.id.',
+  `supplier_id` int(11) NOT NULL COMMENT 'vaccine_supplier',
+  `facility_id` int(11) NOT NULL COMMENT 'system_facilities',
+  `quantity` int(11) NOT NULL COMMENT 'Quantity moved.',
   `expiry_date` date DEFAULT NULL,
-  `remarks` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Notes (e.g., reason for adjustment).',
-  `created_by` int NOT NULL COMMENT 'References users.id (who logged it).',
-  `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp.',
-  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 = not delete\r\n1 = is delete',
-  `is_archive_at` int DEFAULT NULL,
-  `updated_by` int DEFAULT NULL,
+  `remarks` text NOT NULL COMMENT 'Notes (e.g., reason for adjustment).',
+  `created_by` int(11) NOT NULL COMMENT 'References users.id (who logged it).',
+  `created_date` timestamp NULL DEFAULT current_timestamp() COMMENT 'Record creation timestamp.',
+  `is_archive` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not delete\r\n1 = is delete',
+  `is_archive_at` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL COMMENT 'Record update timestamp.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -543,7 +567,8 @@ INSERT INTO `vaccine_receive` (`id`, `vaccine_id`, `supplier_id`, `facility_id`,
 (4, 2, 6, 4, 50, '2026-02-28', 'test', 49, '2024-02-11 07:17:19', 0, NULL, NULL, NULL),
 (5, 9, 4, 5, 100, '2026-07-25', 'Test', 49, '2024-02-20 07:42:39', 0, NULL, NULL, NULL),
 (6, 1, 5, 5, 60, '2026-10-02', 'test', 49, '2025-02-20 07:43:22', 0, NULL, NULL, NULL),
-(7, 8, 4, 5, 150, '2026-09-25', 'test', 49, '2026-02-20 07:43:43', 0, NULL, NULL, NULL);
+(7, 8, 4, 5, 150, '2026-09-25', 'test', 49, '2026-02-20 07:43:43', 0, NULL, NULL, NULL),
+(8, 1, 5, 0, 500, '2026-02-21', 'test', 49, '2026-02-21 06:04:51', 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -552,78 +577,78 @@ INSERT INTO `vaccine_receive` (`id`, `vaccine_id`, `supplier_id`, `facility_id`,
 --
 
 CREATE TABLE `vaccine_registration` (
-  `id` int NOT NULL,
-  `qr_id` mediumtext COLLATE utf8mb4_general_ci,
-  `employmentcategory` mediumtext COLLATE utf8mb4_general_ci,
-  `sub_category` mediumtext COLLATE utf8mb4_general_ci,
-  `idcategory` mediumtext COLLATE utf8mb4_general_ci,
-  `idnumber` mediumtext COLLATE utf8mb4_general_ci,
-  `phid` mediumtext COLLATE utf8mb4_general_ci,
-  `pwdid` mediumtext COLLATE utf8mb4_general_ci,
-  `lastname` mediumtext COLLATE utf8mb4_general_ci,
-  `firstname` mediumtext COLLATE utf8mb4_general_ci,
-  `middlename` mediumtext COLLATE utf8mb4_general_ci,
-  `suffix` mediumtext COLLATE utf8mb4_general_ci,
-  `contact` mediumtext COLLATE utf8mb4_general_ci,
-  `gender` mediumtext COLLATE utf8mb4_general_ci,
+  `id` int(11) NOT NULL,
+  `qr_id` mediumtext DEFAULT NULL,
+  `employmentcategory` mediumtext DEFAULT NULL,
+  `sub_category` mediumtext DEFAULT NULL,
+  `idcategory` mediumtext DEFAULT NULL,
+  `idnumber` mediumtext DEFAULT NULL,
+  `phid` mediumtext DEFAULT NULL,
+  `pwdid` mediumtext DEFAULT NULL,
+  `lastname` mediumtext DEFAULT NULL,
+  `firstname` mediumtext DEFAULT NULL,
+  `middlename` mediumtext DEFAULT NULL,
+  `suffix` mediumtext DEFAULT NULL,
+  `contact` mediumtext DEFAULT NULL,
+  `gender` mediumtext DEFAULT NULL,
   `bday` date DEFAULT NULL,
-  `brgy` mediumtext COLLATE utf8mb4_general_ci,
-  `region` mediumtext COLLATE utf8mb4_general_ci,
-  `province` mediumtext COLLATE utf8mb4_general_ci,
-  `city` mediumtext COLLATE utf8mb4_general_ci,
-  `civil_status` mediumtext COLLATE utf8mb4_general_ci,
-  `employment_status` mediumtext COLLATE utf8mb4_general_ci,
-  `ocupation` mediumtext COLLATE utf8mb4_general_ci,
-  `agency` mediumtext COLLATE utf8mb4_general_ci,
-  `current_residence` mediumtext COLLATE utf8mb4_general_ci,
-  `pregnant` mediumtext COLLATE utf8mb4_general_ci,
-  `nurse_response` mediumtext COLLATE utf8mb4_general_ci,
-  `covid_status` mediumtext COLLATE utf8mb4_general_ci,
-  `covid_exposure` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccination_status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Not-Vaccinated',
-  `reason_refusal` mediumtext COLLATE utf8mb4_general_ci,
-  `if_severe_allergic` mediumtext COLLATE utf8mb4_general_ci,
-  `allergy` mediumtext COLLATE utf8mb4_general_ci,
-  `if_allergy` mediumtext COLLATE utf8mb4_general_ci,
-  `dose_1` mediumtext COLLATE utf8mb4_general_ci,
-  `dose_2` mediumtext COLLATE utf8mb4_general_ci,
-  `booster` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `allergies_to_PEG` mediumtext COLLATE utf8mb4_general_ci,
-  `bleeding_disorders` mediumtext COLLATE utf8mb4_general_ci,
-  `if_bleeding` mediumtext COLLATE utf8mb4_general_ci,
-  `symtoms` mediumtext COLLATE utf8mb4_general_ci,
-  `if_receive_vaccine` mediumtext COLLATE utf8mb4_general_ci,
-  `comorbidity` mediumtext COLLATE utf8mb4_general_ci,
-  `consent` mediumtext COLLATE utf8mb4_general_ci,
-  `defferal` mediumtext COLLATE utf8mb4_general_ci,
+  `brgy` mediumtext DEFAULT NULL,
+  `region` mediumtext DEFAULT NULL,
+  `province` mediumtext DEFAULT NULL,
+  `city` mediumtext DEFAULT NULL,
+  `civil_status` mediumtext DEFAULT NULL,
+  `employment_status` mediumtext DEFAULT NULL,
+  `ocupation` mediumtext DEFAULT NULL,
+  `agency` mediumtext DEFAULT NULL,
+  `current_residence` mediumtext DEFAULT NULL,
+  `pregnant` mediumtext DEFAULT NULL,
+  `nurse_response` mediumtext DEFAULT NULL,
+  `covid_status` mediumtext DEFAULT NULL,
+  `covid_exposure` mediumtext DEFAULT NULL,
+  `vaccination_status` varchar(255) NOT NULL DEFAULT 'Not-Vaccinated',
+  `reason_refusal` mediumtext DEFAULT NULL,
+  `if_severe_allergic` mediumtext DEFAULT NULL,
+  `allergy` mediumtext DEFAULT NULL,
+  `if_allergy` mediumtext DEFAULT NULL,
+  `dose_1` mediumtext DEFAULT NULL,
+  `dose_2` mediumtext DEFAULT NULL,
+  `booster` varchar(255) DEFAULT NULL,
+  `allergies_to_PEG` mediumtext DEFAULT NULL,
+  `bleeding_disorders` mediumtext DEFAULT NULL,
+  `if_bleeding` mediumtext DEFAULT NULL,
+  `symtoms` mediumtext DEFAULT NULL,
+  `if_receive_vaccine` mediumtext DEFAULT NULL,
+  `comorbidity` mediumtext DEFAULT NULL,
+  `consent` mediumtext DEFAULT NULL,
+  `defferal` mediumtext DEFAULT NULL,
   `time_stamp` date DEFAULT NULL,
-  `convalescent` mediumtext COLLATE utf8mb4_general_ci,
-  `if_pregnant` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccine_name` mediumtext COLLATE utf8mb4_general_ci,
-  `batch_number` mediumtext COLLATE utf8mb4_general_ci,
-  `lot_number` mediumtext COLLATE utf8mb4_general_ci,
-  `vaccinator_name` mediumtext COLLATE utf8mb4_general_ci,
-  `prof_vaccinator` mediumtext COLLATE utf8mb4_general_ci,
-  `medical_clearance` mediumtext COLLATE utf8mb4_general_ci,
-  `allergy_to_vaccine` mediumtext COLLATE utf8mb4_general_ci,
-  `profile_comorbidity` mediumtext COLLATE utf8mb4_general_ci,
-  `encoded` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'NO',
-  `covid_classification` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'N/A',
-  `indigenous` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `adverse_event` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `adverse_event_cons` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'N/A',
-  `pwd` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT '02_No',
-  `sched_status` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT ' approved',
-  `facility_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `encoded_by` varchar(255) COLLATE utf8mb4_general_ci DEFAULT 'Unrecorded',
-  `guardian` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ped_comorbid` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `sec_vaccine_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `sec_batch_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `sec_lot_number` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `sec_date_of_vaccination` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `convalescent` mediumtext DEFAULT NULL,
+  `if_pregnant` mediumtext DEFAULT NULL,
+  `vaccine_name` mediumtext DEFAULT NULL,
+  `batch_number` mediumtext DEFAULT NULL,
+  `lot_number` mediumtext DEFAULT NULL,
+  `vaccinator_name` mediumtext DEFAULT NULL,
+  `prof_vaccinator` mediumtext DEFAULT NULL,
+  `medical_clearance` mediumtext DEFAULT NULL,
+  `allergy_to_vaccine` mediumtext DEFAULT NULL,
+  `profile_comorbidity` mediumtext DEFAULT NULL,
+  `encoded` varchar(255) NOT NULL DEFAULT 'NO',
+  `covid_classification` varchar(255) NOT NULL DEFAULT 'N/A',
+  `indigenous` varchar(255) NOT NULL DEFAULT '02_No',
+  `adverse_event` varchar(255) NOT NULL DEFAULT '02_No',
+  `adverse_event_cons` varchar(255) NOT NULL DEFAULT 'N/A',
+  `pwd` varchar(255) NOT NULL DEFAULT '02_No',
+  `sched_status` varchar(255) NOT NULL DEFAULT ' approved',
+  `facility_id` varchar(255) DEFAULT NULL,
+  `encoded_by` varchar(255) DEFAULT 'Unrecorded',
+  `guardian` varchar(255) DEFAULT NULL,
+  `ped_comorbid` varchar(255) DEFAULT NULL,
+  `sec_vaccine_name` varchar(255) NOT NULL,
+  `sec_batch_number` varchar(255) NOT NULL,
+  `sec_lot_number` varchar(255) NOT NULL,
+  `sec_date_of_vaccination` varchar(255) NOT NULL,
+  `date_added` timestamp NOT NULL DEFAULT current_timestamp(),
+  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -653,16 +678,16 @@ INSERT INTO `vaccine_registration` (`id`, `qr_id`, `employmentcategory`, `sub_ca
 --
 
 CREATE TABLE `vaccine_supplier` (
-  `id` int NOT NULL COMMENT 'Supplier ID',
-  `name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Supplier name',
-  `contact_person` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Supplier contact person',
-  `phone` varchar(20) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Contact number',
-  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Contact email',
-  `address` text COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Supplier address',
-  `created_by` int NOT NULL COMMENT 'References users.id (creator of record).',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int(11) NOT NULL COMMENT 'Supplier ID',
+  `name` varchar(100) NOT NULL COMMENT 'Supplier name',
+  `contact_person` varchar(100) NOT NULL COMMENT 'Supplier contact person',
+  `phone` varchar(20) NOT NULL COMMENT 'Contact number',
+  `email` varchar(100) NOT NULL COMMENT 'Contact email',
+  `address` text NOT NULL COMMENT 'Supplier address',
+  `created_by` int(11) NOT NULL COMMENT 'References users.id (creator of record).',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT NULL,
-  `is_archive` int NOT NULL DEFAULT '0' COMMENT '0 = not deleted\r\n1 = deleted'
+  `is_archive` int(11) NOT NULL DEFAULT 0 COMMENT '0 = not deleted\r\n1 = deleted'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -685,38 +710,38 @@ INSERT INTO `vaccine_supplier` (`id`, `name`, `contact_person`, `phone`, `email`
 --
 
 CREATE TABLE `vims_vas_12` (
-  `id` int NOT NULL,
-  `category` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `unique_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `pwd_id` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `indigenous` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `middlename` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `suffix` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `contact` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `region` text COLLATE utf8mb4_general_ci,
-  `province` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `city` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `brgy` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `gender` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bday` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `deferral` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `reason_for_deferral` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `unique_id` varchar(255) DEFAULT NULL,
+  `pwd_id` varchar(255) DEFAULT NULL,
+  `indigenous` varchar(255) DEFAULT NULL,
+  `lastname` varchar(255) DEFAULT NULL,
+  `firstname` varchar(255) DEFAULT NULL,
+  `middlename` varchar(255) DEFAULT NULL,
+  `suffix` varchar(255) DEFAULT NULL,
+  `contact` varchar(255) DEFAULT NULL,
+  `region` text DEFAULT NULL,
+  `province` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `brgy` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `bday` varchar(255) DEFAULT NULL,
+  `deferral` varchar(255) DEFAULT NULL,
+  `reason_for_deferral` varchar(255) DEFAULT NULL,
   `vaccination_date` date DEFAULT NULL,
-  `vaccine_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `batch_number` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `lot_number` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `bakuna_center` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `vaccinator_name` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `1st_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `2nd_dose` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `booster` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `adverse_event` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `adverse_event_condition` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `guardian` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `ped_comorbid` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `R` varchar(255) COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'N/A'
+  `vaccine_name` varchar(255) DEFAULT NULL,
+  `batch_number` varchar(255) DEFAULT NULL,
+  `lot_number` varchar(255) DEFAULT NULL,
+  `bakuna_center` varchar(255) DEFAULT NULL,
+  `vaccinator_name` varchar(255) DEFAULT NULL,
+  `1st_dose` varchar(255) DEFAULT NULL,
+  `2nd_dose` varchar(255) DEFAULT NULL,
+  `booster` varchar(255) DEFAULT NULL,
+  `adverse_event` varchar(255) DEFAULT NULL,
+  `adverse_event_condition` varchar(255) DEFAULT NULL,
+  `guardian` varchar(255) DEFAULT NULL,
+  `ped_comorbid` varchar(255) DEFAULT NULL,
+  `R` varchar(255) NOT NULL DEFAULT 'N/A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -735,6 +760,12 @@ INSERT INTO `vims_vas_12` (`id`, `category`, `unique_id`, `pwd_id`, `indigenous`
 -- Indexes for table `local_data_fetcher`
 --
 ALTER TABLE `local_data_fetcher`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `minimum_stock`
+--
+ALTER TABLE `minimum_stock`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -829,91 +860,97 @@ ALTER TABLE `vims_vas_12`
 -- AUTO_INCREMENT for table `local_data_fetcher`
 --
 ALTER TABLE `local_data_fetcher`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `minimum_stock`
+--
+ALTER TABLE `minimum_stock`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `patient`
 --
 ALTER TABLE `patient`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `system_config`
 --
 ALTER TABLE `system_config`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `system_facilities`
 --
 ALTER TABLE `system_facilities`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `system_nav_group`
 --
 ALTER TABLE `system_nav_group`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `system_pages`
 --
 ALTER TABLE `system_pages`
-  MODIFY `pages_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `pages_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT for table `system_page_access`
 --
 ALTER TABLE `system_page_access`
-  MODIFY `page_access` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `page_access` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `system_user`
 --
 ALTER TABLE `system_user`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT for table `vaccines`
 --
 ALTER TABLE `vaccines`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Vaccine ID', AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Vaccine ID', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `vaccine_inventory`
 --
 ALTER TABLE `vaccine_inventory`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Unique identifier for each inventory record.', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique identifier for each inventory record.', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `vaccine_issuance`
 --
 ALTER TABLE `vaccine_issuance`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `vaccine_receive`
 --
 ALTER TABLE `vaccine_receive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Transaction ID.', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Transaction ID.', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `vaccine_registration`
 --
 ALTER TABLE `vaccine_registration`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `vaccine_supplier`
 --
 ALTER TABLE `vaccine_supplier`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT COMMENT 'Supplier ID', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Supplier ID', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `vims_vas_12`
 --
 ALTER TABLE `vims_vas_12`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
