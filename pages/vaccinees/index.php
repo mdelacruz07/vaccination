@@ -146,7 +146,7 @@
                             <div class="mb-5">
                                 <div class="d-flex align-items-center justify-content-between w-100 mb-3 px-3">
                                     <!-- Category -->
-                                     <div class="col-12 input-group">
+                                    <div class="col-12 input-group">
                                         <label>Category <span style="color:red;">*</span></label>
                                         <div class="input-group">
                                             <div class="form-control p-0 border-0">

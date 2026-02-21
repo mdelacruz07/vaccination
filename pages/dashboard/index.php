@@ -99,85 +99,9 @@
 
         // ==========================================================================================
 
-        /**
-         * Vaccine Balance for Doughnut Chart
-         */
-        $query_vaccine = "SELECT v.id, v.name,
-            (IFNULL(SUM(DISTINCT vr.total_in), 0) - IFNULL(SUM(DISTINCT vi.total_out), 0)) AS balance
-            FROM vaccines v
-            LEFT JOIN (SELECT vaccine_id, SUM(quantity) AS total_in FROM vaccine_receive WHERE is_archive = 0 GROUP BY vaccine_id) vr ON vr.vaccine_id = v.id
-            LEFT JOIN (SELECT vaccine_id, SUM(quantity) AS total_out FROM vaccine_issuance WHERE is_archive = 0 GROUP BY vaccine_id) vi ON vi.vaccine_id = v.id
-            WHERE v.is_archive = 0
-            GROUP BY v.id
-            HAVING balance > 0
-            ORDER BY v.name ASC
-        ";
+        // Include connector and get chart data from PHP
+        $line_chart_json = include 'get_vaccine_prediction_chart.php'; // returns JSON array
 
-        $vax_list = $conn->query($query_vaccine);
-
-        $vax_donut_labels = [];
-        $vax_donut_data = [];
-
-        if ($vax_list && $vax_list->num_rows > 0) {
-            while ($row = $vax_list->fetch_object()) {
-                $vax_donut_labels[] = $row->name;
-                $vax_donut_data[] = (int)$row->balance;
-            }
-        }
-
-        // ==========================================================================================
-
-        // Vertical Bar Chart Data
-        $query_vaccine = "SELECT v.id, v.name AS Vaccine_name, IFNULL(vr.total_in, 0) AS total_in, IFNULL(vi.total_out, 0) AS total_out, (IFNULL(vr.total_in, 0) - IFNULL(vi.total_out, 0)) AS balance
-            FROM vaccines v
-            LEFT JOIN (
-                SELECT vaccine_id, SUM(quantity) AS total_in
-                FROM vaccine_receive
-                WHERE is_archive = 0
-                GROUP BY vaccine_id
-            ) vr ON vr.vaccine_id = v.id
-            LEFT JOIN (
-                SELECT vaccine_id, SUM(quantity) AS total_out
-                FROM vaccine_issuance
-                WHERE is_archive = 0
-                GROUP BY vaccine_id
-            ) vi ON vi.vaccine_id = v.id
-            WHERE v.is_archive = 0
-            HAVING balance > 0
-            ORDER BY v.name ASC";
-
-        $vax_list = $conn->query($query_vaccine);
-
-        $vax_ver_bar_labels = [];
-        $vax_ver_bar_data = [];
-
-        $vax_in = [];
-        $vax_out = [];
-        $vax_balance = [];
-        $vax_rows = []; // full rows with Vaccine_name, balance, In, Out
-
-        if ($vax_list && $vax_list->num_rows > 0) {
-            while ($row = $vax_list->fetch_object()) {
-                $name = $row->Vaccine_name;
-                $balance = (int)$row->balance;
-                $in = (int)$row->total_in;
-                $out = (int)$row->total_out;
-
-                $vax_ver_bar_labels[] = $name;
-                $vax_ver_bar_data[] = $balance;
-
-                $vax_in[] = $in;
-                $vax_out[] = $out;
-                $vax_balance[] = $balance;
-
-                $vax_rows[] = [
-                    'Vaccine_name' => $name,
-                    'balance' => $balance,
-                    'In' => $in,
-                    'Out' => $out
-                ];
-            }
-        }
     ?>
 
     <style>
@@ -223,6 +147,28 @@
             font-weight: 500;
             letter-spacing: 0.5px;
         }
+
+        .year_filter_container .select2-selection {
+            border: 0!important;
+        }
+
+        .year_filter_container .select2-selection__arrow {
+            top: 5px!important;
+            right: 5px!important;
+        }
+
+        #charts_container .separated_charts {
+            border: 1px solid #ced4da;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 49%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .chart_desc p {
+            font-size: 14px;
+        }
     </style>
 
     <body class="pages_body">
@@ -246,7 +192,7 @@
                         </div>
 
                         <div class="card-body row" style="padding: 30px 80px;">
-                            <div id="vaccine_date_count" class="row mx-0 mb-5 w-100 justify-content-between">
+                            <div id="vaccine_date_count" class="row mx-0 mb-3 w-100 justify-content-between">
                                 <div class="jumbotron">
                                     <div class="col-4">
                                         <span class="text-center d-block">
@@ -283,24 +229,81 @@
                                 </div>
                             </div>
 
-                            <div style="width:200px;">
-                                <!-- <input type="text" id="year_filter" class="form-control" placeholder="Select Year">
-                                <button id="filterBtn" class="btn btn-primary mt-2">Filter</button> -->
-
-                                <input type="text" id="year_filter" class="form-control" placeholder="Select Year">
-                            </div>
-
                             <div id="charts_container" class="charts_container w-100">
-                                <div class="d-flex justify-content-between">
-                                    <div class="col-6">
-                                        <div class="doughnut" style="height: 500px;">
+                                <div class="d-flex justify-content-between flex-wrap" style="row-gap: 29px;">
+                                    <div class="col-6 separated_charts">
+                                        <div style="width:150px;">
+                                            <div class="year_filter_container input-group">
+                                                <div class="form-control p-0">
+                                                    <select class="year_filter_donut year-filter-select2 form-control select2" style="width: 100%;">
+                                                        <option value="">Select Year</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart_desc">
+                                            <p class="my-3">This indicates the remaining stocks of vaccines.</p>
+                                        </div>
+
+                                        <div class="doughnut" style="height: 500px;position:relative;">
                                             <canvas id="myDoughnutChart"></canvas>
+                                            <div id="noDataMessage" style="display:none; position:absolute; top:0; left:0; 
+                                                        width:100%; height:100%; 
+                                                        align-items:center; justify-content:center; 
+                                                        font-size:18px; color:#999;">
+                                                No matching records
+                                            </div>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-6">
+                                    <div class="col-6 separated_charts">
+                                        <div style="width:150px;">
+                                            <div class="year_filter_container input-group">
+                                                <div class="form-control p-0">
+                                                    <select class="year_filter_vertical_bar year-filter-select2 form-control select2" style="width: 100%;">
+                                                        <option value="">Select Year</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart_desc">
+                                            <p class="my-3">This chart indicates the IN, OUT, and BALANCE of vaccine movements through out the year.</p>
+                                        </div>
+
                                         <div class="vertical_bar" style="height: 500px;">
                                             <canvas id="myVerticalBarChart" height="500" width="500"></canvas>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 separated_charts">
+                                        <div style="width:150px;">
+                                            <div class="year_filter_container input-group">
+                                                <div class="form-control p-0">
+                                                    <select class="year_filter_horizontal_bar year-filter-select2 form-control select2" style="width: 100%;">
+                                                        <option value="">Select Year</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="chart_desc">
+                                            <p class="my-3">This chart indicates how many vaccinee received each vaccine type.</p>
+                                        </div>
+
+                                        <div class="horizontal_bar" style="width: 100%; max-width: 800px;">
+                                            <canvas id="myHorizontalBarChart"></canvas>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6 separated_charts">
+                                        <div class="chart_desc">
+                                            <p class="my-3">Projected vaccine requirements for the upcoming year based on current usage trends and forecasts.</p>
+                                        </div>
+
+                                        <div class="line_chart" style="width: 100%; max-width: 800px;">
+                                            <canvas id="myLineChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -347,22 +350,61 @@
 
 <script> 
 $(document).ready(function() {
+    // ==========================================================================================
     // Load initial chart data
-    loadChart();
+    loadDonutChart();
+    loadVerticalChart();
+    loadHorizontalChart();
 
-    // Year filter button click event
-    $('#filterBtn').on('click', function() {
-        let year = $("#year_filter").val();
-        loadChart(year);
+    // Select2 dynamic year options
+    let startYear = new Date().getFullYear(); // current year
+    let endYear = 2000; // change this if needed
+
+    for (let year = startYear; year >= endYear; year--) {
+        $('.year-filter-select2').append(
+            $('<option>', {
+                value: year,
+                text: year
+            })
+        );
+    }
+
+    // Initialize Select2
+    $('.year-filter-select2').select2({
+        placeholder: "Select Year",
+        allowClear: true
     });
 
-    $("#year_filter").on("change", function(){
-        loadChart($(this).val());
+    // Donut
+    $(".year_filter_donut").on("change", function(){
+        loadDonutChart($(this).val());
     });
+
+    // Vertical Bar
+    $('.year_filter_vertical_bar').on('change', function () {
+        let year = $(this).val();
+        loadVerticalChart(year);
+    });
+
+    // Horizontal Bar
+    $('.year_filter_horizontal_bar').on('change', function() {
+        let year = $(this).val();
+        loadHorizontalChart(year);
+    });
+    // ==========================================================================================
 });
 
 // ==========================================================================================
-
+// Global Functions start
+function generateColors(count) {
+    const colors = [];
+    for (let i = 0; i < count; i++) {
+        const hue = Math.floor((360 / count) * i);
+        colors.push(`hsla(${hue}, 70%, 50%, 0.6)`);
+    }
+    return colors;
+}
+// Global Functions end
 // ==========================================================================================
 
 // ==========================================================================================
@@ -372,24 +414,21 @@ var eventsFromPHP = <?php echo $events_json; ?>;
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('vaccine_calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      events: eventsFromPHP,
-      dayMaxEvents: true,
-      headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          // right: 'dayGridMonth,timeGridWeek,listWeek' //Weekly view
-        right: ''
-      },
-      height: 700,
-      buttonText: {
-          today: 'Today',
-          month: 'Month',
-          // week: 'Week', // Weekly view
-          // list: 'List'
-      },
-      theme: true
-  });
+        initialView: 'dayGridMonth',
+        events: eventsFromPHP,
+        dayMaxEvents: true,
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: ''
+        },
+        height: 700,
+        buttonText: {
+            today: 'Today',
+            month: 'Month',
+        },
+        theme: true
+    });
 
   calendar.render();
 });
@@ -399,61 +438,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ==========================================================================================
 // Doughnut Chart Start
-// const ctx = document.getElementById('myDoughnutChart');
+const ctx_donut = document.getElementById('myDoughnutChart');
 
-// const vaccineLabels = <?= json_encode($vax_donut_labels); ?>;
-// const vaccineData   = <?= json_encode($vax_donut_data); ?>;
-
-// new Chart(ctx, {
-//     type: 'doughnut',
-//     data: {
-//         labels: vaccineLabels,
-//         datasets: [{
-//             label: 'Vaccine Balance',
-//             data: vaccineData,
-//             backgroundColor: [
-//                 '#4CAF50',
-//                 '#2196F3',
-//                 '#FFC107',
-//                 '#E91E63',
-//                 '#9C27B0',
-//                 '#00BCD4',
-//                 '#FF5722',
-//                 '#8BC34A'
-//             ],
-//             borderWidth: 1
-//         }]
-//     },
-//     options: {
-//         responsive: true,
-//         maintainAspectRatio: false,
-//         plugins: {
-//             legend: {
-//                 position: 'bottom'
-//             },
-//             tooltip: {
-//                 callbacks: {
-//                     label: function(context) {
-//                         return context.label + ': ' + context.raw + ' doses';
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// });
-const ctx = document.getElementById('myDoughnutChart');
-
-let myDoughnutChart = new Chart(ctx, {
+let myDoughnutChart = new Chart(ctx_donut, {
     type: 'doughnut',
     data: {
         labels: [],
         datasets: [{
             label: 'Vaccine Balance',
             data: [],
-            backgroundColor: [
-                '#4CAF50','#2196F3','#FFC107','#E91E63',
-                '#9C27B0','#00BCD4','#FF5722','#8BC34A'
-            ],
             borderWidth: 1
         }]
     },
@@ -473,103 +466,223 @@ let myDoughnutChart = new Chart(ctx, {
     }
 });
 
-// year filter for charts
-$("#year_filter").datepicker({
-    changeYear: true,
-    showButtonPanel: true,
-    dateFormat: 'yy',
-    onClose: function(dateText, inst) {
-        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-        $(this).val(year);
-    },
-    beforeShow: function(input, inst) {
-        $(".ui-datepicker-calendar").hide();
-    }
-});
-
-function loadChart(year = '') {
-
+function loadDonutChart(year = '') {
     $.ajax({
         url: "get_vaccine_donut_chart.php",
         type: "POST",
         data: { year: year },
         dataType: "json",
         success: function(response) {
+            const noData = document.getElementById("noDataMessage");
+            const canvas = document.getElementById("myDoughnutChart");
+
+            if (response.data.length === 0) {
+                // Clear chart data
+                myDoughnutChart.data.labels = [];
+                myDoughnutChart.data.datasets[0].data = [];
+                
+                myDoughnutChart.update();
+
+                canvas.style.display = "none";
+                noData.style.display = "flex";
+
+                return;
+            }
+
+            // Show chart again
+            canvas.style.display = "block";
+            noData.style.display = "none";
 
             myDoughnutChart.data.labels = response.labels;
             myDoughnutChart.data.datasets[0].data = response.data;
+            myDoughnutChart.data.datasets[0].backgroundColor = generateColors(response.data.length);
 
             myDoughnutChart.update();
         }
     });
-
 }
 // Doughnut Chart End
 // ==========================================================================================
 
 // ==========================================================================================
 // Vertical Bar Chart Start
-const labels = <?= json_encode($vax_ver_bar_labels); ?>;
-const totalIn = <?= json_encode($vax_in); ?>;
-const totalOut = <?= json_encode($vax_out); ?>;
-const totalBalance = <?= json_encode($vax_balance); ?>;
+let verticalChart;
 
-const ctx_ver_bar = document.getElementById('myVerticalBarChart');
+function loadVerticalChart(year = '') {
 
-new Chart(ctx_ver_bar, {
+    $.ajax({
+        url: "get_vaccine_vertical_chart.php",
+        type: "POST",
+        data: { year: year },
+        dataType: "json",
+        success: function (response) {
+
+            if (verticalChart) {
+                verticalChart.destroy();
+            }
+
+            const ctx_vertical = document.getElementById('myVerticalBarChart');
+
+            verticalChart = new Chart(ctx_vertical, {
+                type: 'bar',
+                data: {
+                    labels: response.labels,
+                    datasets: [
+                        {
+                            label: 'IN',
+                            data: response.in,
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                        },
+                        {
+                            label: 'OUT',
+                            data: response.out.map(val => -val),
+                            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                        },
+                        {
+                            label: 'BALANCE',
+                            data: response.balance,
+                            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' },
+                        title: {
+                            display: true,
+                            text: year
+                                ? `Vaccine Stock Movement (${year})`
+                                : 'Vaccine Stock Movement (All Years)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    });
+}
+// Vertical Bar Chart End
+// ==========================================================================================
+
+// ==========================================================================================
+// Horizontal Bar Chart Start
+
+const ctx_horizontal = document.getElementById('myHorizontalBarChart');
+
+const vaccineUsageChart_per_patient = new Chart(ctx_horizontal, {
     type: 'bar',
     data: {
-        labels: labels,
-        datasets: [
-            {
-                label: 'IN',
-                data: <?= json_encode($vax_in); ?>,
-                backgroundColor: 'rgba(54, 162, 235, 0.6)', // blue
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'OUT',
-                data: <?= json_encode($vax_out); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.6)', // red
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'BALANCE',
-                data: <?= json_encode($vax_balance); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.6)', // green
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }
-        ]
+        labels: [],
+        datasets: [{
+            label: 'Total Usage',
+            data: [],
+            borderRadius: 6,
+            barThickness: 25
+        }]
     },
     options: {
+        indexAxis: 'y',
         responsive: true,
-        maintainAspectRatio: false,
         plugins: {
-            legend: {
-                position: 'top'
-            },
+            legend: { display: false },
             title: {
                 display: true,
-                text: 'Vaccine Stock Movement'
+                text: 'Vaccine Usage Report'
+            }
+        },
+        scales: {
+            x: { beginAtZero: true },
+            y: { grid: { display: false } }
+        }
+    }
+});
+
+function loadHorizontalChart(year = '') {
+    $.ajax({
+        url: "get_vaccine_horizontal_chart.php",
+        type: "POST",
+        data: { year: year },
+        dataType: "json",
+        success: function(response) {
+
+            let labels = [];
+            let data = [];
+
+            response.forEach(item => {
+                labels.push(item.vaccine_name);
+                data.push(item.total_doses_given);
+            });
+
+            vaccineUsageChart_per_patient.data.labels = labels;
+            vaccineUsageChart_per_patient.data.datasets[0].data = data;
+            vaccineUsageChart_per_patient.data.datasets[0].backgroundColor = generateColors(response.length);
+            vaccineUsageChart_per_patient.update();
+        }
+    });
+}
+
+// Horizontal Bar Chart End
+// ==========================================================================================
+
+// Line Chart Start
+const ctx_line = document.getElementById('myLineChart').getContext('2d');
+const labels = <?php echo json_encode(array_column($line_chart_json['datasets'], 'label')); ?>;
+const datasets_line = <?php
+    // Convert datasets to horizontal format: one dataset per year including prediction
+    $new_datasets = [];
+    foreach($line_chart_json['labels'] as $i => $year){
+        $data = [];
+        foreach($line_chart_json['datasets'] as $vaccine){
+            $data[] = $vaccine['data'][$i] ?? 0;
+        }
+        $new_datasets[] = [
+            'label' => $year,
+            'data' => $data,
+            'fill' => false,
+            'borderColor' => sprintf('hsl(%d, 70%%, 50%%)', rand(0, 360)),
+            'tension' => 0.2
+        ];
+    }
+    echo json_encode($new_datasets);
+?>;
+
+// Get the first dataset
+const firstDataset = datasets_line[0];
+
+// Set its label to next year
+const nextYear_line = new Date().getFullYear(); // current year + 1
+firstDataset.label = nextYear_line;
+
+const horizontalLineChart = new Chart(ctx_line, {
+    type: 'line',
+    data: {
+        labels: labels, // vaccine names
+        datasets: [firstDataset]
+    },
+    options: {
+        indexAxis: 'y', // horizontal orientation
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Vaccine Prediction Forecast'
             }
         },
         scales: {
             x: {
-                grid: {
-                    color: 'rgba(0,0,0,0.1)'
-                }
+                title: { display: true, text: 'Quantity Used' },
+                beginAtZero: true
             },
             y: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(0,0,0,0.1)'
-                }
+                title: { display: true, text: 'Vaccine' }
             }
         }
     }
 });
-// Vertical Bar Chart End
 </script>

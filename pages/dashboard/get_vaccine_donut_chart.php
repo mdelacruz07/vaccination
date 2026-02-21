@@ -11,8 +11,7 @@ if (!empty($year)) {
     $whereYearIssue   = " AND YEAR(issued_date) = '$year' ";
 }
 
-$query_vaccine = "
-    SELECT v.id, v.name,
+$query_vaccine = "SELECT v.id, v.name,
     (IFNULL(vr.total_in,0) - IFNULL(vi.total_out,0)) AS balance
     FROM vaccines v
     LEFT JOIN (
