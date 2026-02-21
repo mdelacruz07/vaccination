@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2026 at 07:11 AM
+-- Generation Time: Feb 21, 2026 at 07:59 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -532,7 +532,9 @@ INSERT INTO `vaccine_issuance` (`id`, `vaccine_id`, `issued_to`, `issued_type`, 
 (6, 2, 0, 'Used', '2026-02-19', 7, 1, 'Used for Test7 Test7 Test7 as first dose', '2026-02-19 09:22:27', 49, 0, NULL, 0, NULL, NULL),
 (7, 7, 0, 'Used', '2026-02-19', 8, 1, 'Used for Test8 Test8 Test8 as first dose', '2026-02-19 09:23:24', 49, 0, NULL, 0, NULL, NULL),
 (8, 1, 4, 'Transfer', '2025-02-05', 0, 40, 'test', '2026-02-21 07:09:53', 49, NULL, NULL, 0, NULL, NULL),
-(9, 9, 5, 'Transfer', '2026-02-21', 0, 80, 'test', '2026-02-21 06:03:59', 49, NULL, NULL, 0, NULL, NULL);
+(9, 9, 5, 'Transfer', '2026-02-21', 0, 80, 'test', '2026-02-21 06:03:59', 49, NULL, NULL, 0, NULL, NULL),
+(10, 1, 5, 'Transfer', '2026-02-21', 0, 100, 'test', '2026-02-21 06:54:07', 49, NULL, NULL, 0, NULL, NULL),
+(11, 8, 4, 'Transfer', '2026-02-21', 0, 50, 'test', '2026-02-21 06:54:30', 49, NULL, NULL, 0, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -926,7 +928,7 @@ ALTER TABLE `vaccine_inventory`
 -- AUTO_INCREMENT for table `vaccine_issuance`
 --
 ALTER TABLE `vaccine_issuance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `vaccine_receive`
