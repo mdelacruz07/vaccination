@@ -63,8 +63,19 @@
 
         // ==========================================================================================
 
-        // Vaccince Calendar Data
-        $select_vac_dates = "SELECT CONCAT(firstname, ' ', lastname) AS full_name, first_dose_date AS first_date_of_vaccination, second_dose_date AS second_date_of_vaccination, first_dose, second_dose FROM patient WHERE is_archive = 0";
+        // Vaccine Calendar Data with Vaccine Name
+        $select_vac_dates = "SELECT 
+                CONCAT(p.firstname, ' ', p.lastname) AS full_name,
+                p.first_dose_date AS first_date_of_vaccination,
+                p.second_dose_date AS second_date_of_vaccination,
+                p.first_dose,
+                p.second_dose,
+                v.name
+            FROM patient p
+            LEFT JOIN vaccines v ON p.first_vaccine_id = v.id
+            WHERE p.is_archive = 0
+        ";
+
         $result_vac_dates = $conn->query($select_vac_dates);
 
         $events = [];
@@ -95,15 +106,17 @@
             $events[] = [
                 'title' => $row["full_name"] . ' - (1st Dose)',
                 'start' => $row["first_date_of_vaccination"],
-                'color' => $colorFirstDose
+                'color' => $colorFirstDose,
+                'vaccine' => $row["name"] ? $row["name"] : 'Vaccine not set',
             ];
 
-            // Second dose event (if available)
+            // Second dose event
             if (!empty($row["second_date_of_vaccination"])) {
                 $events[] = [
                     'title' => $row["full_name"] . ' - (2nd Dose)',
                     'start' => $row["second_date_of_vaccination"],
-                    'color' => $colorSecondDose
+                    'color' => $colorSecondDose,
+                    'vaccine' => $row["name"] ? $row["name"] : 'Vaccine not set',
                 ];
             }
         }
@@ -159,6 +172,10 @@
             font-size: 12px;
             font-weight: 500;
             letter-spacing: 0.5px;
+        }
+
+        .fc .tooltip {
+            z-index: 9999 !important;
         }
     </style>
 
@@ -341,6 +358,7 @@ var eventsFromPHP = <?php echo $events_json; ?>;
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('vaccine_calendar');
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         events: eventsFromPHP,
@@ -350,10 +368,17 @@ document.addEventListener('DOMContentLoaded', function() {
             today: 'Today',
             month: 'Month',
         },
-        theme: true
+        eventDidMount: function(info) {
+            $(info.el).tooltip({
+                title: info.event.extendedProps.vaccine,
+                placement: 'top',
+                trigger: 'hover',
+                container: '.fc'
+            });
+        },
     });
 
-  calendar.render();
+    calendar.render();
 });
 
 // Fullcalendar End 

@@ -22,6 +22,7 @@
     $first_lot_no        = trim($_GET["first_lot_no"]);
 
     $second_dose_date     = $_GET["second_dose_date"] ?? "0000-00-00";
+    $second_vaccine_id    = trim($_GET["first_vaccine_id"]);
 
     $vaccinator_name     = trim($_GET["vaccinator_name"]);
     $first_dose          = trim($_GET["first_dose"]);
@@ -49,6 +50,7 @@
     `first_vaccine_id`,
     `first_batch_no`,
     `first_lot_no`,
+    `second_vaccine_id`,
     `second_dose_date`,
     `vaccinator_name`,
     `first_dose`,
@@ -73,6 +75,7 @@
     '$first_vaccine_id',
     '$first_batch_no',
     '$first_lot_no',
+    '$second_vaccine_id',
     '$second_dose_date',
     '$vaccinator_name',
     '$first_dose',

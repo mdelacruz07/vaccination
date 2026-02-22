@@ -277,7 +277,7 @@
                 <div class="form-group">
                     <label>Date of Vaccination 2nd Dose</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="second_dose_date" value="<?= $data['second_dose_date'] ?>">
+                        <input type="date" class="form-control" name="second_dose_date" value="<?= $data['second_dose_date'] ?>" disabled>
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
                     <label>Vaccine name</label>
                     <div class="input-group">
                         <div class="form-control p-0 border-0">
-                            <select class="form-control select2 vaccine_id" name="second_vaccine_id" style="width: 100%;">
+                            <select class="form-control select2 vaccine_id" name="second_vaccine_id" style="width: 100%;" disabled>
                                 <option value="0">Select Vaccine</option>
                                 <?php
                                     if ($select2vaccine != "none") {

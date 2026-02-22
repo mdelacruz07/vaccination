@@ -282,7 +282,7 @@
                                     <!-- 1st dose -->
                                     <div class="form-group">
                                         <label>Date of Vaccination 1st Dose <span style="color:red;">*</span></label>
-                                        <input type="date" class="form-control" name="first_dose_date" alt="required" required>
+                                        <input type="date" class="form-control" name="first_dose_date" id="first_dose_date" alt="required" required>
                                     </div>
 
                                     <!-- Vaccine name -->
@@ -290,7 +290,7 @@
                                         <label>Vaccine name <span style="color:red;">*</span></label>
                                         <div class="input-group">
                                             <div class="form-control p-0 border-0">
-                                                <select class="form-control select2 vaccine_id" name="first_vaccine_id" alt="required" style="width: 100%;" required>
+                                                <select class="form-control select2 vaccine_id first_vaccine_id" name="first_vaccine_id" alt="required" style="width: 100%;" required>
                                                     <option value="0">Select Vaccine</option>
                                                     <?php
                                                         if ($select2vaccine != "none") {
@@ -329,7 +329,7 @@
                                     <div class="form-group">
                                         <label>Date of Vaccination 2nd Dose</label>
                                         <div class="input-group">
-                                            <input type="date" class="form-control" name="second_dose_date">
+                                            <input type="date" class="form-control" name="second_dose_date" id="second_dose_date" disabled>
                                         </div>
                                     </div>
 
@@ -338,7 +338,7 @@
                                         <label>Vaccine name</label>
                                         <div class="input-group">
                                             <div class="form-control p-0 border-0">
-                                                <select class="form-control select2 vaccine_id" name="second_vaccine_id" style="width: 100%;" disabled>
+                                                <select class="form-control select2 vaccine_id second_vaccine_id" name="second_vaccine_id" style="width: 100%;" disabled>
                                                     <option value="0">Select Vaccine</option>
                                                     <?php
                                                         if ($select2vaccine != "none") {
@@ -567,6 +567,28 @@
 
         $('.form-control[type="number"]').on('input', function () {
             this.value = this.value.replace(/\D/g, '');
+        });
+
+        $('.first_vaccine_id').on('change', function () {
+            let firstSelected = $(this).val();
+            let secondVaccineSelect = $('.second_vaccine_id');
+
+            secondVaccineSelect.prop('disabled', false)
+                                .val(firstSelected)
+                                .trigger('change.select2')
+                                .prop('disabled', true);
+        });
+
+        // =================================================================
+
+        const firstDoseDate = document.getElementById("first_dose_date");
+        const secDoseDate = document.getElementById("second_dose_date");
+
+        firstDoseDate.addEventListener('input', function () {
+            let firstDate = moment(this.value, "YYYY-MM-DD");
+            let secondDate = firstDate.clone().add(1, 'month');
+
+            secDoseDate.value = secondDate.format("YYYY-MM-DD");
         });
     </script>
 </body>
