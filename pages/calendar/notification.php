@@ -4,9 +4,9 @@ include '../../database/connector.php';
 $query = "SELECT 
     p.id,
     CONCAT(p.firstname, ' ', p.lastname) AS patient_name,
-    v.name,
+    v.name AS vaccine_name,
     p.first_dose_date AS scheduled_date,
-    'First Dose' AS dose_type
+    '1st Dose' AS dose_type
 
 FROM patient p
 LEFT JOIN vaccines v ON v.id = p.first_vaccine_id
@@ -20,9 +20,9 @@ UNION ALL
 SELECT 
     p.id,
     CONCAT(p.firstname, ' ', p.lastname) AS patient_name,
-    v.name,
+    v.name AS vaccine_name,
     p.second_dose_date AS scheduled_date,
-    'Second Dose' AS dose_type
+    '2nd Dose' AS dose_type
 
 FROM patient p
 LEFT JOIN vaccines v ON v.id = p.second_vaccine_id

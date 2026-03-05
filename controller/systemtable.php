@@ -55,7 +55,7 @@ class systemtable {
                         echo "<tr>";
                             echo "<td><span id='".$value['id']."-first_name'>".$value['first_name']."</span></td>";
                             echo "<td id='".$value['id']."-access'>".$value['access_name']."</td>";
-                            echo "<td>".$value['date_added']."</td>" ;
+                            echo "<td>".date('M j, Y', strtotime($value['date_added']))."</td>" ;
                             ?>
                             <td class="row">
                                 <button onclick="sys_edit('edit.php', 'veiw_result', '<?php echo $value['id'];?>', 'required_div', '#example1')" type="button" class="col-sm-10 btn btn-block btn-outline-info" data-toggle="modal" data-target="#update">Edit</button><br>
@@ -342,7 +342,7 @@ class systemtable {
                             echo "<td id='".$value['id']."-facility_name'>".$value['facility_name']."</td>";
                             echo "<td id='".$value['id']."-location'>".$value['location']."</td>";
                             echo "<td id='".$value['id']."-status'>".$value['status']."</td>";
-                            echo "<td>".$value['time_stamp']."</td>" ;
+                            echo "<td>". date('M j, Y', strtotime($value['time_stamp'])) ."</td>" ;
                             ?>
                             <td class="row">
                                 <button onclick="sys_edit('edit.php', 'veiw_result', '<?php echo $value['id'];?>', 'required_div', '#example1')" type="button" class="col-sm-12 btn btn-block btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
@@ -383,7 +383,7 @@ class systemtable {
                             echo "<td>".$value['manufacturer']."</td>";
                             echo "<td>".$value['dose_per_vial']."</td>";
                             echo "<td>".$value['description']."</td>";
-                            echo "<td>".$value['created_at']."</td>" ;
+                            echo "<td>".date('M j, Y', strtotime($value['created_at']))."</td>" ;
                             ?>
                             <td class="row m-0">
                                 <button onclick="sys_edit('edit.php', 'veiw_result', '<?php echo $value['id'];?>', 'required_div', '#tbl_vaccines')" type="button" class="col-sm-10 btn btn-block btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
@@ -439,7 +439,7 @@ class systemtable {
                             echo "<td>".$value['phone']."</td>";
                             echo "<td>".$value['email']."</td>";
                             echo "<td>".$value['address']."</td>";
-                            echo "<td>".$value['created_at']."</td>" ;
+                            echo "<td>".date('M j, Y', strtotime($value['created_at']))."</td>" ;
                             ?>
                             <td class="row m-0">
                                 <button onclick="sys_edit('edit.php', 'veiw_result', '<?php echo $value['id'];?>', 'required_div', '#tbl_suppliers')" type="button" class="col-sm-10 btn btn-block btn-outline-info" data-toggle="modal" data-target="#update">Edit</button>
@@ -1638,7 +1638,7 @@ class systemtable {
                 if($SelectTable != "none"){
                     $x = 0;
                     foreach($SelectTable as $value){
-                        $exp = ($value['expiry_date'] != "") ? $value['expiry_date'] : "----:--:--";
+                        $exp = ($value['expiry_date'] != "") ? date('M j, Y', strtotime($value['expiry_date'])) : "----:--:--";
 
                         $x++;
                         echo "<tr>";
@@ -1732,7 +1732,7 @@ class systemtable {
                                     echo "<td>".$issued_to_name."</td>";
                                     echo "<td>".$value['issued_type']."</td>";
                                     echo "<td>".$value['quantity']."</td>";
-                                    echo "<td>".$value['issued_date']."</td>";
+                                    echo "<td>".date('M j, Y', strtotime($value['issued_date']))."</td>";
                                     ?>
                                     <td class="row m-0" style="justify-content: space-evenly;">
                                         <button onclick="sys_edit('view.php', 'view_result_view', '<?php echo $value['vaccine_issuance_id'];?>', 'required_div', '#tbl_vaccines_issuance')" type="button" class="col-5 btn btn-block btn-outline-info" data-toggle="modal" data-target="#view_vaccine_inv">View</button>
@@ -1816,7 +1816,7 @@ class systemtable {
                                     echo "<td>{$row['total_in']}</td>";
                                     echo "<td>{$row['total_out']}</td>";
                                     echo "<td>{$row['balance']}</td>";
-                                    echo "<td>".($row['expiry_date'] ?? 'N/A')."</td>";
+                                    echo "<td>".(date('M j, Y', strtotime($row['expiry_date'])) ?? 'N/A')."</td>";
                                 echo "</tr>";
                                 $i++;
                             }
@@ -1858,13 +1858,15 @@ class systemtable {
                         if($patients != "none"){
                              $i = 1;
                             foreach ($patients as $row) {
+                                $f_d_date = date('M j, Y', strtotime($row['first_dose_date']));
+                                $s_d_date = date('M j, Y', strtotime($row['second_dose_date']));
                                 echo "<tr>";
                                     echo "<td>{$i}</td>";
                                     echo "<td>{$row['firstname']} {$row['lastname']}</td>";
                                     echo "<td>{$row['first_vaccine_name']}</td>";      // 1st Dose Vaccine
-                                    echo "<td>{$row['first_dose_date']}</td>";        // 1st Dose Date
+                                    echo "<td>{$f_d_date}</td>";        // 1st Dose Date
                                     echo "<td>{$row['second_vaccine_name']}</td>";    // 2nd Dose Vaccine
-                                    echo "<td>{$row['second_dose_date']}</td>";       // 2nd Dose Date
+                                    echo "<td>{$s_d_date}</td>";       // 2nd Dose Date
                     ?>
 
                                     <td class="row m-0" style="justify-content: space-evenly;">

@@ -1,3 +1,4 @@
+
 <?php
     include '../../controller/systemcore.php'; 
     $systemcore = new systemcore();
@@ -62,47 +63,42 @@
 <div id="update_result"></div>
 
 <div class="modal-body">
-    <div class="row">
-        <!-- Vaccine Name -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Vaccine Name:</label>
-            <div class="fs-6 text-dark"><?= $vaccine_name ?></div>
-        </div>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th width="35%" class="fw-bold text-muted">Vaccine Name</th>
+                <td><?= $vaccine_name ?></td>
+            </tr>
 
-        <!-- Issued to -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Issued To:</label>
-            <div class="fs-6 text-dark"><?= $issued_to ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Issued To</th>
+                <td><?= $issued_to ?></td>
+            </tr>
 
-        <!-- Issued type -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Issued Type:</label>
-            <div class="fs-6 text-dark"><?= $issued_type ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Issued Type</th>
+                <td><?= $issued_type ?></td>
+            </tr>
 
-        <!-- Quantity -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Quantity Issued:</label>
-            <div class="fs-6 text-dark"><?= $quantity ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Quantity Issued</th>
+                <td><?= $quantity ?></td>
+            </tr>
 
-        <!-- Created By -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Issued By:</label>
-            <div class="fs-6 text-dark"><?= $issue_by ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Issued By</th>
+                <td><?= $issue_by ?></td>
+            </tr>
 
-        <!-- Issued Date -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Issued Date:</label>
-            <div class="fs-6 text-dark"><?= $issued_date ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Issued Date</th>
+                <td><?= date("M d, Y", strtotime($issued_date)) ?></td>
+            </tr>
 
-        <!-- Remarks -->
-        <div class="col-lg-12 mb-4">
-            <label class="fw-bold text-muted mb-0">Remarks:</label>
-            <div class="fs-6 text-dark"><?= nl2br($remarks) ?></div>
-        </div>
-    </div>
+            <tr>
+                <th class="fw-bold text-muted">Remarks</th>
+                <td><?= nl2br($remarks) ?></td>
+            </tr>
+        </tbody>
+    </table>
 </div>

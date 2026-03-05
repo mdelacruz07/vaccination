@@ -104,19 +104,19 @@
 
             // First dose event
             $events[] = [
-                'title' => $row["full_name"] . ' - (1st Dose)',
+                'title' => strtoupper($row["full_name"] . ' - (1st Dose)'),
                 'start' => $row["first_date_of_vaccination"],
                 'color' => $colorFirstDose,
-                'vaccine' => $row["name"] ? $row["name"] : 'Vaccine not set',
+                'vaccine' => strtoupper($row["name"] ?? 'Vaccine not set'),
             ];
 
             // Second dose event
             if (!empty($row["second_date_of_vaccination"])) {
                 $events[] = [
-                    'title' => $row["full_name"] . ' - (2nd Dose)',
+                    'title' => strtoupper($row["full_name"] . ' - (2nd Dose)'),
                     'start' => $row["second_date_of_vaccination"],
                     'color' => $colorSecondDose,
-                    'vaccine' => $row["name"] ? $row["name"] : 'Vaccine not set',
+                    'vaccine' => strtoupper($row["name"] ?? 'Vaccine not set'),
                 ];
             }
         }
@@ -265,6 +265,26 @@
                 </div>
             </div>
         </section>
+
+        <div class="modal fade" id="vaccineDayModal" tabindex="-1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Vaccines Scheduled</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div id="vaccine_day_list"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <?php 
             include '../inc/confirmation_alerts.php';
             include '../inc/footer.php';
@@ -313,7 +333,7 @@ function loadDashboardData() {
                     html += `
                         <li>
                             <a class="dropdown-item small">
-                                <div class="fw-bold">${notif.patient_name}</div>
+                                <div class="fw-bold">${notif.patient_name.toUpperCase()}</div>
                                 <div>${notif.vaccine_name ? notif.vaccine_name : 'Vaccine not set'} (${notif.dose_type})</div>
                                 <div class="d-flex justify-content-between mt-1">
                                     <small>${moment(notif.scheduled_date).format('MMM DD, YYYY')}</small>
@@ -354,20 +374,22 @@ function loadDashboardData() {
 
 // ==========================================================================================
 // Fullcalendar Start
+
 var eventsFromPHP = <?php echo $events_json; ?>;
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('vaccine_calendar');
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         events: eventsFromPHP,
         dayMaxEvents: true,
         height: 700,
+
         buttonText: {
             today: 'Today',
             month: 'Month',
         },
+
         eventDidMount: function(info) {
             $(info.el).tooltip({
                 title: info.event.extendedProps.vaccine,
@@ -376,10 +398,86 @@ document.addEventListener('DOMContentLoaded', function() {
                 container: '.fc'
             });
         },
+
+        dateClick: function(info) {
+            let clickedDate = info.dateStr;
+            
+            // Format date using moment
+            let formattedDate = moment(clickedDate).format("MMM DD, YYYY");
+
+            let events = calendar.getEvents();
+            let eventsForDay = events.filter(function(event){
+                return event.startStr === clickedDate;
+            });
+
+            let html = '';
+
+            if(eventsForDay.length > 0) {
+                html += `
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="50%">Name</th>
+                                <th width="50%">Vaccine</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                eventsForDay.forEach(function(event){
+                    html += `
+                        <tr>
+                            <td>${event.title}</td>
+                            <td>${event.extendedProps.vaccine}</td>
+                        </tr>
+                    `;
+                });
+
+                html += `
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                html = '<div class="text-muted">No vaccines scheduled for this day.</div>';
+            }
+
+            $("#vaccine_day_list").html(html);
+            $(".modal-title").text("Vaccines Scheduled - " + formattedDate);
+            $("#vaccineDayModal").modal("show");
+
+        }
+
     });
 
     calendar.render();
+
 });
+
+// var eventsFromPHP = <?php //echo $events_json; ?>;
+
+// document.addEventListener('DOMContentLoaded', function() {
+//     var calendarEl = document.getElementById('vaccine_calendar');
+
+//     var calendar = new FullCalendar.Calendar(calendarEl, {
+//         initialView: 'dayGridMonth',
+//         events: eventsFromPHP,
+//         dayMaxEvents: true,
+//         height: 700,
+//         buttonText: {
+//             today: 'Today',
+//             month: 'Month',
+//         },
+//         eventDidMount: function(info) {
+//             $(info.el).tooltip({
+//                 title: info.event.extendedProps.vaccine,
+//                 placement: 'top',
+//                 trigger: 'hover',
+//                 container: '.fc'
+//             });
+//         },
+//     });
+
+//     calendar.render();
+// });
 
 // Fullcalendar End 
 // ==========================================================================================

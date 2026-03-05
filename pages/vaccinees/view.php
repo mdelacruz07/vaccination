@@ -61,130 +61,92 @@
 <div id="update_result"></div>
 
 <div class="modal-body">
-    <div class="row">
+    <div class="table-responsive">
+        <table class="table table-bordered table-sm">
+            <tbody>
 
-        <!-- Patient Name -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Full Name:</label>
-            <div class="fs-6 text-dark"><?= $fullname ?></div>
-        </div>
+                <tr>
+                    <th width="15%">Full Name</th>
+                    <td width="35%"><?= $fullname ?></td>
+                    <th width="15%">Category</th>
+                    <td width="35%"><?= $category ?></td>
+                </tr>
 
-        <!-- Category -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Category:</label>
-            <div class="fs-6 text-dark"><?= $category ?></div>
-        </div>
+                <tr>
+                    <th>Address</th>
+                    <td><?= implode(', ', array_filter([$barangay, $city, $province])) ?></td>
+                    <th>Indigenous</th>
+                    <td><?= $indigenous ?></td>
+                </tr>
 
-        <!-- Address -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Province:</label>
-            <div class="fs-6 text-dark"><?= $province ?></div>
-        </div>
+                <tr>
+                    <th>PWD</th>
+                    <td><?= $pwd ?></td>
+                    <th>Guardian Name</th>
+                    <td><?= $guardian ?></td>
+                </tr>
 
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">City/Municipality:</label>
-            <div class="fs-6 text-dark"><?= $city ?></div>
-        </div>
+                <tr>
+                    <th>Pedia Comorbidity</th>
+                    <td><?= $comorbidity ?></td>
+                    <th>Vaccinator</th>
+                    <td><?= $vaccinator ?></td>
+                </tr>
 
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Barangay:</label>
-            <div class="fs-6 text-dark"><?= $barangay ?></div>
-        </div>
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Special Tags -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Indigenous:</label>
-            <div class="fs-6 text-dark"><?= $indigenous ?></div>
-        </div>
 
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">PWD:</label>
-            <div class="fs-6 text-dark"><?= $pwd ?></div>
-        </div>
+    <div class="table-responsive mt-4">
+        <table class="table table-bordered table-sm text-center">
+            <thead class="thead-light">
+                <tr>
+                    <th width="20%"></th>
+                    <th width="40%">1st Dose</th>
+                    <th width="40%">2nd Dose</th>
+                </tr>
+            </thead>
 
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Guardian Name:</label>
-            <div class="fs-6 text-dark"><?= $guardian ?></div>
-        </div>
+            <tbody>
 
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Pedia Comorbidity:</label>
-            <div class="fs-6 text-dark"><?= $comorbidity ?></div>
-        </div>
-            
+                <tr>
+                    <th>Vaccine</th>
+                    <td><?= $first_vaccine_name ?></td>
+                    <td><?= $second_vaccine_name ?></td>
+                </tr>
 
-        <div class="d-flex col-12">
-            <!-- First Dose -->
-            <div class="col-6 p-0">
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">1st Vaccine:</label>
-                    <div class="fs-6 text-dark"><?= $first_vaccine_name ?></div>
-                </div>
+                <tr>
+                    <th>Dose Date</th>
+                    <td><?= date('M j, Y', strtotime($first_date)) ?></td>
+                    <td><?= date('M j, Y', strtotime($second_date)) ?></td>
+                </tr>
 
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">1st Dose Date:</label>
-                    <div class="fs-6 text-dark"><?= $first_date ?></div>
-                </div>
+                <tr>
+                    <th>Batch No</th>
+                    <td><?= $first_batch ?></td>
+                    <td><?= $second_batch ?></td>
+                </tr>
 
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">1st Batch No:</label>
-                    <div class="fs-6 text-dark"><?= $first_batch ?></div>
-                </div>
+                <tr>
+                    <th>Lot No</th>
+                    <td><?= $first_lot ?></td>
+                    <td><?= $second_lot ?></td>
+                </tr>
 
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">1st Lot No:</label>
-                    <div class="fs-6 text-dark"><?= $first_lot ?></div>
-                </div>
+                <tr>
+                    <th>Dose Given</th>
+                    <td><?= $first_dose_status ?></td>
+                    <td><?= $second_dose_status ?></td>
+                </tr>
 
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">1st Dose Given:</label>
-                    <div class="fs-6 text-dark"><?= $first_dose_status ?></div>
-                </div>
+                <tr>
+                    <th>Booster</th>
+                    <td colspan="2"><?= $booster_status ?></td>
+                </tr>
 
-            </div>
-
-            <!-- Second Dose -->
-            <div class="col-6 p-0">
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">2nd Vaccine:</label>
-                    <div class="fs-6 text-dark"><?= $second_vaccine_name ?></div>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">2nd Dose Date:</label>
-                    <div class="fs-6 text-dark"><?= $second_date ?></div>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">2nd Batch No:</label>
-                    <div class="fs-6 text-dark"><?= $second_batch ?></div>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">2nd Lot No:</label>
-                    <div class="fs-6 text-dark"><?= $second_lot ?></div>
-                </div>
-
-                <div class="form-group mb-4">
-                    <label class="fw-bold text-muted mb-0">2nd Dose Given:</label>
-                    <div class="fs-6 text-dark"><?= $second_dose_status ?></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Vaccination Status -->
-        <!-- Vaccinator -->
-         <div class="col-12 d-flex">
-            <div class="col-6 p-0 mb-4">
-                <label class="fw-bold text-muted mb-0">Vaccinator:</label>
-                <div class="fs-6 text-dark"><?= $vaccinator ?></div>
-            </div>
-
-            <div class="col-6 p-0 mb-4">
-                <label class="fw-bold text-muted mb-0">Booster:</label>
-                <div class="fs-6 text-dark"><?= $booster_status ?></div>
-            </div>
-         </div>
+            </tbody>
+        </table>
     </div>
 </div>
 

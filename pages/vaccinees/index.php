@@ -110,7 +110,7 @@
     </div>
 
     <div class="modal fade" id="view_vaccine_inv">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content" id="view_result_view"></div>
         </div>
     </div>

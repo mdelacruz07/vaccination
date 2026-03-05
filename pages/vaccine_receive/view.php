@@ -49,47 +49,42 @@
 <div id="update_result"></div>
 
 <div class="modal-body">
-    <div class="row">
-        <!-- Vaccine Name -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Vaccine Name:</label>
-            <div class="fs-6 text-dark"><?= $vaccine_name ?></div>
-        </div>
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th width="35%" class="fw-bold text-muted">Vaccine Name</th>
+                <td><?= $vaccine_name ?></td>
+            </tr>
 
-        <!-- Supplier -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Supplier:</label>
-            <div class="fs-6 text-dark"><?= $supplier_name ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Supplier</th>
+                <td><?= $supplier_name ?></td>
+            </tr>
 
-        <!-- Facility -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Facility:</label>
-            <div class="fs-6 text-dark"><?= $facility_name ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Facility</th>
+                <td><?= $facility_name ?></td>
+            </tr>
 
-        <!-- Quantity -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Quantity Received:</label>
-            <div class="fs-6 text-dark"><?= $quantity ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Quantity Received</th>
+                <td><?= $quantity ?></td>
+            </tr>
 
-        <!-- Created By -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Received / Created By:</label>
-            <div class="fs-6 text-dark"><?= $receive_by ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Received / Created By</th>
+                <td><?= $receive_by ?></td>
+            </tr>
 
-        <!-- Expiry Date -->
-        <div class="col-lg-6 mb-4">
-            <label class="fw-bold text-muted mb-0">Expiry Date:</label>
-            <div class="fs-6 text-dark"><?= $exp ?></div>
-        </div>
+            <tr>
+                <th class="fw-bold text-muted">Expiry Date</th>
+                <td><?= date("M d, Y", strtotime($exp)) ?></td>
+            </tr>
 
-        <!-- Remarks -->
-        <div class="col-lg-12 mb-4">
-            <label class="fw-bold text-muted mb-0">Remarks:</label>
-            <div class="fs-6 text-dark"><?= nl2br($remarks) ?></div>
-        </div>
-    </div>
+            <tr>
+                <th class="fw-bold text-muted">Remarks</th>
+                <td><?= nl2br($remarks) ?></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
